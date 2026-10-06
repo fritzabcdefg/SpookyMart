@@ -19,10 +19,13 @@ const Home = () => {
 
     const getProducts = async (keyword = '', price) => {
 
-        let link = `http://localhost:4001/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}`
-        // http://localhost:4001/api/v1/products?keyword=''
-        // http://localhost:4001/api/v1/products?keyword=adid&price[gte]=100&price[lte]=1000
-        let res = await axios.get(link)
+        const res = await axios.get('http://localhost:4001/api/v1/products', {
+            params: {
+                keyword: keyword.trim(),
+                'price[gte]': price[0],
+                'price[lte]': price[1]
+            }
+        })
         console.log(res.data.products)
         setProducts(res.data.products)
         setLoading(false)
@@ -42,7 +45,7 @@ const Home = () => {
 
     return (
         <>
-            <MetaData title={'shop Here'} />
+            <MetaData title={'Spooky Mart'} />
             {loading ? <Loader /> : (<div className="container container-fluid">
                 <h1 id="products_heading">Latest Products</h1>
                 <section id="products" className="container mt-5">

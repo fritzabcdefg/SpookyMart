@@ -8,8 +8,9 @@ const Search = () => {
     const searchHandler = (e) => {
         e.preventDefault()
 
-        if (keyword.trim()) {
-            navigate(`/search/${keyword}`)
+        const searchTerm = keyword.trim()
+        if (searchTerm) {
+            navigate(`/search/${encodeURIComponent(searchTerm)}`)
         } else {
             navigate('/')
         }
