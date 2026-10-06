@@ -1,6 +1,6 @@
 const Product = require('../models/product')
 const cloudinary = require('cloudinary')
-const APIFeatures = require('./utils/APIFeatures');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.newProduct = async (req, res, next) => {
     console.log(req.files)
@@ -76,7 +76,7 @@ exports.getProducts = async (req, res) => {
     // const productsCount = await Product.countDocuments();
 
     // const products = await Product.find()
-    const apiFeatures = new APIFeatures(Product.find(), req.query).search()
+    const apiFeatures = new APIFeatures(Product.find(), req.query).search().filter()
     // .filter()
 
     // apiFeatures.pagination(resPerPage);
