@@ -1,0 +1,172 @@
+[
+  {
+    "name": "Spooky Pumpkin Halloween Decoration",
+    "price": 12.99,
+    "description": "A classic spooky pumpkin decoration perfect for Halloween parties, bedrooms, living rooms, and haunted house setups. Add a creepy Halloween atmosphere to any space with this festive decoration.",
+    "ratings": 4.8,
+    "images": [
+      {
+        "public_id": "products/spooky_pumpkin",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+      }
+    ],
+    "category": "Halloween Decorations",
+    "seller": "SpookyMart",
+    "stock": 45,
+    "numOfReviews": 18,
+    "reviews": []
+  },
+  {
+    "name": "Creepy Halloween Mask",
+    "price": 18.99,
+    "description": "A creepy Halloween mask designed for costumes, Halloween parties, trick-or-treating, and spooky events. Create an unforgettable horror-inspired look with this terrifying mask.",
+    "ratings": 4.6,
+    "images": [
+      {
+        "public_id": "products/creepy_halloween_mask",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791296823/20251129155742_1.jpg"
+      }
+    ],
+    "category": "Halloween Costumes",
+    "seller": "SpookyMart",
+    "stock": 32,
+    "numOfReviews": 14,
+    "reviews": []
+  },
+  {
+    "name": "Haunted House Halloween Prop",
+    "price": 24.99,
+    "description": "Turn your home into a haunted house with this spooky Halloween prop. Perfect for Halloween parties, haunted attractions, photo booths, and scary room decorations.",
+    "ratings": 4.7,
+    "images": [
+      {
+        "public_id": "products/haunted_house_prop",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302093/20251129155650_1.jpg"
+      }
+    ],
+    "category": "Halloween Decorations",
+    "seller": "SpookyMart",
+    "stock": 27,
+    "numOfReviews": 21,
+    "reviews": []
+  },
+  {
+    "name": "Classic Jack-O-Lantern Decoration",
+    "price": 15.99,
+    "description": "Give your Halloween display a traditional spooky look with a Jack-O-Lantern decoration. Great for tables, shelves, porches, parties, and Halloween photo areas.",
+    "ratings": 4.9,
+    "images": [
+      {
+        "public_id": "products/jack_o_lantern",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+      }
+    ],
+    "category": "Halloween Decorations",
+    "seller": "SpookyMart",
+    "stock": 60,
+    "numOfReviews": 35,
+    "reviews": []
+  },
+  {
+    "name": "Terrifying Horror Face Mask",
+    "price": 21.99,
+    "description": "Complete your Halloween costume with a terrifying horror face mask. Designed for spooky parties, costume events, haunted houses, and Halloween gatherings.",
+    "ratings": 4.5,
+    "images": [
+      {
+        "public_id": "products/horror_face_mask",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791296823/20251129155742_1.jpg"
+      }
+    ],
+    "category": "Halloween Costumes",
+    "seller": "SpookyMart",
+    "stock": 19,
+    "numOfReviews": 11,
+    "reviews": []
+  },
+  {
+    "name": "Spooky Halloween Table Display",
+    "price": 9.99,
+    "description": "A spooky decorative piece for Halloween tables, desks, shelves, and party areas. Combine it with pumpkins, masks, and other decorations for the perfect Halloween setup.",
+    "ratings": 4.4,
+    "images": [
+      {
+        "public_id": "products/halloween_table_display",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302093/20251129155650_1.jpg"
+      }
+    ],
+    "category": "Halloween Decorations",
+    "seller": "SpookyMart",
+    "stock": 75,
+    "numOfReviews": 9,
+    "reviews": []
+  },
+  {
+    "name": "Scary Halloween Costume Set",
+    "price": 34.99,
+    "description": "A spooky costume set made for Halloween parties, trick-or-treating, cosplay events, and costume competitions. Build your own frightening Halloween character with this set.",
+    "ratings": 4.8,
+    "images": [
+      {
+        "public_id": "products/scary_costume_set",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791296823/20251129155742_1.jpg"
+      }
+    ],
+    "category": "Halloween Costumes",
+    "seller": "SpookyMart",
+    "stock": 24,
+    "numOfReviews": 17,
+    "reviews": []
+  },
+  {
+    "name": "Halloween Haunted Decoration Kit",
+    "price": 29.99,
+    "description": "Create a frightening Halloween environment with this haunted decoration kit. Perfect for decorating bedrooms, living rooms, entrances, party venues, and haunted house attractions.",
+    "ratings": 4.7,
+    "images": [
+      {
+        "public_id": "products/haunted_decoration_kit",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302093/20251129155650_1.jpg"
+      }
+    ],
+    "category": "Halloween Decorations",
+    "seller": "SpookyMart",
+    "stock": 38,
+    "numOfReviews": 26,
+    "reviews": []
+  },
+  {
+    "name": "Mini Spooky Pumpkin",
+    "price": 7.99,
+    "description": "A small spooky pumpkin decoration that is perfect for desks, shelves, tables, bedrooms, and small Halloween displays. A simple and affordable way to add Halloween spirit to your space.",
+    "ratings": 4.6,
+    "images": [
+      {
+        "public_id": "products/mini_spooky_pumpkin",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+      }
+    ],
+    "category": "Halloween Decorations",
+    "seller": "SpookyMart",
+    "stock": 100,
+    "numOfReviews": 42,
+    "reviews": []
+  },
+  {
+    "name": "Ultimate Horror Halloween Mask",
+    "price": 27.99,
+    "description": "Make your Halloween costume even scarier with this horror-inspired mask. Ideal for Halloween parties, haunted houses, cosplay, trick-or-treating, and scary photo sessions.",
+    "ratings": 4.9,
+    "images": [
+      {
+        "public_id": "products/ultimate_horror_mask",
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791296823/20251129155742_1.jpg"
+      }
+    ],
+    "category": "Halloween Costumes",
+    "seller": "SpookyMart",
+    "stock": 15,
+    "numOfReviews": 31,
+    "reviews": []
+  }
+]
