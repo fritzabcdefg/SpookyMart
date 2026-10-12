@@ -1,0 +1,22 @@
+[
+  {
+    "name": "SpookyMart Admin1",
+    "email": "Admin1_spookymart@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "admin"
+  },
+  {
+    "name": "SpookyMart User1",
+    "email": "User1_spookymart@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user"
+  }
+]

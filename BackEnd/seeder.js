@@ -1,38 +1,67 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const fs = require('fs');
+const path = require('path');
 
-// 1. Import your Mongoose Product Model 
-// (Adjust this path to point to your exact product model file!)
-const Product = require('./models/product'); 
+// Import models
+const Product = require('./models/product');
+const User = require('./models/user');
 
-// 2. Load environment variables from your root config.env
-dotenv.config({ path: './config/.env' })
+// Load environment variables
+dotenv.config({
+    path: path.join(__dirname, 'config', '.env')
+});
 
-// 3. Connect to your SpookyMart MongoDB
-mongoose.connect(process.env.DB_LOCAL_URI || process.env.DB_URI)
-    .then(() => console.log('📦 MongoDB Connected for Seeding...'))
-    .catch(err => console.error('Connection Error:', err));
+// JSON file paths
+const productsPath = path.join(__dirname, 'productseed.json');
+const usersPath = path.join(__dirname, 'userseed.json');
 
-// 4. Read and parse your local products.json file
-const products = JSON.parse(fs.readFileSync('./products.json', 'utf-8'));
-
-const seedProducts = async () => {
+const seedDatabase = async () => {
     try {
-        // Clear out any old test data in the collection first
-        await Product.deleteMany();
-        console.log('🗑️ Old products cleared.');
+        // Connect to MongoDB
+        await mongoose.connect(
+            process.env.DB_LOCAL_URI || process.env.DB_URI
+        );
 
-        // Insert all JSON items automatically into your cluster
+        console.log('📦 MongoDB Connected for Seeding...');
+
+        // Read seed files
+        const products = JSON.parse(
+            fs.readFileSync(productsPath, 'utf-8')
+        );
+
+        const users = JSON.parse(
+            fs.readFileSync(usersPath, 'utf-8')
+        );
+
+        // Reset products collection
+        await Product.deleteMany({});
+        console.log('🗑️ Existing products deleted.');
+
+        // Reset users collection
+        await User.deleteMany({});
+        console.log('🗑️ Existing users deleted.');
+
+        // Insert seeded products
         await Product.insertMany(products);
-        console.log('🎉 All products from JSON imported to SpookyMart successfully!');
-        
-        process.exit();
+        console.log(`🎃 Imported ${products.length} products.`);
+
+        // Insert seeded users
+        // User.create() triggers the password-hashing pre-save hook
+        for (const userData of users) {
+            await User.create(userData);
+        }
+
+        console.log(`👤 Imported ${users.length} users.`);
+        console.log('✅ Database seeding completed successfully!');
+
     } catch (error) {
         console.error('❌ Seeding failed:', error);
-        process.exit(1);
+        process.exitCode = 1;
+    } finally {
+        await mongoose.disconnect();
+        console.log('🔌 MongoDB connection closed.');
     }
 };
 
-// Run the script function
-seedProducts();
+seedDatabase();
