@@ -2,6 +2,7 @@ const User = require('../models/user');
 const crypto = require('crypto')
 const cloudinary = require('cloudinary')
 const sendEmail = require('../utils/sendEmail')
+const sendToken = require('../utils/jwtToken');
 
 exports.registerUser = async (req, res, next) => {
     console.log(req.body)
@@ -59,13 +60,13 @@ exports.loginUser = async (req, res, next) => {
     }
     const token = user.getJwtToken();
 
-    res.status(201).json({
-        success: true,
-        token,
-        user
-    });
-    //  user = await User.findOne({ email })
-    // sendToken(user, 200, res)
+    // res.status(201).json({
+    //     success: true,
+    //     token,
+    //     user
+    // });
+    user = await User.findOne({ email })
+    sendToken(user, 200, res)
 }
 
 exports.forgotPassword = async (req, res, next) => {
@@ -203,4 +204,73 @@ exports.updatePassword = async (req, res, next) => {
         token
     });
 
+}
+
+exports.allUsers = async (req, res, next) => {
+    const users = await User.find();
+    res.status(200).json({
+        success: true,
+        users
+    })
+}
+
+exports.deleteUser = async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        return res.status(401).json({ message: `User does not found with id: ${req.params.id}` })
+        // return next(new ErrorHandler(`User does not found with id: ${req.params.id}`))
+    }
+
+    // Remove avatar from cloudinary
+    const image_id = user.avatar.public_id;
+    await cloudinary.v2.uploader.destroy(image_id);
+    await User.findByIdAndDelete(req.params.id);
+    return res.status(200).json({
+        success: true,
+    })
+}
+
+exports.getUserDetails = async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        return res.status(400).json({ message: `User does not found with id: ${req.params.id}` })
+        // return next(new ErrorHandler(`User does not found with id: ${req.params.id}`))
+    }
+
+    res.status(200).json({
+        success: true,
+        user
+    })
+}
+
+exports.updateUser = async (req, res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+        new: true,
+        runValidators: true,
+        // useFindAndModify: false
+    })
+
+    return res.status(200).json({
+        success: true
+    })
+}
+
+exports.logout = async (req, res, next) => {
+    res.cookie('token', null, {
+        expires: new Date(Date.now()),
+        httpOnly: true
+    })
+
+    return res.status(200).json({
+        success: true,
+        message: 'Logged out'
+    })
 }
