@@ -39,11 +39,18 @@ const productSchema = new mongoose.Schema({
         required: [true, 'Please select category for this product'],
         enum: {
             values: [
-                'Halloween Decorations',
-                'Halloween Costumes',
-                'Halloween Accessories',
-                'Halloween Party Supplies',
-                'Outdoor Halloween'
+                'Electronics',
+                'Cameras',
+                'Laptops',
+                'Accessories',
+                'Headphones',
+                'Food',
+                "Books",
+                'Clothes/Shoes',
+                'Beauty/Health',
+                'Sports',
+                'Outdoor',
+                'Home'
             ],
             message: 'Please select correct category for product'
         }
@@ -57,6 +64,35 @@ const productSchema = new mongoose.Schema({
         required: [true, 'Please enter product stock'],
         maxLength: [5, 'Product name cannot exceed 5 characters'],
         default: 0
+    },
+    numOfReviews: {
+        type: Number,
+        default: 0
+    },
+    reviews: [
+        {
+            user: {
+                type: mongoose.Schema.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            name: {
+                type: String,
+                required: true
+            },
+            rating: {
+                type: Number,
+                required: true
+            },
+            comment: {
+                type: String,
+                required: true
+            }
+        }
+    ],
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
     },
     // numOfReviews: {
     //     type: Number,
