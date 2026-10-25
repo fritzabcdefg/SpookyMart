@@ -22,31 +22,38 @@ import {
     CLEAR_ERRORS
 } from '../constants/productConstants';
 
-export const getProducts = (currentPage = 1, keyword = '', price, category = '') => async (dispatch) => {
-    try {
-        dispatch({
-            type: ALL_PRODUCTS_REQUEST
-        })
+export const getProducts =
+    (currentPage = 1, keyword = '', price = [1, 1000], category = '') =>
+    async (dispatch) => {
+        try {
+            dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-        let link = `${import.meta.env.VITE_API}/products?page=${currentPage}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+            let link = `${import.meta.env.VITE_API}/products?page=${currentPage}&keyword=${encodeURIComponent(keyword)}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
 
-        if (category) {
-            link = `${import.meta.env.VITE_API}/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
+            if (category) {
+                link += `&category=${encodeURIComponent(category)}`;
+            }
+
+            const { data } = await axios.get(link);
+
+            console.log('Products API response:', data);
+
+            dispatch({
+                type: ALL_PRODUCTS_SUCCESS,
+                payload: {
+                    ...data,
+                    products: Array.isArray(data.products) ? data.products : []
+                }
+            });
+        } catch (error) {
+            console.error('Failed to fetch products:', error);
+
+            dispatch({
+                type: ALL_PRODUCTS_FAIL,
+                payload: error.response?.data?.message || error.message
+            });
         }
-        const { data } = await axios.get(link)
-        console.log(data)
-        dispatch({
-            type: ALL_PRODUCTS_SUCCESS,
-            payload: data
-        })
-
-    } catch (error) {
-        dispatch({
-            type: ALL_PRODUCTS_FAIL,
-            payload: error.response.data.message
-        })
-    }
-}
+    };
 
 export const getProductDetails = (id) => async (dispatch) => {
     try {

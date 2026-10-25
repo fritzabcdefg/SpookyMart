@@ -7,10 +7,10 @@
     "images": [
       {
         "public_id": "products/spooky_pumpkin",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893966/20251129155804_1.jpg"
       }
     ],
-    "category": "Halloween Decorations",
+    "category": "Decorations",
     "seller": "SpookyMart",
     "stock": 45,
     "numOfReviews": 18,
@@ -24,10 +24,10 @@
     "images": [
       {
         "public_id": "products/creepy_halloween_mask",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791296823/20251129155742_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893966/20251129155804_1.jpg"
       }
     ],
-    "category": "Halloween Costumes",
+    "category": "Costumes",
     "seller": "SpookyMart",
     "stock": 32,
     "numOfReviews": 14,
@@ -41,10 +41,10 @@
     "images": [
       {
         "public_id": "products/haunted_house_prop",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302093/20251129155650_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893966/20251129155751_1.jpg"
       }
     ],
-    "category": "Halloween Decorations",
+    "category": "Decorations",
     "seller": "SpookyMart",
     "stock": 27,
     "numOfReviews": 21,
@@ -58,10 +58,10 @@
     "images": [
       {
         "public_id": "products/jack_o_lantern",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893966/20251129155751_1.jpg"
       }
     ],
-    "category": "Halloween Decorations",
+    "category": "Decorations",
     "seller": "SpookyMart",
     "stock": 60,
     "numOfReviews": 35,
@@ -75,10 +75,10 @@
     "images": [
       {
         "public_id": "products/horror_face_mask",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791296823/20251129155742_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20251129155742_1.jpg"
       }
     ],
-    "category": "Halloween Costumes",
+    "category": "Costumes",
     "seller": "SpookyMart",
     "stock": 19,
     "numOfReviews": 11,
@@ -92,10 +92,10 @@
     "images": [
       {
         "public_id": "products/halloween_table_display",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302093/20251129155650_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20250228192535_1.jpg"
       }
     ],
-    "category": "Halloween Decorations",
+    "category": "Decorations",
     "seller": "SpookyMart",
     "stock": 75,
     "numOfReviews": 9,
@@ -109,10 +109,10 @@
     "images": [
       {
         "public_id": "products/scary_costume_set",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791296823/20251129155742_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20250228192535_1.jpg"
       }
     ],
-    "category": "Halloween Costumes",
+    "category": "Costumes",
     "seller": "SpookyMart",
     "stock": 24,
     "numOfReviews": 17,
@@ -126,10 +126,10 @@
     "images": [
       {
         "public_id": "products/haunted_decoration_kit",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302093/20251129155650_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20250228192535_1.jpg"
       }
     ],
-    "category": "Halloween Decorations",
+    "category": "Decorations",
     "seller": "SpookyMart",
     "stock": 38,
     "numOfReviews": 26,
@@ -143,10 +143,10 @@
     "images": [
       {
         "public_id": "products/mini_spooky_pumpkin",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20250228192535_1.jpg"
       }
     ],
-    "category": "Halloween Decorations",
+    "category": "Decorations",
     "seller": "SpookyMart",
     "stock": 100,
     "numOfReviews": 42,
@@ -160,10 +160,10 @@
     "images": [
       {
         "public_id": "products/ultimate_horror_mask",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791296823/20251129155742_1.jpg"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893964/20251129155650_1.jpg"
       }
     ],
-    "category": "Halloween Costumes",
+    "category": "Costumes",
     "seller": "SpookyMart",
     "stock": 15,
     "numOfReviews": 31,

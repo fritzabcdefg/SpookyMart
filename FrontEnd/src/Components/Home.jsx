@@ -24,7 +24,14 @@ const Home = () => {
     const [currentPage, setCurrentPage] = useState(1)
     let { keyword } = useParams();
     const dispatch = useDispatch();
-    const { loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector(state => state.products);
+    const {
+        loading,
+        error,
+        products = [],
+        productsCount = 0,
+        resPerPage = 0,
+        filteredProductsCount = 0
+    } = useSelector(state => state.products || {});
 
     let count = productsCount;
 
@@ -60,14 +67,21 @@ const Home = () => {
     //     // getProducts(keyword, price, currentPage)
     // }, [keyword, price, currentPage]);
     useEffect(() => {
-
         dispatch(getProducts(currentPage, keyword, price,))
-    }, [currentPage, keyword, price,]);
+    }, [dispatch, currentPage, keyword, price,]);
 
     return (
         <>
             <MetaData title={'shop Here'} />
-            {loading ? <Loader /> : (<div className="container container-fluid">
+            {loading ? (
+                <Loader />
+            ) : error ? (
+                <div className="container mt-5">
+                    <h3>Failed to load products</h3>
+                    <p>{String(error)}</p>
+                </div>
+            ) : (
+                <div className="container container-fluid">
                 <h1 id="products_heading">Latest Products</h1>
                 <section id="products" className="container mt-5">
                     {/* <div className="row">

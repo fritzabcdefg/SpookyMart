@@ -38,27 +38,37 @@ import {
     CLEAR_ERRORS
 } from '../constants/userConstants'
 
+
 export const register = (userData) => async (dispatch) => {
     try {
-        dispatch({ type: REGISTER_USER_REQUEST })
-        const config = {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }
-        const { data } = await axios.post(`${import.meta.env.VITE_API}/register`, userData, config)
+        dispatch({ type: REGISTER_USER_REQUEST });
+
+        // Axios automatically sets the correct multipart boundary for FormData.
+        const { data } = await axios.post(
+            `${import.meta.env.VITE_API}/register`,
+            userData
+        );
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
             payload: data.user
-        })
+        });
     } catch (error) {
+        console.error(
+            'Registration failed:',
+            error.response?.data || error.message
+        );
+
         dispatch({
             type: REGISTER_USER_FAIL,
-            payload: error.response.data.message
-        })
+            payload:
+                error.response?.data?.message ||
+                error.message ||
+                'Registration failed'
+        });
     }
-}
+};
+
 
 export const login = (email, password) => async (dispatch) => {
     try {
