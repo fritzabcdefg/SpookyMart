@@ -16,7 +16,7 @@ import { getProducts } from '../actions/productActions'
 const Home = () => {
     // console.log(products)
     // const [products, setProducts] = useState([])
-    const [price, setPrice] = useState([1, 1000]);
+    const [price, setPrice] = useState([1, 10000]);
     // const [loading, setLoading] = useState(true)
     // const [productsCount, setProductsCount] = useState(0)
     // const [resPerPage, setResPerPage] = useState(0)
@@ -104,7 +104,7 @@ const Home = () => {
                                             valueLabelDisplay="on"
                                             getAriaValueText={valuetext}
                                             min={1}
-                                            max={1000}
+                                            max={10000}
 
                                         />
                                     </Box>

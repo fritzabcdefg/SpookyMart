@@ -39,7 +39,7 @@ const NewPassword = () => {
             });
         }
         if (success) {
-            toast.success('password updated', {
+            toast.success('Password updated successfully!', {
                 position: 'bottom-right'
             });
             navigate('/login')

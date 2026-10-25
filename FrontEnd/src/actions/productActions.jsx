@@ -23,7 +23,7 @@ import {
 } from '../constants/productConstants';
 
 export const getProducts =
-    (currentPage = 1, keyword = '', price = [1, 1000], category = '') =>
+    (currentPage = 1, keyword = '', price = [1, 10000], category = '') =>
     async (dispatch) => {
         try {
             dispatch({ type: ALL_PRODUCTS_REQUEST });
@@ -131,28 +131,41 @@ export const getAdminProducts = () => async (dispatch) => {
     }
 }
 
+
 export const updateProduct = (id, productData) => async (dispatch) => {
     try {
-        dispatch({ type: UPDATE_PRODUCT_REQUEST })
+        dispatch({ type: UPDATE_PRODUCT_REQUEST });
+
         const config = {
             headers: {
-                'Content-Type': 'application/json',
-
+                'Content-Type': 'application/json'
             },
-            withCredentials: true //correct
-        }
-        const { data } = await axios.put(`${import.meta.env.VITE_API}/admin/product/${id}`, productData, config)
+            withCredentials: true
+        };
+
+        const { data } = await axios.put(
+            `${import.meta.env.VITE_API}/admin/product/${id}`,
+            productData,
+            config
+        );
+
         dispatch({
             type: UPDATE_PRODUCT_SUCCESS,
             payload: data
-        })
+        });
     } catch (error) {
+        console.error(
+            'Update product failed:',
+            error.response?.data || error.message
+        );
+
         dispatch({
             type: UPDATE_PRODUCT_FAIL,
-            payload: error.response.data.message
-        })
+            payload: error.response?.data?.message || error.message || 'Failed to update product'
+        });
     }
 }
+
 
 export const deleteProduct = (id) => async (dispatch) => {
     try {

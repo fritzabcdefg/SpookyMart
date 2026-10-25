@@ -109,54 +109,77 @@ exports.getProducts = async (req, res) => {
     // })
 }
 
+
 exports.updateProduct = async (req, res, next) => {
-    let product = await Product.findById(req.params.id);
-    console.log(req.body)
-    if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: 'Product not found'
-        })
-    }
-    let images = []
+    try {
+        let product = await Product.findById(req.params.id);
 
-    // if (typeof req.files === 'string') {
-    //     images.push(req.files)
-    // } else {
-    //     images = req.files
-    // }
-    if (typeof req.body.images === 'string') {
-        images.push(req.body.images)
-    } else {
-        images = req.body.images
-    }
-    // console.log(images)
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found'
+            });
+        }
 
-    let imagesLinks = [];
-    for (let i = 0; i < images.length; i++) {
-        const result = await cloudinary.v2.uploader.upload(images[i], {
-            folder: 'products',
-            width: 150,
-            crop: "scale",
+        // Only upload and replace images when new images are provided.
+        if (req.body.images !== undefined) {
+            let images = [];
+
+            if (typeof req.body.images === 'string') {
+                images.push(req.body.images);
+            } else if (Array.isArray(req.body.images)) {
+                images = req.body.images;
+            }
+
+            // Do not erase existing images if the submitted array is empty.
+            if (images.length > 0) {
+                const imagesLinks = [];
+
+                for (let i = 0; i < images.length; i++) {
+                    const result = await cloudinary.v2.uploader.upload(
+                        images[i],
+                        {
+                            folder: 'products',
+                            width: 150,
+                            crop: 'scale'
+                        }
+                    );
+
+                    imagesLinks.push({
+                        public_id: result.public_id,
+                        url: result.secure_url
+                    });
+                }
+
+                req.body.images = imagesLinks;
+            } else {
+                delete req.body.images;
+            }
+        }
+
+        product = await Product.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+        return res.status(200).json({
+            success: true,
+            product
         });
-        imagesLinks.push({
-            public_id: result.public_id,
-            url: result.secure_url
-        })
+    } catch (error) {
+        console.error('Update product error:', error);
 
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Failed to update product'
+        });
     }
-    req.body.images = imagesLinks
-    product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindandModify: false
-    })
-    // console.log(product)
-    return res.status(200).json({
-        success: true,
-        product
-    })
-}
+};
+
 
 exports.deleteProduct = async (req, res, next) => {
     const product = await Product.findByIdAndDelete(req.params.id);
@@ -241,7 +264,7 @@ exports.deleteReview = async (req, res, next) => {
     const ratings = product.reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length
 
     await Product.findByIdAndUpdate(req.query.productId, {
-        reviews,
+        reviews,    
         ratings,
         numOfReviews
     }, {
