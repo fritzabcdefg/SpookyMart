@@ -18,7 +18,10 @@ import {
     DELETE_PRODUCT_REQUEST,
     DELETE_PRODUCT_SUCCESS,
     DELETE_PRODUCT_FAIL,
-
+    RESTORE_PRODUCT_REQUEST,
+    RESTORE_PRODUCT_SUCCESS,
+    RESTORE_PRODUCT_FAIL,
+    RESTORE_PRODUCT_RESET,
     CLEAR_ERRORS
 } from '../constants/productConstants';
 
@@ -112,24 +115,69 @@ export const newProduct = (productData) => async (dispatch) => {
     }
 }
 
-export const getAdminProducts = () => async (dispatch) => {
+export const getAdminProducts = (showDeleted = false) => async (dispatch) => {
     try {
-        dispatch({ type: ADMIN_PRODUCTS_REQUEST })
-        const { data } = await axios.get(`${import.meta.env.VITE_API}/admin/products`, {
-            //AxiosRequestConfig parameter
-            withCredentials: true //correct
-        })
+        dispatch({ type: ADMIN_PRODUCTS_REQUEST });
+
+        const { data } = await axios.get(
+            `${import.meta.env.VITE_API}/admin/products?deleted=${showDeleted}`,
+            { withCredentials: true }
+        );
+
         dispatch({
             type: ADMIN_PRODUCTS_SUCCESS,
             payload: data.products
-        })
+        });
     } catch (error) {
         dispatch({
             type: ADMIN_PRODUCTS_FAIL,
-            payload: error.response.data.message
-        })
+            payload: error.response?.data?.message || error.message
+        });
     }
-}
+};
+
+export const deleteProduct = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: DELETE_PRODUCT_REQUEST });
+
+        const { data } = await axios.delete(
+            `${import.meta.env.VITE_API}/admin/product/${id}`,
+            { withCredentials: true }
+        );
+
+        dispatch({
+            type: DELETE_PRODUCT_SUCCESS,
+            payload: data.success
+        });
+    } catch (error) {
+        dispatch({
+            type: DELETE_PRODUCT_FAIL,
+            payload: error.response?.data?.message || error.message
+        });
+    }
+};
+
+export const restoreProduct = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: RESTORE_PRODUCT_REQUEST });
+
+        const { data } = await axios.put(
+            `${import.meta.env.VITE_API}/admin/product/${id}/restore`,
+            {},
+            { withCredentials: true }
+        );
+
+        dispatch({
+            type: RESTORE_PRODUCT_SUCCESS,
+            payload: data.success
+        });
+    } catch (error) {
+        dispatch({
+            type: RESTORE_PRODUCT_FAIL,
+            payload: error.response?.data?.message || error.message
+        });
+    }
+};
 
 
 export const updateProduct = (id, productData) => async (dispatch) => {
@@ -163,34 +211,6 @@ export const updateProduct = (id, productData) => async (dispatch) => {
             type: UPDATE_PRODUCT_FAIL,
             payload: error.response?.data?.message || error.message || 'Failed to update product'
         });
-    }
-}
-
-
-export const deleteProduct = (id) => async (dispatch) => {
-    try {
-
-        dispatch({ type: DELETE_PRODUCT_REQUEST })
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-
-            },
-            withCredentials: true //correct
-        }
-
-        const { data } = await axios.delete(`${import.meta.env.VITE_API}/admin/product/${id}`, config)
-
-        dispatch({
-            type: DELETE_PRODUCT_SUCCESS,
-            payload: data.success
-        })
-
-    } catch (error) {
-        dispatch({
-            type: DELETE_PRODUCT_FAIL,
-            payload: error.response.data.message
-        })
     }
 }
 

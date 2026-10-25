@@ -60,55 +60,53 @@ exports.newProduct = async (req, res, next) => {
 }
 
 exports.getSingleProduct = async (req, res, next) => {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findOne({
+        _id: req.params.id,
+        isDeleted: { $ne: true }
+    });
+
     if (!product) {
         return res.status(404).json({
             success: false,
             message: 'Product not found'
-        })
+        });
     }
+
     return res.status(200).json({
         success: true,
         product
-    })
-}
+    });
+};
 
-exports.getProducts = async (req, res) => {
-
+exports.getProducts = async (req, res, next) => {
     const resPerPage = 4;
-    const productsCount = await Product.countDocuments();
 
-    // const products = await Product.find()
-    const apiFeatures = new APIFeatures(Product.find(), req.query).search().filter()
-    // .filter()
+    const activeProducts = {
+        isDeleted: { $ne: true }
+    };
+
+    const productsCount = await Product.countDocuments(activeProducts);
+
+    const apiFeatures = new APIFeatures(
+        Product.find(activeProducts),
+        req.query
+    ).search().filter();
+
+    const filteredQuery = apiFeatures.query.clone();
+    const filteredProductsCount = await filteredQuery.countDocuments();
 
     apiFeatures.pagination(resPerPage);
-    const products = await apiFeatures.query;
-    let filteredProductsCount = products.length;
-    // const products = await apiFeatures.query;
 
-    if (!products)
-        return res.status(400).json({ message: 'error loading products' })
+    const products = await apiFeatures.query;
+
     return res.status(200).json({
         success: true,
         products,
         filteredProductsCount,
         resPerPage,
-        productsCount,
-
-    })
-    // if (!products)
-    //     return res.status(400).json({ message: 'error loading products' })
-
-    // return res.status(200).json({
-    //     success: true,
-    //     products,
-    //     resPerPage,
-    //     productsCount,
-
-    // })
-}
-
+        productsCount
+    });
+};
 
 exports.updateProduct = async (req, res, next) => {
     try {
@@ -182,35 +180,72 @@ exports.updateProduct = async (req, res, next) => {
 
 
 exports.deleteProduct = async (req, res, next) => {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const product = await Product.findById(req.params.id);
+
     if (!product) {
         return res.status(404).json({
             success: false,
             message: 'Product not found'
-        })
+        });
     }
+
+    if (product.isDeleted === true) {
+        return res.status(400).json({
+            success: false,
+            message: 'Product is already deleted'
+        });
+    }
+
+    product.isDeleted = true;
+    await product.save();
 
     return res.status(200).json({
         success: true,
-        message: 'Product deleted'
-    })
-}
+        message: 'Product moved to deleted products'
+    });
+};
 
-exports.getAdminProducts = async (req, res, next) => {
+exports.restoreProduct = async (req, res, next) => {
+    const product = await Product.findById(req.params.id);
 
-    const products = await Product.find();
-    if (!products) {
+    if (!product) {
         return res.status(404).json({
             success: false,
-            message: 'Products not found'
-        })
+            message: 'Product not found'
+        });
     }
+
+    if (product.isDeleted !== true) {
+        return res.status(400).json({
+            success: false,
+            message: 'Product is not deleted'
+        });
+    }
+
+    product.isDeleted = false;
+    await product.save();
+
+    return res.status(200).json({
+        success: true,
+        message: 'Product restored successfully',
+        product
+    });
+};
+
+exports.getAdminProducts = async (req, res, next) => {
+    const showDeleted = req.query.deleted === 'true';
+
+    const filter = showDeleted
+        ? { isDeleted: true }
+        : { isDeleted: { $ne: true } };
+
+    const products = await Product.find(filter);
+
     return res.status(200).json({
         success: true,
         products
-    })
-
-}
+    });
+};
 
 exports.createProductReview = async (req, res, next) => {
     const { rating, comment, productId } = req.body;

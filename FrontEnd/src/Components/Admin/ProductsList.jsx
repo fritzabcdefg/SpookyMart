@@ -1,221 +1,221 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-
-
-import MetaData from '../Layout/MetaData'
-import Loader from '../Layout/Loader'
-import Sidebar from './SideBar'
-import { getToken } from '../Utils/helpers';
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { DataGrid } from '@mui/x-data-grid';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { DataGrid, } from '@mui/x-data-grid'
-import { useDispatch, useSelector } from 'react-redux'
+
+import MetaData from '../Layout/MetaData';
+import Loader from '../Layout/Loader';
+import Sidebar from './SideBar';
+
 import {
     getAdminProducts,
     deleteProduct,
-    clearErrors,
-} from '../../actions/productActions'
-import { DELETE_PRODUCT_RESET } from '../../constants/productConstants'
+    restoreProduct,
+    clearErrors
+} from '../../actions/productActions';
+
+import {DELETE_PRODUCT_RESET, RESTORE_PRODUCT_RESET} from '../../constants/productConstants';
 
 const ProductsList = () => {
-    // const [products, setProducts] = useState([])
-    // const [error, setError] = useState('')
     const dispatch = useDispatch();
-    const { loading, error, products } = useSelector(state => state.products)
-    const { error: deleteError, isDeleted } = useSelector(state => state.product)
+    const [showDeleted, setShowDeleted] = useState(false);
 
-    // const [deleteError, setDeleteError] = useState('')
+    const {
+        loading,
+        error: productsError,
+        products = []
+    } = useSelector((state) => state.products || {});
 
-    // const [loading, setLoading] = useState(true)
-    // const [isDeleted, setIsDeleted] = useState(false)
-
-    let navigate = useNavigate()
-    // const getAdminProducts = async () => {
-    //     try {
-
-    //         const config = {
-    //             headers: {
-    //                 'Authorization': `Bearer ${getToken()}`
-    //             }
-    //         }
-
-    //         const { data } = await axios.get(`${import.meta.env.VITE_API}/admin/products`, config)
-    //         console.log(data)
-    //         setProducts(data.products)
-    //         setLoading(false)
-    //     } catch (error) {
-
-    //         setError(error.response.data.message)
-
-    //     }
-    // }
-    // useEffect(() => {
-    //     getAdminProducts()
-
-    //     if (error) {
-    //         toast.error(error, {
-    //             position: 'bottom-right'
-    //         });
-    //     }
-
-    //     if (deleteError) {
-    //         toast.error(deleteError, {
-    //             position: 'bottom-right'
-    //         });
-    //     }
-
-    //     if (isDeleted) {
-    //         toast.success('Product deleted successfully', {
-    //             position: 'bottom-right'
-    //         })
-    //         navigate('/admin/products');
-
-    //     }
-
-    // }, [error, deleteError, isDeleted,])
-
-    // const deleteProduct = async (id) => {
-    //     try {
-    //         const config = {
-    //             headers: {
-    //                 'Authorization': `Bearer ${getToken()}`
-    //             }
-    //         }
-    //         const { data } = await axios.delete(`${import.meta.env.VITE_API}/admin/product/${id}`, config)
-
-    //         setIsDeleted(data.success)
-    //         setLoading(false)
-    //     } catch (error) {
-    //         setDeleteError(error.response.data.message)
-
-    //     }
-    // }
-    const deleteProductHandler = (id) => {
-        dispatch(deleteProduct(id))
-    }
+    const {
+        error: actionError,
+        isDeleted,
+        isRestored
+    } = useSelector((state) => state.product || {});
 
     useEffect(() => {
-        dispatch(getAdminProducts())
+        dispatch(getAdminProducts(showDeleted));
+    }, [dispatch, showDeleted]);
 
-        if (error) {
-            toast.error(error, {
-                position: 'bottom-right'
-            });
-            dispatch(clearErrors())
+    useEffect(() => {
+        if (productsError) {
+            toast.error(productsError, { position: 'bottom-right' });
+            dispatch(clearErrors());
         }
 
-        if (deleteError) {
-            toast.error(deleteError, {
-                position: 'bottom-right'
-            });
-            dispatch(clearErrors())
+        if (actionError) {
+            toast.error(actionError, { position: 'bottom-right' });
+            dispatch(clearErrors());
         }
+    }, [productsError, actionError, dispatch]);
 
+    useEffect(() => {
         if (isDeleted) {
-            toast.success('Product deleted successfully', {
+            toast.success('Product moved to Deleted Products', {
                 position: 'bottom-right'
-            })
-            // navigate('/admin/products');
-            dispatch({ type: DELETE_PRODUCT_RESET })
+            });
 
+            dispatch(getAdminProducts(showDeleted));
+            dispatch({ type: DELETE_PRODUCT_RESET });
         }
 
-    }, [error, deleteError,])
+        if (isRestored) {
+            toast.success('Product restored successfully', {
+                position: 'bottom-right'
+            });
+
+            dispatch(getAdminProducts(showDeleted));
+            dispatch({ type: RESTORE_PRODUCT_RESET });
+        }
+    }, [isDeleted, isRestored, showDeleted, dispatch]);
+
+    const deleteProductHandler = (id) => {
+        const confirmed = window.confirm(
+            'Move this product to Deleted Products? You can restore it later.'
+        );
+
+        if (confirmed) {
+            dispatch(deleteProduct(id));
+        }
+    };
+
+    const restoreProductHandler = (id) => {
+        const confirmed = window.confirm(
+            'Restore this product and make it available in the store again?'
+        );
+
+        if (confirmed) {
+            dispatch(restoreProduct(id));
+        }
+    };
 
     const columns = [
         {
             field: 'id',
             headerName: 'Product ID',
             flex: 1,
-            renderCell: (params) => <span style={{ wordBreak: 'break-all' }}>{params.value}</span>
+            minWidth: 180,
+            renderCell: (params) => (
+                <span style={{ wordBreak: 'break-all' }}>
+                    {params.value}
+                </span>
+            )
         },
         {
             field: 'name',
             headerName: 'Name',
-
-            width: 130,
-            align: 'right',
-            headerAlign: 'right'
+            flex: 1,
+            minWidth: 160
         },
         {
             field: 'price',
             headerName: 'Price',
-            width: 120,
-            align: 'right',
-            headerAlign: 'right'
+            width: 120
         },
         {
             field: 'stock',
             headerName: 'Stock',
-            width: 120,
-            align: 'right',
-            headerAlign: 'right'
+            width: 100
         },
-
         {
             field: 'actions',
             headerName: 'Actions',
-            width: 120,
+            width: 170,
             sortable: false,
             filterable: false,
             renderCell: (params) => (
-
                 <>
-                    {console.log(params)}
-                    <Link to={`/admin/product/${params.id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-pencil"></i>
-                    </Link>
-                    <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteProductHandler(params.id)}>
-                        <i className="fa fa-trash"></i>
-                    </button>
+                    {!showDeleted && (
+                        <>
+                            <Link
+                                to={`/admin/product/${params.row.id}`}
+                                className="btn btn-primary py-1 px-2"
+                                title="Edit product"
+                            >
+                                <i className="fa fa-pencil" />
+                            </Link>
+
+                            <button
+                                type="button"
+                                className="btn btn-danger py-1 px-2 ml-2"
+                                onClick={() => deleteProductHandler(params.row.id)}
+                                title="Soft delete product"
+                            >
+                                <i className="fa fa-trash" />
+                            </button>
+                        </>
+                    )}
+
+                    {showDeleted && (
+                        <button
+                            type="button"
+                            className="btn btn-success py-1 px-2"
+                            onClick={() => restoreProductHandler(params.row.id)}
+                            title="Restore product"
+                        >
+                            <i className="fa fa-undo" /> Restore
+                        </button>
+                    )}
                 </>
             )
         }
     ];
 
-    const rows = products.map(product => ({
+    const rows = (products || []).map((product) => ({
         id: product._id,
         name: product.name,
         price: `₱${product.price}`,
-        stock: product.stock,
+        stock: product.stock
     }));
-
-
 
     return (
         <>
-            <MetaData title={'All Products'} />
+            <MetaData
+                title={showDeleted ? 'Deleted Products' : 'All Products'}
+            />
+
             <div className="row">
                 <div className="col-12 col-md-2">
                     <Sidebar />
                 </div>
 
                 <div className="col-12 col-md-10">
-                    <>
-                        <h1 className="my-5">All Products</h1>
+                    <div className="d-flex flex-wrap justify-content-between align-items-center my-5">
+                        <h1>
+                            {showDeleted ? 'Deleted Products' : 'All Products'}
+                        </h1>
 
-                        {loading ? <Loader /> : (
-                            <div style={{ width: '100%' }}>
-                                <DataGrid
-                                    rows={rows}
-                                    columns={columns}
+                        <button
+                            type="button"
+                            className={`btn ${showDeleted ? 'btn-primary' : 'btn-secondary'}`}
+                            onClick={() => setShowDeleted((current) => !current)}
+                        >
+                            {showDeleted
+                                ? 'View Active Products'
+                                : 'View Deleted Products'}
+                        </button>
+                    </div>
 
-                                    pageSize={5}
-                                    rowsPerPageOptions={[5, 10, 25]}
-                                    disableSelectionOnClick
-                                    getRowId={(row) => row.id}
-                                    showToolbar
-                                />
-                            </div>
-                        )}
-
-                    </>
+                    {loading ? (
+                        <Loader />
+                    ) : (
+                        <div style={{ width: '100%' }}>
+                            <DataGrid
+                                rows={rows}
+                                columns={columns}
+                                pageSize={5}
+                                rowsPerPageOptions={[5, 10, 25]}
+                                disableSelectionOnClick
+                                getRowId={(row) => row.id}
+                                autoHeight
+                                showToolbar
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
-
         </>
-    )
-}
+    );
+};
 
-export default ProductsList
+export default ProductsList;

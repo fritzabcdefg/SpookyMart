@@ -1,4 +1,5 @@
-product = require("../models/product");
+const product = require("../models/product");
+
 class APIFeatures {
     constructor(query, queryStr) {
         this.query = query;
@@ -6,49 +7,47 @@ class APIFeatures {
     }
 
     search() {
-        // http://localhost:5173?keyword=apple
-        const keyword = this.queryStr.keyword ? {
-            name: {
-                $regex: this.queryStr.keyword,
-                $options: 'i'
+        const keyword = this.queryStr.keyword
+            ? {
+                name: {
+                    $regex: this.queryStr.keyword,
+                    $options: "i"
+                }
             }
-        } : {}
+            : {};
 
-        console.log(this.query, this.queryStr);
-        this.query = this.query.find({ ...keyword });
+        this.query = this.query.find(keyword);
         return this;
     }
 
     filter() {
-        // { 'price[gte]': '100', 'price[lte]': '1000' }
         const queryCopy = { ...this.queryStr };
-        // console.log(queryCopy);
-        // Removing fields from the query
-        const removeFields = ['keyword', 'page']
-        removeFields.forEach(el => delete queryCopy[el]);
 
-        let priceFilter = {};
-        if (queryCopy['price[gte]'] || queryCopy['price[lte]']) {
-            priceFilter.price = {};
-            if (queryCopy['price[gte]']) {
-                priceFilter.price.$gte = Number(queryCopy['price[gte]']);
+        const removeFields = ["keyword", "page"];
+        removeFields.forEach((field) => delete queryCopy[field]);
+
+        const filters = {};
+
+        if (queryCopy["price[gte]"] || queryCopy["price[lte]"]) {
+            filters.price = {};
+
+            if (queryCopy["price[gte]"]) {
+                filters.price.$gte = Number(queryCopy["price[gte]"]);
             }
-            if (queryCopy['price[lte]']) {
-                priceFilter.price.$lte = Number(queryCopy['price[lte]']);
+
+            if (queryCopy["price[lte]"]) {
+                filters.price.$lte = Number(queryCopy["price[lte]"]);
             }
-            // priceFilter {
-            //     price: {
-            //         $gte: 100,
-            //         $lte: 1000
-            //     }
-            // }
-            delete queryCopy['price[gte]'];
-            delete queryCopy['price[lte]'];
+
+            delete queryCopy["price[gte]"];
+            delete queryCopy["price[lte]"];
         }
 
-        console.log(queryCopy);
+        if (queryCopy.category) {
+            filters.category = queryCopy.category;
+        }
 
-        this.query = this.query.find(priceFilter);
+        this.query = this.query.find(filters);
         return this;
     }
 
@@ -60,4 +59,5 @@ class APIFeatures {
         return this;
     }
 }
-module.exports = APIFeatures
+
+module.exports = APIFeatures;
