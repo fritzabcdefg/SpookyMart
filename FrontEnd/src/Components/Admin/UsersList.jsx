@@ -127,33 +127,46 @@ const UsersList = () => {
             align: 'right',
             headerAlign: 'right'
         },
-
         {
-            field: 'actions',
-            headerName: 'Actions',
-            width: 120,
-            sortable: false,
-            filterable: false,
+            field: 'status',
+            headerName: 'Status',
+            width: 130,
             renderCell: (params) => (
-
-                <>
-                    {console.log(params)}
-                    <Link to={`/admin/user/${params.id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-pencil"></i>
-                    </Link>
-                    <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteUserHandler(params.id)}>
-                        <i className="fa fa-trash"></i>
-                    </button>
-                </>
+                <span
+                    className={`badge ${
+                        params.value === 'Active'
+                            ? 'badge-success'
+                            : 'badge-secondary'
+                    }`}
+                >
+                    {params.value}
+                </span>
             )
-        }
+        },
+        {
+        field: 'actions',
+        headerName: 'Actions',
+        width: 100,
+        sortable: false,
+        filterable: false,
+        renderCell: (params) => (
+            <Link
+                to={`/admin/user/${params.row.id}`}
+                className="btn btn-primary py-1 px-2"
+                title="Edit user"
+            >
+                <i className="fa fa-pencil" />
+            </Link>
+        )
+    }
     ];
-    const rows = users.map(user => ({
+    const rows = (users || []).map((user) => ({
         id: user._id,
         name: user.name,
-
         email: user.email,
         role: user.role,
+        isActive: user.isActive !== false,
+        status: user.isActive === false ? 'Inactive' : 'Active'
     }));
 
     return (

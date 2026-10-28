@@ -102,7 +102,7 @@ const ListOrders = () => {
     const rows = orders.map(order => ({
         id: order._id,
         numOfItems: order.orderItems.length,
-        amount: `$${order.totalPrice}`,
+        amount: `₱${order.totalPrice}`,
         status: order.orderStatus || ''
     }));
     useEffect(() => {

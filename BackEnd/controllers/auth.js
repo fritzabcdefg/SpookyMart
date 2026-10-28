@@ -34,40 +34,38 @@ exports.registerUser = async (req, res, next) => {
     sendToken(user, 200, res)
 }
 
+
 exports.loginUser = async (req, res, next) => {
     const { email, password } = req.body;
 
-    // Checks if email and password is entered by user
     if (!email || !password) {
-        return res.status(400).json({ error: 'Please enter email & password' })
+        return res.status(400).json({
+            success: false,
+            message: 'Please enter your email and password.'
+        });
     }
 
+    const user = await User.findOne({ email }).select('+password');
 
-    // Finding user in database
-
-    let user = await User.findOne({ email }).select('+password')
-    if (!user) {
-        return res.status(401).json({ message: 'Invalid Email or Password' })
+    if (!user || !(await user.comparePassword(password))) {
+        return res.status(401).json({
+            success: false,
+            message: 'Invalid email or password.'
+        });
+    }
+    //To block inactive users from logging in
+    if (user.isActive === false) {
+        return res.status(403).json({
+            success: false,
+            message: 'This account is no longer active.'
+        });
     }
 
+    const activeUser = await User.findById(user._id);
 
-    // Checks if password is correct or not
-    const isPasswordMatched = await user.comparePassword(password);
+    return sendToken(activeUser, 200, res);
+};
 
-
-    if (!isPasswordMatched) {
-        return res.status(401).json({ message: 'Invalid Email or Password' })
-    }
-    const token = user.getJwtToken();
-
-    // res.status(201).json({
-    //     success: true,
-    //     token,
-    //     user
-    // });
-    user = await User.findOne({ email })
-    sendToken(user, 200, res)
-}
 
 exports.forgotPassword = async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
@@ -246,22 +244,60 @@ exports.getUserDetails = async (req, res, next) => {
     })
 }
 
+
+
 exports.updateUser = async (req, res, next) => {
-    const newUserData = {
-        name: req.body.name,
-        email: req.body.email,
-        role: req.body.role
+    try {
+        const { role, isActive } = req.body;
+
+        if (!['user', 'admin'].includes(role)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid user role.'
+            });
+        }
+
+        if (typeof isActive !== 'boolean') {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid account status.'
+            });
+        }
+
+        if (
+            req.user._id.toString() === req.params.id &&
+            (!isActive || role !== 'admin')
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: 'You cannot deactivate your own account or remove your own admin role.'
+            });
+        }
+
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found.'
+            });
+        }
+
+        user.role = role;
+        user.isActive = isActive;
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            user
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
-
-    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
-        new: true,
-        runValidators: true,
-        // useFindAndModify: false
-    })
-
-    return res.status(200).json({
-        success: true
-    })
 }
 
 exports.logout = async (req, res, next) => {

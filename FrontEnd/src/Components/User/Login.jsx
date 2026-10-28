@@ -64,8 +64,7 @@ const Login = () => {
         else if (isAuthenticated)
             navigate('/')
         if (error) {
-            // alert.error(error);
-            console.log(error)
+            toast.error(error);
             dispatch(clearErrors());
         }
     }, [error, isAuthenticated, dispatch, navigate, redirect])
