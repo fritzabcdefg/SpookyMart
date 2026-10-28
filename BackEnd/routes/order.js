@@ -4,8 +4,6 @@ const router = express.Router();
 const { newOrder,
 	myOrders,
 	getSingleOrder,
-
-	deleteOrder,
 	allOrders,
 	updateOrder,
 	totalOrders,
@@ -22,7 +20,7 @@ router.get('/orders/me', isAuthenticatedUser, myOrders);
 router.get('/order/:id', isAuthenticatedUser, getSingleOrder);
 router.get('/admin/orders/', isAuthenticatedUser, authorizeRoles('admin'), allOrders);
 // // router.route('/admin/order/:id').delete(isAuthenticatedUser, deleteOrder);
-router.route('/admin/order/:id').put(isAuthenticatedUser, authorizeRoles('admin'), updateOrder).delete(isAuthenticatedUser, authorizeRoles('admin'), deleteOrder);
+router.put('/admin/order/:id', isAuthenticatedUser, authorizeRoles('admin'), updateOrder);
 router.get('/admin/total-orders', totalOrders);
 router.get('/admin/total-sales', totalSales);
 router.get('/admin/customer-sales', customerSales);

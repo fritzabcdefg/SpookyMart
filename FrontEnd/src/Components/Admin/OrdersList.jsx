@@ -10,9 +10,7 @@ import { DataGrid, } from '@mui/x-data-grid'
 // import { getToken } from '../Utils/helpers'
 // import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { allOrders, clearErrors, deleteOrder } from '../../actions/orderActions'
-import { DELETE_ORDER_RESET } from '../../constants/orderConstants'
-
+import { allOrders, clearErrors } from '../../actions/orderActions'
 
 const OrdersList = () => {
     let navigate = useNavigate();
@@ -22,11 +20,7 @@ const OrdersList = () => {
     // const [isDeleted, setIsDeleted] = useState(false)
     const dispatch = useDispatch();
     const { loading, error, orders } = useSelector(state => state.allOrders);
-    const { isDeleted } = useSelector(state => state.order)
     const errMsg = (message = '') => toast.error(message, {
-        position: 'bottom-right'
-    });
-    const successMsg = (message = '') => toast.success(message, {
         position: 'bottom-right'
     });
 
@@ -80,15 +74,7 @@ const OrdersList = () => {
             dispatch(clearErrors())
 
         }
-        if (isDeleted) {
-            successMsg('Order deleted successfully');
-            dispatch({ type: DELETE_ORDER_RESET })
-            // navigate('/admin/orders');
-        }
-    }, [error, isDeleted])
-    const deleteOrderHandler = (id) => {
-        dispatch(deleteOrder(id))
-    }
+    }, [error, dispatch])
 
     const columns = [
         {
@@ -127,23 +113,19 @@ const OrdersList = () => {
             sortable: false,
             filterable: false,
             renderCell: (params) => (
-
-                <>
-                    {console.log(params)}
-                    <Link to={`/admin/order/${params.id}`} className="btn btn-primary py-1 px-2">
-                        <i className="fa fa-eye"></i>
-                    </Link>
-                    <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteOrderHandler(params.id)}>
-                        <i className="fa fa-trash"></i>
-                    </button>
-                </>
+                <Link
+                    to={`/admin/order/${params.id}`}
+                    className="btn btn-primary py-1 px-2"
+                >
+                    <i className="fa fa-eye"></i>
+                </Link>
             )
         }
     ];
     const rows = orders.map(order => ({
         id: order._id,
         numofItems: order.orderItems.length,
-        amount: `$${order.totalPrice}`,
+        amount: `₱${order.totalPrice}`,
         status: order.orderStatus,
     }));
 
