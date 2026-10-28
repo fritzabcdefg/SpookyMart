@@ -11,7 +11,9 @@ const {
     restoreProduct,
     getAdminProducts,
     createProductReview,
+    updateProductReview,
     getProductReviews,
+    getMyProductReview,
     deleteReview,
     productSales
 } = require('../controllers/product');
@@ -25,8 +27,12 @@ router.put('/admin/product/:id', isAuthenticatedUser, authorizeRoles('admin'), u
 router.delete('/admin/product/:id', isAuthenticatedUser, authorizeRoles('admin'), deleteProduct);
 router.put('/admin/product/:id/restore', isAuthenticatedUser, authorizeRoles('admin'), restoreProduct);
 router.get('/admin/products', isAuthenticatedUser, authorizeRoles('admin'), getAdminProducts)
+
 router.put('/review', isAuthenticatedUser, createProductReview);
-router.get('/reviews', isAuthenticatedUser, getProductReviews)
+
+router.put('/review/update', isAuthenticatedUser, updateProductReview)
+router.get('/review/my/:productId', isAuthenticatedUser, getMyProductReview)
+router.get('/reviews', getProductReviews)
 router.delete('/reviews', isAuthenticatedUser, authorizeRoles('admin'), deleteReview)
 router.get('/admin/product-sales', productSales);
 module.exports = router

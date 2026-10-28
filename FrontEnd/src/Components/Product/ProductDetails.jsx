@@ -173,54 +173,9 @@ const ProductDetails = () => {
                     <p>{product.description}</p>
                     <hr />
                     <p id="product_seller mb-3">Sold by: <strong>{product.seller}</strong></p>
-                    {/* <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div>
-                    <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal"  >
-                        Submit Your Review
-                    </button> */}
                     {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={setUserRatings} >
                         Submit Your Review
-                    </button> :
-                        <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div>}
-
-                    {/* <div className="row mt-2 mb-5">
-                        <div className="rating w-50">
-
-                            <div className="modal fade" id="ratingModal" tabIndex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
-                                <div className="modal-dialog" role="document">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="ratingModalLabel">Submit Review</h5>
-                                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div className="modal-body">
-
-                                            <ul className="stars" >
-                                                <li className="star"><i className="fa fa-star"></i></li>
-                                                <li className="star"><i className="fa fa-star"></i></li>
-                                                <li className="star"><i className="fa fa-star"></i></li>
-                                                <li className="star"><i className="fa fa-star"></i></li>
-                                                <li className="star"><i className="fa fa-star"></i></li>
-                                            </ul>
-
-                                            <textarea
-                                                name="review"
-                                                id="review" className="form-control mt-3"
-
-
-                                            >
-                                            </textarea>
-
-
-                                            <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close" >Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div> */}
+                    </button>:
                     <div className="row mt-2 mb-5">
                         <div className="rating w-50">
 
@@ -261,16 +216,14 @@ const ProductDetails = () => {
 
                         </div>
                     </div>
+                    }
                     {product.reviews && product.reviews.length > 0 && (
 
                         <ListReviews reviews={product.reviews} />
 
                     )}
                 </div>
-
             </div>
-
-
         </>
     )
 }

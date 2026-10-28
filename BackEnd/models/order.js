@@ -93,6 +93,13 @@ const orderSchema = mongoose.Schema({
     deliveredAt: {
         type: Date
     },
+    isReceived: {
+        type: Boolean,
+        default: false
+    },
+    receivedAt: {
+        type: Date
+    },
     createdAt: {
         type: Date,
         default: Date.now

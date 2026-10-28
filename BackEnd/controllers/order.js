@@ -74,27 +74,115 @@ exports.allOrders = async (req, res, next) => {
     })
 }
 
+
 exports.updateOrder = async (req, res, next) => {
-    const order = await Order.findById(req.params.id)
-    console.log(req.body.order)
-    if (order.orderStatus === 'Delivered') {
-        return res.status(400).json({
-            message: 'You have already delivered this order',
+    try {
+        const order = await Order.findById(req.params.id);
 
-        })
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
+        if (order.orderStatus === 'Delivered') {
+            return res.status(400).json({
+                success: false,
+                message: 'This order has already been delivered'
+            });
+        }
+
+        const allowedStatuses = [
+            'Processing',
+            'Shipped',
+            'Delivered'
+        ];
+
+        const status = req.body.status;
+
+        if (!allowedStatuses.includes(status)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid order status'
+            });
+        }
+
+        if (status === 'Delivered') {
+            for (const item of order.orderItems) {
+                await updateStock(item.product, item.quantity);
+            }
+
+            order.deliveredAt = Date.now();
+        }
+
+        order.orderStatus = status;
+        await order.save();
+
+        return res.status(200).json({
+            success: true,
+            order
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Unable to update order'
+        });
     }
-
-    order.orderItems.forEach(async item => {
-        await updateStock(item.product, item.quantity)
-    })
-
-    order.orderStatus = req.body.status
-    order.deliveredAt = Date.now()
-    await order.save()
-    res.status(200).json({
-        success: true,
-    })
 }
+
+
+exports.confirmOrderReceived = async (req, res, next) => {
+    try {
+        const order = await Order.findById(req.params.id);
+
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
+        // Customers may confirm only their own orders.
+        if (order.user.toString() !== req.user._id.toString()) {
+            return res.status(403).json({
+                success: false,
+                message: 'You can only confirm receipt of your own order'
+            });
+        }
+
+        if (order.orderStatus !== 'Delivered') {
+            return res.status(400).json({
+                success: false,
+                message: 'You can confirm receipt only after delivery'
+            });
+        }
+
+        if (order.isReceived) {
+            return res.status(400).json({
+                success: false,
+                message: 'You have already confirmed receipt'
+            });
+        }
+
+        order.isReceived = true;
+        order.receivedAt = Date.now();
+
+        await order.save();
+
+        return res.status(200).json({
+            success: true,
+            message: 'Order marked as completed',
+            order
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Unable to confirm receipt'
+        });
+    }
+}
+
 
 async function updateStock(id, quantity) {
     const product = await Product.findById(id);
