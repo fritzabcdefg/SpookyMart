@@ -4,59 +4,66 @@ const cloudinary = require('cloudinary')
 const APIFeatures = require('../utils/apiFeatures');
 
 exports.newProduct = async (req, res, next) => {
-    console.log(req.files)
-    let images = []
-    // if (typeof req.files === 'string') {
-    //     images.push(req.files)
-    // } else {
-    //     images = req.files
-    // }
+    try {
+        let images = req.body.images || [];
 
-    if (typeof req.body.images === 'string') {
-        images.push(req.body.images)
-    } else {
-        images = req.body.images
-    }
+        if (typeof images === 'string') {
+            images = [images];
+        }
 
-    let imagesLinks = [];
+        if (!Array.isArray(images)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid product images'
+            });
+        }
 
-    for (let i = 0; i < images.length; i++) {
-        try {
-            // const result = await cloudinary.v2.uploader.upload(images[i].path, {
-            const result = await cloudinary.v2.uploader.upload(images[i], {
+        if (images.length > 10) {
+            return res.status(400).json({
+                success: false,
+                message: 'You can upload a maximum of 10 images'
+            });
+        }
 
+        const imagesLinks = [];
+
+        for (const image of images) {
+            if (typeof image !== 'string' || !image.startsWith('data:image/')) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Invalid image format'
+                });
+            }
+
+            const result = await cloudinary.v2.uploader.upload(image, {
                 folder: 'products',
                 width: 150,
-                crop: "scale",
+                crop: 'scale'
             });
 
             imagesLinks.push({
                 public_id: result.public_id,
                 url: result.secure_url
-            })
-
-        } catch (error) {
-            console.log(error)
+            });
         }
 
-    }
+        req.body.images = imagesLinks;
 
-    req.body.images = imagesLinks
-    // req.body.user = req.user.id;
+        const product = await Product.create(req.body);
 
-    const product = await Product.create(req.body);
+        return res.status(201).json({
+            success: true,
+            product
+        });
 
-    if (!product)
-        return res.status(400).json({
+    } catch (error) {
+        console.error('Create product error:', error);
+
+        return res.status(500).json({
             success: false,
-            message: 'Product not created'
-        })
-
-
-    return res.status(201).json({
-        success: true,
-        product
-    })
+            message: error.message || 'Product creation failed'
+        });
+    }
 }
 
 exports.getSingleProduct = async (req, res, next) => {
@@ -76,7 +83,7 @@ exports.getSingleProduct = async (req, res, next) => {
         success: true,
         product
     });
-};
+}
 
 exports.getProducts = async (req, res, next) => {
     const resPerPage = 4;
@@ -106,11 +113,11 @@ exports.getProducts = async (req, res, next) => {
         resPerPage,
         productsCount
     });
-};
+}
 
 exports.updateProduct = async (req, res, next) => {
     try {
-        let product = await Product.findById(req.params.id);
+        const product = await Product.findById(req.params.id);
 
         if (!product) {
             return res.status(404).json({
@@ -119,55 +126,105 @@ exports.updateProduct = async (req, res, next) => {
             });
         }
 
-        // Only upload and replace images when new images are provided.
-        if (req.body.images !== undefined) {
-            let images = [];
+        let removeImageIds = [];
 
-            if (typeof req.body.images === 'string') {
-                images.push(req.body.images);
-            } else if (Array.isArray(req.body.images)) {
-                images = req.body.images;
-            }
-
-            // Do not erase existing images if the submitted array is empty.
-            if (images.length > 0) {
-                const imagesLinks = [];
-
-                for (let i = 0; i < images.length; i++) {
-                    const result = await cloudinary.v2.uploader.upload(
-                        images[i],
-                        {
-                            folder: 'products',
-                            width: 150,
-                            crop: 'scale'
-                        }
-                    );
-
-                    imagesLinks.push({
-                        public_id: result.public_id,
-                        url: result.secure_url
-                    });
-                }
-
-                req.body.images = imagesLinks;
-            } else {
-                delete req.body.images;
-            }
+        if (req.body.removeImages) {
+            removeImageIds = JSON.parse(req.body.removeImages);
         }
 
-        product = await Product.findByIdAndUpdate(
+        if (!Array.isArray(removeImageIds)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid image removal data'
+            });
+        }
+
+        // Only remove images explicitly selected by the user.
+        const removedIds = removeImageIds.filter(id =>
+            product.images.some(img => img.public_id === id)
+        );
+
+        let remainingImages = product.images.filter(
+            img => !removedIds.includes(img.public_id)
+        );
+
+        // Get newly added images.
+        let newImages = [];
+
+        if (req.body.images) {
+            newImages = Array.isArray(req.body.images)
+                ? req.body.images
+                : [req.body.images];
+        }
+
+        if (remainingImages.length + newImages.length > 10) {
+            return res.status(400).json({
+                success: false,
+                message: 'A product can have a maximum of 10 images'
+            });
+        }
+
+        const uploadedImages = [];
+
+        for (const image of newImages) {
+            if (
+                typeof image !== 'string' ||
+                !image.startsWith('data:image/')
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Invalid image format'
+                });
+            }
+
+            const result = await cloudinary.v2.uploader.upload(image, {
+                folder: 'products',
+                width: 150,
+                crop: 'scale'
+            });
+
+            uploadedImages.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            });
+        }
+
+        const updatedImages = [
+            ...remainingImages,
+            ...uploadedImages
+        ];
+
+        const updateData = { ...req.body };
+
+        delete updateData.images;
+        delete updateData.removeImages;
+
+        const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            {
+                ...updateData,
+                images: updatedImages
+            },
             {
                 new: true,
                 runValidators: true
             }
         );
 
+        // Delete removed Cloudinary images after the database update succeeds.
+        for (const publicId of removedIds) {
+            try {
+                await cloudinary.v2.uploader.destroy(publicId);
+            } catch (error) {
+                console.error('Cloudinary image deletion failed:', publicId);
+            }
+        }
+
         return res.status(200).json({
             success: true,
-            product
+            product: updatedProduct
         });
+
     } catch (error) {
         console.error('Update product error:', error);
 
@@ -176,8 +233,7 @@ exports.updateProduct = async (req, res, next) => {
             message: error.message || 'Failed to update product'
         });
     }
-};
-
+}
 
 exports.deleteProduct = async (req, res, next) => {
     const product = await Product.findById(req.params.id);
@@ -203,7 +259,53 @@ exports.deleteProduct = async (req, res, next) => {
         success: true,
         message: 'Product moved to deleted products'
     });
-};
+}
+
+exports.bulkDeleteProducts = async (req, res) => {
+    try {
+        const { ids } = req.body;
+
+        if (!Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please select at least one product'
+            });
+        }
+
+        const validIds = [...new Set(ids.map(String))];
+
+        if (validIds.some(id => !/^[0-9a-fA-F]{24}$/.test(id))) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid product ID'
+            });
+        }
+
+        const result = await Product.updateMany(
+            {
+                _id: { $in: validIds },
+                isDeleted: { $ne: true }
+            },
+            {
+                $set: { isDeleted: true }
+            }
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: `${result.modifiedCount} product(s) moved to Deleted Products`,
+            deletedCount: result.modifiedCount
+        });
+
+    } catch (error) {
+        console.error('Bulk delete error:', error);
+
+        return res.status(500).json({
+            success: false,
+            message: 'Bulk deletion failed'
+        });
+    }
+}
 
 exports.restoreProduct = async (req, res, next) => {
     const product = await Product.findById(req.params.id);
@@ -230,7 +332,7 @@ exports.restoreProduct = async (req, res, next) => {
         message: 'Product restored successfully',
         product
     });
-};
+}
 
 exports.getAdminProducts = async (req, res, next) => {
     const showDeleted = req.query.deleted === 'true';
@@ -245,7 +347,7 @@ exports.getAdminProducts = async (req, res, next) => {
         success: true,
         products
     });
-};
+}
 
 
 exports.createProductReview = async (req, res, next) => {
@@ -337,7 +439,7 @@ exports.createProductReview = async (req, res, next) => {
             message: error.message || 'Unable to submit review'
         });
     }
-};
+}
 
 exports.updateProductReview = async (req, res, next) => {
     try {
@@ -422,7 +524,7 @@ exports.updateProductReview = async (req, res, next) => {
             message: error.message || 'Unable to update review'
         });
     }
-};
+}
 
 // Public endpoint: everyone can read reviews.
 exports.getProductReviews = async (req, res, next) => {
@@ -451,7 +553,7 @@ exports.getProductReviews = async (req, res, next) => {
             message: error.message || 'Unable to get reviews'
         });
     }
-};
+}
 
 // Authenticated endpoint: returns the current customer's review.
 exports.getMyProductReview = async (req, res, next) => {
@@ -571,3 +673,4 @@ exports.productSales = async (req, res, next) => {
     })
 
 }
+

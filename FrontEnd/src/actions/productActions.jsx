@@ -95,23 +95,26 @@ export const getProductDetails = (id) => async (dispatch) => {
 
 export const newProduct = (productData) => async (dispatch) => {
     try {
-        dispatch({ type: NEW_PRODUCT_REQUEST })
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            withCredentials: true //correct
-        }
-        const { data } = await axios.post(`${import.meta.env.VITE_API}/admin/product/new`, productData, config)
+        dispatch({ type: NEW_PRODUCT_REQUEST });
+
+        const { data } = await axios.post(
+            `${import.meta.env.VITE_API}/admin/product/new`,
+            productData,
+            {
+                withCredentials: true
+            }
+        );
+
         dispatch({
             type: NEW_PRODUCT_SUCCESS,
             payload: data
-        })
+        });
+
     } catch (error) {
         dispatch({
             type: NEW_PRODUCT_FAIL,
-            payload: error.response.data.message
-        })
+            payload: error.response?.data?.message || error.message
+        });
     }
 }
 
@@ -134,7 +137,7 @@ export const getAdminProducts = (showDeleted = false) => async (dispatch) => {
             payload: error.response?.data?.message || error.message
         });
     }
-};
+}
 
 export const deleteProduct = (id) => async (dispatch) => {
     try {
@@ -155,7 +158,32 @@ export const deleteProduct = (id) => async (dispatch) => {
             payload: error.response?.data?.message || error.message
         });
     }
-};
+}
+
+export const deleteProducts = (ids) => async (dispatch) => {
+    try {
+        dispatch({ type: DELETE_PRODUCT_REQUEST });
+
+        const { data } = await axios.delete(
+            `${import.meta.env.VITE_API}/admin/products/bulk-delete`,
+            {
+                data: { ids },
+                withCredentials: true
+            }
+        );
+
+        dispatch({
+            type: DELETE_PRODUCT_SUCCESS,
+            payload: data.success
+        });
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_PRODUCT_FAIL,
+            payload: error.response?.data?.message || error.message
+        });
+    }
+}
 
 export const restoreProduct = (id) => async (dispatch) => {
     try {
@@ -177,39 +205,29 @@ export const restoreProduct = (id) => async (dispatch) => {
             payload: error.response?.data?.message || error.message
         });
     }
-};
-
+}
 
 export const updateProduct = (id, productData) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_PRODUCT_REQUEST });
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            withCredentials: true
-        };
-
         const { data } = await axios.put(
             `${import.meta.env.VITE_API}/admin/product/${id}`,
             productData,
-            config
+            {
+                withCredentials: true
+            }
         );
 
         dispatch({
             type: UPDATE_PRODUCT_SUCCESS,
             payload: data
         });
-    } catch (error) {
-        console.error(
-            'Update product failed:',
-            error.response?.data || error.message
-        );
 
+    } catch (error) {
         dispatch({
             type: UPDATE_PRODUCT_FAIL,
-            payload: error.response?.data?.message || error.message || 'Failed to update product'
+            payload: error.response?.data?.message || error.message
         });
     }
 }
