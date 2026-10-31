@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { loadCartForUser, clearCart } from './cartActions'
 import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -86,6 +87,7 @@ export const login = (email, password) => async (dispatch) => {
             type: LOGIN_SUCCESS,
             payload: data.user
         })
+        dispatch(loadCartForUser(data.user._id))
     } catch (error) {
     dispatch({
         type: LOGIN_FAIL,
@@ -108,6 +110,7 @@ export const logout = () => async (dispatch) => {
         dispatch({
             type: LOGOUT_SUCCESS,
         })
+        dispatch(clearCart())
     } catch (error) {
         dispatch({
             type: LOGOUT_FAIL,
@@ -174,6 +177,7 @@ export const loadUser = () => async (dispatch) => {
             type: LOAD_USER_SUCCESS,
             payload: data.user
         })
+        dispatch(loadCartForUser(data.user._id))
     } catch (error) {
         dispatch({
             type: LOAD_USER_FAIL,

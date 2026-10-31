@@ -1,9 +1,11 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer, } from 'react-toastify';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadUser } from './actions/userActions';
 
 import { Header } from './Components/Layout/Header'
 import Footer from './Components/Layout/Footer'
@@ -37,81 +39,12 @@ import UpdateUser from './Components/Admin/UpdateUser';
 import ProtectedRoute from './Components/Route/ProtectedRoute';
 import ProductReviews from './Components/Admin/ProductReviews';
 import AllProducts from './Components/Product/AllProducts';
+
 function App() {
-
-  // const [state, setState] = useState({
-  //   cartItems: localStorage.getItem('cartItems')
-  //     ? JSON.parse(localStorage.getItem('cartItems'))
-  //     : [],
-
-  //   shippingInfo: localStorage.getItem('shippingInfo')
-  //     ? JSON.parse(localStorage.getItem('shippingInfo'))
-  //     : {},
-  // })
-
-  // const addItemToCart = async (id, quantity) => {
-  //   console.log(id, quantity)
-  //   try {
-  //     const { data } = await axios.get(`${import.meta.env.VITE_API}/product/${id}`)
-  //     console.log(data)
-
-  //     const item = {
-  //       product: data.product._id,
-  //       name: data.product.name,
-  //       price: data.product.price,
-  //       image: data.product.images[0].url ? data.product.images[0].url : '',
-  //       stock: data.product.stock,
-  //       quantity: quantity
-  //     }
-  //     console.log(item)
-
-  //     const isItemExist = state.cartItems.find(i => i.product === item.product)
-
-
-  //     if (isItemExist) {
-  //       setState({
-  //         ...state,
-  //         cartItems: state.cartItems.map(i => i.product === isItemExist.product ? item : i)
-  //       })
-  //     }
-  //     else {
-  //       setState({
-  //         ...state,
-  //         cartItems: [...state.cartItems, item]
-  //       })
-  //     }
-
-  //     toast.success('Item Added to Cart', {
-  //       position: 'bottom-right'
-  //     })
-
-
-
-  //   } catch (error) {
-  //     toast.error(error, {
-  //       position: 'top-left'
-  //     });
-
-  //   }
-
-  // }
-
-  // const removeItemFromCart = async (id) => {
-  //   setState({
-  //     ...state,
-  //     cartItems: state.cartItems.filter(i => i.product !== id)
-  //   })
-  //   localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
-  // }
-
-  // const saveShippingInfo = async (data) => {
-  //   setState({
-  //     ...state,
-  //     shippingInfo: data
-  //   })
-  //   localStorage.setItem('shippingInfo', JSON.stringify(data))
-  // }
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+      dispatch(loadUser());
+  }, [dispatch]);
 
   return (
     <>

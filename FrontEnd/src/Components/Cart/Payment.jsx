@@ -1,134 +1,154 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
-import MetaData from '../Layout/MetaData'
-import CheckoutSteps from './CheckoutSteps'
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-// import { getToken } from '../Utils/helpers';
-import { useDispatch, useSelector } from 'react-redux'
-import { createOrder, clearErrors } from '../../actions/orderActions'
-import { clearCart } from '../../actions/cartActions';
 
-
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import MetaData from '../Layout/MetaData';
+import CheckoutSteps from './CheckoutSteps';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOrder, clearErrors } from '../../actions/orderActions';
 
 const Payment = () => {
-    // const [loading, setLoading] = useState(true)
     const dispatch = useDispatch();
-    const { cartItems, shippingInfo } = useSelector(state => state.cart)
-    const { error, loading } = useSelector(state => state.newOrder)
-    let navigate = useNavigate();
-    // useEffect(() => {
-    // }, [])
+    const navigate = useNavigate();
+
+    const { shippingInfo } = useSelector(state => state.cart);
+    const { error, loading } = useSelector(state => state.newOrder);
+
+    let selectedItems = [];
+
+    try {
+        selectedItems = JSON.parse(
+            sessionStorage.getItem('checkoutItems') || '[]'
+        );
+    } catch {
+        selectedItems = [];
+    }
+
+    const orderInfo = JSON.parse(
+        sessionStorage.getItem('orderInfo') || 'null'
+    );
+
     useEffect(() => {
         if (error) {
-            console.log(error)
-            dispatch(clearErrors())
+            console.error(error);
+            dispatch(clearErrors());
         }
+    }, [dispatch, error]);
 
-    }, [dispatch, error])
+    useEffect(() => {
+        if (selectedItems.length === 0 || !orderInfo) {
+            navigate('/cart', { replace: true });
+        }
+    }, [navigate, selectedItems.length, orderInfo]);
 
-    const order = {
-        orderItems: cartItems,
-        shippingInfo
-    }
+    const formatPrice = price =>
+        new Intl.NumberFormat('en-PH', {
+            style: 'currency',
+            currency: 'PHP'
+        }).format(Number(price) || 0);
 
-    const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
-    if (orderInfo) {
-        order.itemsPrice = orderInfo.itemsPrice
-        order.shippingPrice = orderInfo.shippingPrice
-        order.taxPrice = orderInfo.taxPrice
-        order.totalPrice = orderInfo.totalPrice
-    }
-
-    // const createOrder = async (order) => {
-    //     console.log(order)
-    //     try {
-    //         const config = {
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${getToken()}`
-    //             }
-    //         }
-    //         const { data } = await axios.post(`${import.meta.env.VITE_API}/order/new`, order, config)
-    //         // setIsUpdated(data.success)
-    //         setLoading(false)
-    //         toast.success('order created', {
-    //             position: toast.POSITION.BOTTOM_RIGHT
-    //         });
-
-    //         // sessionStorage.removeItem('orderInfo')
-    //         // navigate('/success')
-
-    //     } catch (error) {
-    //         toast.error(error.response.data.message, {
-    //             position: toast.POSITION.BOTTOM_RIGHT
-    //         });
-    //     }
-    // }
-
-    const submitHandler = async (e) => {
+    const submitHandler = async e => {
         e.preventDefault();
-        document.querySelector('#pay_btn').disabled = true;
-        order.paymentInfo = {
-            id: 'pi_1DpdYh2eZvKYlo2CYIynhU32',
-            status: 'succeeded'
+
+        if (selectedItems.length === 0 || !orderInfo) {
+            navigate('/cart');
+            return;
         }
-        dispatch(createOrder(order))
-        navigate('/success')
-    }
+
+        const order = {
+            orderItems: selectedItems,
+            shippingInfo,
+            itemsPrice: orderInfo.itemsPrice,
+            shippingPrice: orderInfo.shippingPrice,
+            taxPrice: orderInfo.taxPrice,
+            totalPrice: orderInfo.totalPrice,
+            paymentInfo: {
+                id: 'pi_1DpdYh2eZvKYlo2CYIynhU32',
+                status: 'succeeded'
+            }
+        };
+
+        try {
+            await dispatch(createOrder(order));
+            navigate('/success');
+        } catch (err) {
+            console.error('Order creation failed:', err);
+        }
+    };
+
+    if (selectedItems.length === 0 || !orderInfo) return null;
 
     return (
         <>
-            <MetaData title={'Payment'} />
+            <MetaData title="Payment - SpookyMart" />
             <CheckoutSteps shipping confirmOrder payment />
+
             <div className="row wrapper">
                 <div className="col-10 col-lg-5">
                     <form className="shadow-lg" onSubmit={submitHandler}>
-                        <h1 className="mb-4">Card Info</h1>
+                        <h1 className="mb-4">Payment</h1>
+
+                        <h5>Selected Products: {selectedItems.length}</h5>
+
+                        <p>
+                            Amount to Pay:{' '}
+                            <strong>
+                                {formatPrice(orderInfo.totalPrice)}
+                            </strong>
+                        </p>
+
+                        <hr />
+
                         <div className="form-group">
-                            <label htmlFor="card_num_field">Card Number</label>
+                            <label htmlFor="card_num_field">
+                                Card Number
+                            </label>
                             <input
                                 type="text"
                                 id="card_num_field"
                                 className="form-control"
-
+                                required
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="card_exp_field">Card Expiry</label>
+                            <label htmlFor="card_exp_field">
+                                Card Expiry
+                            </label>
                             <input
                                 type="text"
                                 id="card_exp_field"
                                 className="form-control"
-
+                                required
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="card_cvc_field">Card CVC</label>
+                            <label htmlFor="card_cvc_field">
+                                Card CVC
+                            </label>
                             <input
                                 type="text"
                                 id="card_cvc_field"
                                 className="form-control"
-
+                                required
                             />
                         </div>
+
                         <button
                             id="pay_btn"
                             type="submit"
                             className="btn btn-block py-3"
+                            disabled={loading}
                         >
-                            Pay {` - ${orderInfo && orderInfo.totalPrice}`}
+                            {loading
+                                ? 'Processing...'
+                                : `Pay ${formatPrice(orderInfo.totalPrice)}`}
                         </button>
-
                     </form>
                 </div>
             </div>
-
         </>
-    )
-}
+    );
+};
 
-export default Payment
+export default Payment;
