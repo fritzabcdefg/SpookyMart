@@ -64,4 +64,11 @@ const seedDatabase = async () => {
     }
 };
 
+const correctedProducts = products.map(product => ({
+    ...product,
+    numOfReviews: product.reviews?.length || 0,
+    ratings: product.reviews?.length
+        ? product.reviews.reduce((sum, review) => sum + review.rating, 0) / product.reviews.length
+        : 0
+}));
 seedDatabase();

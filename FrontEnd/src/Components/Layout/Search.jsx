@@ -1,23 +1,25 @@
-import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom";
+
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
     const [keyword, setKeyword] = useState('');
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     const searchHandler = (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        const searchTerm = keyword.trim()
+        const searchTerm = keyword.trim();
+
         if (searchTerm) {
-            navigate(`/search/${encodeURIComponent(searchTerm)}`)
+            navigate(`/products?keyword=${encodeURIComponent(searchTerm)}`);
         } else {
-            navigate('/')
+            navigate('/products');
         }
-    }
-    return (
-        <form onSubmit={searchHandler} >
+    };
 
+    return (
+        <form onSubmit={searchHandler}>
             <div className="input-group">
                 <input
                     type="text"
@@ -27,14 +29,19 @@ const Search = () => {
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
                 />
+
                 <div className="input-group-append">
-                    <button id="search_btn" className="btn">
+                    <button
+                        id="search_btn"
+                        className="btn"
+                        type="submit"
+                    >
                         <i className="fa fa-search" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
         </form>
-    )
-}
+    );
+};
 
-export default Search
+export default Search;

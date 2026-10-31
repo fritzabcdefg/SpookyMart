@@ -46,6 +46,9 @@ export const Header = () => {
 
                 </div>
                 <Search />
+                <div className="products-nav">
+                    <Link to="/products">Products</Link>
+                </div>
                 <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
 
                     {user ? (<div className="ml-4 dropdown d-inline">

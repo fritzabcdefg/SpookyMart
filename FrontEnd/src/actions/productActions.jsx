@@ -26,7 +26,14 @@ import {
 } from '../constants/productConstants';
 
 export const getProducts =
-    (currentPage = 1, keyword = '', price = [1, 10000], category = '') =>
+    (
+        currentPage = 1,
+        keyword = '',
+        price = [1, 10000],
+        category = '',
+        ratings = 0,
+        reviews = 0
+    ) =>
     async (dispatch) => {
         try {
             dispatch({ type: ALL_PRODUCTS_REQUEST });
@@ -35,6 +42,14 @@ export const getProducts =
 
             if (category) {
                 link += `&category=${encodeURIComponent(category)}`;
+            }
+
+            if (ratings > 0) {
+                link += `&ratings[gte]=${ratings}`;
+            }
+
+            if (reviews > 0) {
+                link += `&numOfReviews[gte]=${reviews}`;
             }
 
             const { data } = await axios.get(link);
@@ -57,6 +72,7 @@ export const getProducts =
             });
         }
     };
+
 
 export const getProductDetails = (id) => async (dispatch) => {
     try {

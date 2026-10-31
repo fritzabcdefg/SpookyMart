@@ -36,6 +36,7 @@ import UsersList from './Components/Admin/UsersList';
 import UpdateUser from './Components/Admin/UpdateUser';
 import ProtectedRoute from './Components/Route/ProtectedRoute';
 import ProductReviews from './Components/Admin/ProductReviews';
+import AllProducts from './Components/Product/AllProducts';
 function App() {
 
   // const [state, setState] = useState({
@@ -120,6 +121,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
+          <Route path="/products" element={<AllProducts />} />
           {/* <Route path="/product/:id" element={<ProductDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" /> */}
           <Route path="/product/:id" element={<ProductDetails />} exact="true" />
 
