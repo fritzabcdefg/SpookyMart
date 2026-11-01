@@ -1,7 +1,9 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
 const Customer = require('../models/customer');
-
+const sendEmail = require('../utils/sendEmail');
+const generateReceiptPDF = require('../utils/generateReceiptPDF');
+const jwt = require('jsonwebtoken');
 // Create a new order   =>  /api/v1/order/new
 
 // Create a new order => /api/v1/order/new
@@ -74,6 +76,136 @@ exports.newOrder = async (req, res, next) => {
             user: req.user._id,
             customer: customer ? customer._id : null
         });
+        // Send order confirmation email after checkout
+        try {
+            const customerEmail = req.user.email;
+            const customerName = req.user.name || 'Valued Customer';
+
+            if (customerEmail) {
+                const formatPrice = amount =>
+                    `₱${Number(amount || 0).toLocaleString('en-PH', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    })}`;
+                const emailSubtotal = Number(order.itemsPrice || 0);
+                const emailTax = Number(order.taxPrice || 0);
+                const emailShipping = Number(order.shippingPrice || 0);
+
+                const emailGrandTotal =
+                    Number(order.totalPrice || 0) > 0
+                        ? Number(order.totalPrice)
+                        : emailSubtotal + emailTax + emailShipping;
+                const receiptPDF = await generateReceiptPDF(order);
+
+                const productRows = order.orderItems.map(item => `
+                    <tr>
+                        <td style="padding:12px;border-bottom:1px solid #eee;">
+                            ${item.name}
+                        </td>
+                        <td style="padding:12px;text-align:center;border-bottom:1px solid #eee;">
+                            ${item.quantity}
+                        </td>
+                        <td style="padding:12px;text-align:right;border-bottom:1px solid #eee;">
+                            ${formatPrice(item.price * item.quantity)}
+                        </td>
+                    </tr>
+                `).join('');
+                const receiptToken = jwt.sign(
+                    {
+                        orderId: order._id.toString(),
+                        purpose: 'receipt'
+                    },
+                    process.env.JWT_SECRET,
+                    {
+                        expiresIn: '7d'
+                    }
+                );
+                const emailHTML = `
+                <div style="background:#f4f1f8;padding:30px;font-family:Arial,sans-serif;">
+                    <div style="max-width:600px;margin:auto;background:white;border-radius:12px;overflow:hidden;">
+                        <div style="background:#24133f;padding:30px;color:white;">
+                    <h1 style="margin:0;">SPOOKY<span style="color:#f28c28;">MART</span></h1>
+                    <p style="color:#ddd;">ORDER CONFIRMATION</p>
+                </div>
+
+                <div style="padding:30px;color:#292333;">
+                    <h2>Thank you for your order, ${customerName}!</h2>
+                    <p>We've successfully received your order. Here are your transaction details.</p>
+
+                    <p><strong>Order ID:</strong> ${order._id}</p>
+                    <p><strong>Order Status:</strong> ${order.orderStatus}</p>
+
+                    <h3>Order Summary</h3>
+
+                    <table width="100%" cellspacing="0" cellpadding="0"
+                        style="border-collapse:collapse;font-size:13px;">
+                        <thead>
+                            <tr style="background:#24133f;color:white;">
+                                <th align="left" style="padding:12px;">Product</th>
+                                <th style="padding:12px;">Qty</th>
+                                <th align="right" style="padding:12px;">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>${productRows}</tbody>
+                    </table>
+
+                    <div style="margin-top:20px;text-align:right;">
+                        <p>Subtotal: ${formatPrice(emailSubtotal)}</p>
+                        <p>Tax: ${formatPrice(emailTax)}</p>
+                        <p>Shipping: ${formatPrice(emailShipping)}</p>
+
+                        <h2 style="color:#f28c28;">
+                            Grand Total: ${formatPrice(emailGrandTotal)}
+                        </h2>
+                    </div>
+                    <div style="text-align:center;margin:30px 0;">
+                        <a
+                            href="${process.env.BACKEND_URL}/api/v1/order/${order._id}/receipt/${receiptToken}"
+                            style="
+                                display:inline-block;
+                                background:#f28c28;
+                                color:#ffffff;
+                                padding:15px 28px;
+                                border-radius:8px;
+                                text-decoration:none;
+                                font-weight:bold;
+                                font-size:15px;
+                            "
+                        >
+                            Download PDF Receipt
+                        </a>
+                    </div>
+                    <div style="background:#f7f4fa;padding:18px;border-radius:8px;margin-top:20px;">
+                        <strong>Your PDF receipt is attached!</strong>
+                        <p style="font-size:13px;">Keep the attached receipt for your records.</p>
+                    </div>
+                </div>
+
+                <div style="background:#24133f;padding:22px;text-align:center;color:white;">
+                    Thank you for shopping with SpookyMart!
+                </div>
+            </div>
+        </div>`;
+
+        await sendEmail({
+            email: customerEmail,
+            subject: 'SpookyMart | Your Order Confirmation',
+            html: emailHTML,
+            attachments: [{
+                filename: `SpookyMart-Receipt-${order._id}.pdf`,
+                content: receiptPDF,
+                contentType: 'application/pdf'
+            }]
+        });
+
+        console.log('Checkout confirmation email sent to:', customerEmail);
+    } else {
+        console.log('Checkout email skipped: customer email not found.');
+    }
+
+} catch (emailError) {
+    console.error('Checkout confirmation email failed:', emailError);
+}
 
         return res.status(201).json({
             success: true,
@@ -111,29 +243,36 @@ exports.getSingleOrder = async (req, res, next) => {
     })
 }
 
+// Get all orders (Admin) => /api/v1/admin/orders
 exports.allOrders = async (req, res, next) => {
-    const orders = await Order.find();
+    try {
+        const orders = await Order.find()
+            .populate('user', 'name email')
+            .sort({ createdAt: -1 });
 
-    let totalAmount = 0;
+        const totalAmount = orders.reduce(
+            (total, order) => total + Number(order.totalPrice || 0),
+            0
+        );
 
-    orders.forEach(order => {
-        totalAmount +=
-            Number(order.itemsPrice || 0) +
-            Number(order.taxPrice || 0) +
-            Number(order.shippingPrice || 0);
-    });
+        return res.status(200).json({
+            success: true,
+            orders,
+            totalAmount
+        });
 
-    res.status(200).json({
-        success: true,
-        totalAmount,
-        orders
-    });
-}
-
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Unable to retrieve orders'
+        });
+    }
+};
 
 exports.updateOrder = async (req, res, next) => {
     try {
-        const order = await Order.findById(req.params.id);
+        const order = await Order.findById(req.params.id)
+            .populate('user', 'name email');
 
         if (!order) {
             return res.status(404).json({
@@ -164,6 +303,8 @@ exports.updateOrder = async (req, res, next) => {
             });
         }
 
+        const previousStatus = order.orderStatus;
+
         if (status === 'Delivered') {
             for (const item of order.orderItems) {
                 await updateStock(item.product, item.quantity);
@@ -175,17 +316,216 @@ exports.updateOrder = async (req, res, next) => {
         order.orderStatus = status;
         await order.save();
 
+        // Send an email only when the order status changes.
+        if (previousStatus !== status && order.user?.email) {
+            try {
+                const formatPrice = amount =>
+                    `₱${Number(amount || 0).toLocaleString('en-PH', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    })}`;
+
+                const escapeHTML = value =>
+                    String(value ?? '').replace(/[&<>"']/g, character => ({
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        '"': '&quot;',
+                        "'": '&#39;'
+                    })[character]);
+
+                const productRows = order.orderItems.map(item => {
+                    const quantity = Number(item.quantity || 0);
+                    const price = Number(item.price || 0);
+
+                    return `
+                        <tr>
+                            <td style="padding:14px 10px;border-bottom:1px solid #eee;color:#292333;">
+                                ${escapeHTML(item.name)}
+                            </td>
+                            <td style="padding:14px 10px;border-bottom:1px solid #eee;text-align:center;color:#555;">
+                                ${quantity}
+                            </td>
+                            <td style="padding:14px 10px;border-bottom:1px solid #eee;text-align:right;color:#555;">
+                                ${formatPrice(price)}
+                            </td>
+                            <td style="padding:14px 10px;border-bottom:1px solid #eee;text-align:right;font-weight:bold;color:#292333;">
+                                ${formatPrice(quantity * price)}
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                const customerName = escapeHTML(
+                    order.user.name || 'Valued Customer'
+                );
+
+                const statusColors = {
+                    Processing: '#B7791F',
+                    Shipped: '#2563EB',
+                    Delivered: '#15803D'
+                };
+
+                const statusColor = statusColors[status] || '#6B21A8';
+
+                const emailHTML = `
+                <!DOCTYPE html>
+                <html>
+                <body style="margin:0;padding:0;background:#f4f1f8;font-family:Arial,Helvetica,sans-serif;color:#292333;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f1f8;padding:30px 12px;">
+                        <tr>
+                            <td align="center">
+                                <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;">
+
+                                    <tr>
+                                        <td style="background:#24133f;padding:30px 35px;">
+                                            <div style="font-size:25px;font-weight:800;letter-spacing:2px;color:#ffffff;">
+                                                SPOOKY<span style="color:#f28c28;">MART</span>
+                                            </div>
+                                            <div style="font-size:11px;letter-spacing:2px;color:#d8cde8;margin-top:7px;">
+                                                YOUR SPOOKY SHOPPING DESTINATION
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding:35px 35px 20px;">
+                                            <div style="font-size:12px;font-weight:bold;letter-spacing:1.5px;color:#f28c28;">
+                                                ORDER UPDATE
+                                            </div>
+
+                                            <h1 style="font-size:25px;color:#24133f;margin:12px 0;">
+                                                Your order has been updated!
+                                            </h1>
+
+                                            <p style="font-size:14px;line-height:1.7;color:#625b6b;margin:0;">
+                                                Hello ${customerName}, your SpookyMart order has a new status.
+                                                Here are your updated transaction details.
+                                            </p>
+
+                                            <div style="margin-top:22px;padding:17px;background:#f7f4fa;border-radius:9px;">
+                                                <div style="font-size:11px;color:#777;margin-bottom:7px;">
+                                                    CURRENT ORDER STATUS
+                                                </div>
+                                                <span style="display:inline-block;padding:8px 14px;border-radius:20px;background:${statusColor};color:#ffffff;font-size:12px;font-weight:bold;">
+                                                    ${escapeHTML(status.toUpperCase())}
+                                                </span>
+                                                <div style="font-size:12px;color:#777;margin-top:12px;">
+                                                    Order ID: <strong style="color:#24133f;">${escapeHTML(order._id)}</strong>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding:10px 35px 25px;">
+                                            <h2 style="font-size:17px;color:#24133f;margin-bottom:15px;">
+                                                Your transaction summary
+                                            </h2>
+
+                                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;font-size:12px;">
+                                                <thead>
+                                                    <tr style="background:#24133f;color:#ffffff;">
+                                                        <th align="left" style="padding:12px 10px;">Product / Service</th>
+                                                        <th align="center" style="padding:12px 5px;">Qty</th>
+                                                        <th align="right" style="padding:12px 5px;">Price</th>
+                                                        <th align="right" style="padding:12px 10px;">Subtotal</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    ${productRows}
+                                                </tbody>
+                                            </table>
+
+                                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:18px;font-size:13px;">
+                                                <tr>
+                                                    <td style="padding:6px 0;color:#777;">Subtotal</td>
+                                                    <td align="right" style="padding:6px 0;color:#292333;">${formatPrice(order.itemsPrice)}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:6px 0;color:#777;">Tax</td>
+                                                    <td align="right" style="padding:6px 0;color:#292333;">${formatPrice(order.taxPrice)}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:6px 0;color:#777;">Shipping</td>
+                                                    <td align="right" style="padding:6px 0;color:#292333;">${formatPrice(order.shippingPrice)}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="padding-top:12px;border-top:2px solid #f28c28;"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:8px 0;font-size:16px;font-weight:bold;color:#24133f;">GRAND TOTAL</td>
+                                                    <td align="right" style="padding:8px 0;font-size:19px;font-weight:bold;color:#f28c28;">${formatPrice(order.totalPrice)}</td>
+                                                </tr>
+                                            </table>
+
+                                            <div style="margin-top:22px;padding:17px;border:1px solid #eee;border-radius:9px;background:#fff;">
+                                                <div style="font-weight:bold;color:#24133f;font-size:13px;">
+                                                    Your receipt is attached!
+                                                </div>
+                                                <p style="font-size:12px;line-height:1.6;color:#777;margin:7px 0 0;">
+                                                    We've included a PDF receipt with your order details.
+                                                    You can download it, save it, or print it for your records.
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="background:#24133f;padding:25px 35px;text-align:center;">
+                                            <div style="font-size:15px;font-weight:bold;color:#ffffff;">
+                                                Thank you for shopping with SpookyMart!
+                                            </div>
+                                            <div style="font-size:11px;color:#c9bdd9;margin-top:9px;">
+                                                Keep your receipt safe. We appreciate your order.
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </body>
+                </html>
+                `;
+
+                // Generate the PDF receipt.
+                const receiptPDF = await generateReceiptPDF(order);
+
+                // Send the email with the PDF attached.
+                await sendEmail({
+                    email: order.user.email,
+                    subject: `SpookyMart | Order ${status} - Receipt Attached`,
+                    html: emailHTML,
+                    attachments: [
+                        {
+                            filename: `SpookyMart-Receipt-${order._id}.pdf`,
+                            content: receiptPDF,
+                            contentType: 'application/pdf'
+                        }
+                    ]
+                });
+
+                console.log(`Order update email sent to ${order.user.email}`);
+            } catch (emailError) {
+                // Do not undo a successfully saved order update if email fails.
+                console.error('Order update email / PDF failed:', emailError);
+            }
+        }
+
         return res.status(200).json({
             success: true,
             order
         });
+
     } catch (error) {
         return res.status(500).json({
             success: false,
             message: error.message || 'Unable to update order'
         });
     }
-}
+};
 
 
 exports.confirmOrderReceived = async (req, res, next) => {
@@ -421,3 +761,90 @@ exports.salesPerMonth = async (req, res, next) => {
         salesPerMonth
     });
 }
+
+// Download order receipt PDF
+exports.downloadOrderReceipt = async (req, res, next) => {
+    try {
+        const order = await Order.findById(req.params.id);
+
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
+        // Customers can only download their own receipts.
+        if (
+            req.user.role !== 'admin' &&
+            order.user.toString() !== req.user._id.toString()
+        ) {
+            return res.status(403).json({
+                success: false,
+                message: 'You are not authorized to download this receipt'
+            });
+        }
+
+        const receiptPDF = await generateReceiptPDF(order);
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader(
+            'Content-Disposition',
+            `attachment; filename="SpookyMart-Receipt-${order._id}.pdf"`
+        );
+
+        return res.send(receiptPDF);
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Unable to download receipt'
+        });
+    }
+};
+
+// Download receipt using a secure email token
+exports.downloadReceiptWithToken = async (req, res) => {
+    try {
+        const { id, token } = req.params;
+
+        // Verify the download token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Ensure this token is specifically for this receipt
+        if (
+            decoded.purpose !== 'receipt' ||
+            decoded.orderId !== id
+        ) {
+            return res.status(403).json({
+                success: false,
+                message: 'Invalid receipt download link'
+            });
+        }
+
+        const order = await Order.findById(id);
+
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
+        const receiptPDF = await generateReceiptPDF(order);
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader(
+            'Content-Disposition',
+            `attachment; filename="SpookyMart-Receipt-${order._id}.pdf"`
+        );
+
+        return res.send(receiptPDF);
+
+    } catch (error) {
+        return res.status(403).json({
+            success: false,
+            message: 'Receipt link is invalid or has expired'
+        });
+    }
+};

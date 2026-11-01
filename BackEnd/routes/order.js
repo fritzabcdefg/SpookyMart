@@ -12,7 +12,10 @@ const {
     totalSales,
     customerSales,
     salesPerMonth,
+    downloadOrderReceipt,
+    downloadReceiptWithToken
 } = require('../controllers/order');
+
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth')
 
 router.post('/order/new', isAuthenticatedUser, newOrder);
@@ -26,4 +29,6 @@ router.get('/admin/total-orders', totalOrders);
 router.get('/admin/total-sales', totalSales);
 router.get('/admin/customer-sales', customerSales);
 router.get('/admin/sales-per-month', salesPerMonth);
+router.get('/order/:id/receipt', isAuthenticatedUser, downloadOrderReceipt);
+router.get('/order/:id/receipt/:token',downloadReceiptWithToken);
 module.exports = router;

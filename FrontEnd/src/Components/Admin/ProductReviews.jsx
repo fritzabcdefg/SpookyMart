@@ -22,10 +22,10 @@ const ProductReviews = () => {
 
     const config = {
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getToken()}`
-        }
-    }
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
+    };
 
     const getProductReviews = async (id) => {
         try {
@@ -37,15 +37,29 @@ const ProductReviews = () => {
             setError(error.response.data.message)
         }
     }
+
     const deleteReview = async (id, productId) => {
         try {
-            const { data } = await axios.delete(`${import.meta.env.VITE_API}/reviews?id=${id}&productId=${productId}`, config)
-            setIsDeleted(data.success)
+            const { data } = await axios.delete(
+                `${import.meta.env.VITE_API}/reviews?id=${id}&productId=${productId}`,
+                config
+            );
+
+            if (data.success) {
+                // Remove the deleted review immediately from the table
+                setListReviews(prev =>
+                    prev.filter(review => review._id !== id)
+                );
+
+                setIsDeleted(true);
+            }
 
         } catch (error) {
-            setDeleteError(error.response.data.message);
+            setDeleteError(
+                error.response?.data?.message || 'Failed to delete review'
+            );
         }
-    }
+    };
 
     const deleteReviewHandler = (id) => {
         Swal.fire({

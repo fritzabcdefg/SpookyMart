@@ -695,26 +695,74 @@ exports.getMyProductReview = async (req, res, next) => {
 
 
 exports.deleteReview = async (req, res, next) => {
-    console.log(req.query)
-    const product = await Product.findById(req.query.productId);
-    const reviews = product.reviews.filter(review => review._id.toString() !== req.query.id.toString());
-    const numOfReviews = reviews.length;
+    try {
+        const { id, productId } = req.query;
 
-    const ratings = product.reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length
+        // Validate required IDs
+        if (
+            !productId ||
+            !id ||
+            !/^[0-9a-fA-F]{24}$/.test(productId) ||
+            !/^[0-9a-fA-F]{24}$/.test(id)
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid product ID or review ID'
+            });
+        }
 
-    await Product.findByIdAndUpdate(req.query.productId, {
-        reviews,    
-        ratings,
-        numOfReviews
-    }, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    })
+        // Find the product containing the review
+        const product = await Product.findById(productId);
 
-    return res.status(200).json({
-        success: true
-    })
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found'
+            });
+        }
+
+        // Find the exact review
+        const reviewIndex = product.reviews.findIndex(
+            review => review._id.toString() === id
+        );
+
+        if (reviewIndex === -1) {
+            return res.status(404).json({
+                success: false,
+                message: 'Review not found'
+            });
+        }
+
+        // Delete only the selected review
+        product.reviews.splice(reviewIndex, 1);
+
+        // Recalculate review count and average rating
+        product.numOfReviews = product.reviews.length;
+
+        product.ratings = product.reviews.length > 0
+            ? product.reviews.reduce(
+                (total, review) => total + review.rating,
+                0
+            ) / product.reviews.length
+            : 0;
+
+        await product.save();
+
+        return res.status(200).json({
+            success: true,
+            message: 'Review deleted successfully',
+            numOfReviews: product.numOfReviews,
+            ratings: product.ratings
+        });
+
+    } catch (error) {
+        console.error('Delete review error:', error);
+
+        return res.status(500).json({
+            success: false,
+            message: 'Unable to delete review'
+        });
+    }
 }
 
 exports.productSales = async (req, res, next) => {

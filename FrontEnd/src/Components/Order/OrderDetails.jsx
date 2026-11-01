@@ -221,7 +221,44 @@ const OrderDetails = () => {
             setSavingProductId(null);
         }
     };
+    const [downloadingReceipt, setDownloadingReceipt] = useState(false);
 
+    const downloadReceipt = async () => {
+        try {
+            setDownloadingReceipt(true);
+
+            const response = await axios.get(
+                `${import.meta.env.VITE_API}/order/${id}/receipt`,
+                {
+                    withCredentials: true,
+                    responseType: 'blob'
+                }
+            );
+
+            const pdfBlob = new Blob([response.data], {
+                type: 'application/pdf'
+            });
+
+            const downloadUrl = window.URL.createObjectURL(pdfBlob);
+            const link = document.createElement('a');
+
+            link.href = downloadUrl;
+            link.download = `SpookyMart-Receipt-${id}.pdf`;
+
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+            window.URL.revokeObjectURL(downloadUrl);
+
+            toast.success('Receipt downloaded successfully!');
+        } catch (error) {
+            toast.error('Unable to download receipt. Please try again.');
+            console.error('Receipt download error:', error);
+        } finally {
+            setDownloadingReceipt(false);
+        }
+    };
     return (
         <>
             <MetaData title="Order Details" />
@@ -234,7 +271,17 @@ const OrderDetails = () => {
                         <h1 className="my-5">
                             Order # {order._id}
                         </h1>
-
+                        <button
+                            type="button"
+                            className="btn btn-warning mb-4"
+                            onClick={downloadReceipt}
+                            disabled={downloadingReceipt}
+                        >
+                            <i className="fa fa-download"></i>{' '}
+                            {downloadingReceipt
+                                ? 'Generating Receipt...'
+                                : 'Download PDF Receipt'}
+                        </button>
                         <p>
                             <b>Order Date:</b> {orderDate}
                         </p>
