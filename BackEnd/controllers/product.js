@@ -628,7 +628,7 @@ exports.productSales = async (req, res, next) => {
     ])
     console.log(totalSales)
     const sales = await Order.aggregate([
-        { $project: { _id: 0, "orderItems": 1, totalPrice: true } },
+        { $project: { _id: 0, orderItems: 1 } },
         { $unwind: "$orderItems" },
 
         {

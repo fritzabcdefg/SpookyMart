@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MetaData from '../Layout/MetaData';
@@ -41,6 +40,8 @@ const ConfirmOrder = () => {
 
     const shippingPrice = itemsPrice > 200 ? 0 : 25;
     const taxPrice = Number((0.05 * itemsPrice).toFixed(2));
+
+    // Calculated in the frontend only.
     const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
     const processToPayment = () => {
@@ -50,10 +51,9 @@ const ConfirmOrder = () => {
         }
 
         const data = {
-            itemsPrice: itemsPrice.toFixed(2),
+            itemsPrice: Number(itemsPrice.toFixed(2)),
             shippingPrice,
-            taxPrice,
-            totalPrice: totalPrice.toFixed(2)
+            taxPrice
         };
 
         sessionStorage.setItem('orderInfo', JSON.stringify(data));
@@ -122,6 +122,7 @@ const ConfirmOrder = () => {
                     ))}
 
                     <hr />
+
                     <p>
                         <b>{selectedItems.length}</b> selected product(s) will be
                         included in this order.
@@ -179,4 +180,4 @@ const ConfirmOrder = () => {
     );
 };
 
-export default ConfirmOrder;
+export default ConfirmOrder

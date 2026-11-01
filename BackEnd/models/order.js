@@ -1,7 +1,16 @@
-const mongoose = require('mongoose')
 
-const orderSchema = mongoose.Schema({
+const mongoose = require('mongoose');
+
+const orderSchema = new mongoose.Schema({
     shippingInfo: {
+        recipientName: {
+            type: String,
+            default: ''
+        },
+        label: {
+            type: String,
+            default: 'Shipping address'
+        },
         address: {
             type: String,
             required: true
@@ -23,11 +32,22 @@ const orderSchema = mongoose.Schema({
             required: true
         }
     },
+
+    // Keep the User reference for existing login and order-history features.
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
     },
+
+    // Optional link to the separate Customer collection.
+    // Existing orders do not need this field.
+    customer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Customer',
+        default: null
+    },
+
     orderItems: [
         {
             name: {
@@ -53,16 +73,34 @@ const orderSchema = mongoose.Schema({
             }
         }
     ],
+
     paymentInfo: {
         id: {
-            type: String
+            type: String,
+            default: ''
         },
         status: {
-            type: String
+            type: String,
+            default: 'pending'
+        },
+        method: {
+            type: String,
+            enum: ['COD', 'Card'],
+            default: 'Card'
+        },
+        brand: {
+            type: String,
+            default: ''
+        },
+        last4: {
+            type: String,
+            default: ''
         }
     },
+
     paidAt: {
-        type: Date
+        type: Date,
+        default: null
     },
 
     itemsPrice: {
@@ -70,41 +108,48 @@ const orderSchema = mongoose.Schema({
         required: true,
         default: 0.0
     },
+
     taxPrice: {
         type: Number,
         required: true,
         default: 0.0
     },
+
     shippingPrice: {
         type: Number,
         required: true,
         default: 0.0
     },
+
     totalPrice: {
         type: Number,
         required: true,
         default: 0.0
     },
+
     orderStatus: {
         type: String,
         required: true,
         default: 'Processing'
     },
+
     deliveredAt: {
         type: Date
     },
+
     isReceived: {
         type: Boolean,
         default: false
     },
+
     receivedAt: {
         type: Date
     },
+
     createdAt: {
         type: Date,
         default: Date.now
     }
+});
 
-})
-
-module.exports = mongoose.model('Order', orderSchema)
+module.exports = mongoose.model('Order', orderSchema);

@@ -1,33 +1,48 @@
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import MetaData from '../Layout/MetaData';
-import { removeItemFromCart } from '../../actions/cartActions';
+import { removePurchasedItemsFromCart } from '../../actions/cartActions';
 
 const OrderSuccess = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        let purchasedItems = [];
+        const cleanPurchasedItems = async () => {
+            let purchasedItems = [];
 
-        try {
-            purchasedItems = JSON.parse(
-                sessionStorage.getItem('checkoutItems') || '[]'
-            );
-        } catch {
-            purchasedItems = [];
-        }
+            try {
+                purchasedItems = JSON.parse(
+                    sessionStorage.getItem('checkoutItems') || '[]'
+                );
+            } catch (error) {
+                console.error('Could not read checkout items:', error);
+            }
 
-        // Remove only products that were purchased.
-        purchasedItems.forEach(item => {
-            dispatch(removeItemFromCart(item.product));
-        });
+            const productIds = purchasedItems
+                .map(item => item.product)
+                .filter(Boolean);
 
-        // Clear checkout information only.
-        sessionStorage.removeItem('checkoutItems');
-        sessionStorage.removeItem('orderInfo');
+            try {
+                if (productIds.length > 0) {
+                    await dispatch(
+                        removePurchasedItemsFromCart(productIds)
+                    );
+                }
+
+                sessionStorage.removeItem('checkoutItems');
+                sessionStorage.removeItem('orderInfo');
+            } catch (error) {
+                console.error(
+                    'Could not remove purchased products from cart:',
+                    error
+                );
+                // Keep checkoutItems so cleanup can be retried if this page reloads.
+            }
+        };
+
+        cleanPurchasedItems();
     }, [dispatch]);
 
     return (

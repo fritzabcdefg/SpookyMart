@@ -20,6 +20,9 @@ import NewPassword from './Components/User/NewPassword';
 import Profile from './Components/User/Profile';
 import UpdateProfile from './Components/User/UpdateProfile';
 import UpdatePassword from './Components/User/UpdatePassword';
+import PaymentMethods from './Components/User/PaymentMethods';
+import AddressBook from './Components/User/AddressBook';
+
 import Cart from './Components/Cart/Cart';
 import Shipping from './Components/Cart/Shipping';
 import ConfirmOrder from './Components/Cart/ConfirmOrder';
@@ -64,14 +67,11 @@ function App() {
           <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
           <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
           <Route path="/me" element={<Profile />} exact="true" />
-          <Route path="/me/update" element={<UpdateProfile />} exact="true"
-          />
+          <Route path="/me/update" element={<UpdateProfile />} exact="true"/>
+          <Route path="/me/payment-methods" element={<PaymentMethods />} />
           <Route path="/password/update" element={<UpdatePassword />} />
-          {/* <Route path="/cart" element={<Cart cartItems={state.cartItems} addItemToCart={addItemToCart} removeItemFromCart={removeItemFromCart} />} exact="true" />
-          <Route path="/shipping" element={<Shipping shipping={state.shippingInfo} saveShippingInfo={saveShippingInfo} />} />
-          <Route path="/confirm" element={<ConfirmOrder cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
-          <Route path="/payment" element={<Payment cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} /> */}
-
+          <Route path="/me/addresses" element={<AddressBook />} />
+          
           <Route path="/cart" element={<Cart />} exact="true" />
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/confirm" element={<ConfirmOrder />} />

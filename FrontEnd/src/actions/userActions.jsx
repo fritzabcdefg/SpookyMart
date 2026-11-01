@@ -40,20 +40,29 @@ import {
 } from '../constants/userConstants'
 
 
+
 export const register = (userData) => async (dispatch) => {
     try {
         dispatch({ type: REGISTER_USER_REQUEST });
 
-        // Axios automatically sets the correct multipart boundary for FormData.
         const { data } = await axios.post(
             `${import.meta.env.VITE_API}/register`,
-            userData
+            userData,
+            {
+                withCredentials: true
+            }
         );
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
             payload: data.user
         });
+
+        // Load and synchronize the new user's cart.
+        if (data.user?._id) {
+            dispatch(loadCartForUser(data.user._id));
+        }
+
     } catch (error) {
         console.error(
             'Registration failed:',
@@ -68,7 +77,8 @@ export const register = (userData) => async (dispatch) => {
                 'Registration failed'
         });
     }
-};
+}
+
 
 
 export const login = (email, password) => async (dispatch) => {

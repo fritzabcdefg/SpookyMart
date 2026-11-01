@@ -1,38 +1,92 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
-
-
+const Customer = require('../models/customer');
 
 // Create a new order   =>  /api/v1/order/new
+
+// Create a new order => /api/v1/order/new
 exports.newOrder = async (req, res, next) => {
-    const {
-        orderItems,
-        shippingInfo,
-        itemsPrice,
-        taxPrice,
-        shippingPrice,
-        totalPrice,
-        paymentInfo
+    try {
+        const {
+            orderItems,
+            shippingInfo,
+            itemsPrice,
+            taxPrice,
+            shippingPrice,
+            totalPrice,
+            paymentInfo
+        } = req.body;
 
-    } = req.body;
+        if (!orderItems || orderItems.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Your cart is empty.'
+            });
+        }
 
-    const order = await Order.create({
-        orderItems,
-        shippingInfo,
-        itemsPrice,
-        taxPrice,
-        shippingPrice,
-        totalPrice,
-        paymentInfo,
-        paidAt: Date.now(),
-        user: req.user._id
-    })
+        if (!shippingInfo) {
+            return res.status(400).json({
+                success: false,
+                message: 'Shipping information is required.'
+            });
+        }
 
-    res.status(200).json({
-        success: true,
-        order
-    })
-}
+        // Find the customer's separate profile, if one exists.
+        const customer = await Customer.findOne({
+            user: req.user._id
+        });
+
+        // Existing checkout requests without a method are treated as Card
+        // to preserve compatibility with the previous checkout frontend.
+        const method = paymentInfo?.method || 'Card';
+
+        if (!['COD', 'Card'].includes(method)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid payment method.'
+            });
+        }
+
+        // Card checkout is simulated in this project.
+        // COD orders are not marked as paid at order creation.
+        const isCardPaid =
+            method === 'Card' &&
+            paymentInfo?.status === 'succeeded';
+
+        const order = await Order.create({
+            orderItems,
+            shippingInfo,
+            itemsPrice,
+            taxPrice,
+            shippingPrice,
+            totalPrice,
+
+            paymentInfo: {
+                id: method === 'Card' ? (paymentInfo?.id || '') : '',
+                status: isCardPaid ? 'succeeded' : 'pending',
+                method,
+                brand: method === 'Card' ? (paymentInfo?.brand || '') : '',
+                last4: method === 'Card' ? (paymentInfo?.last4 || '') : ''
+            },
+
+            paidAt: isCardPaid ? Date.now() : null,
+
+            user: req.user._id,
+            customer: customer ? customer._id : null
+        });
+
+        return res.status(201).json({
+            success: true,
+            order
+        });
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 
 exports.myOrders = async (req, res, next) => {
     const orders = await Order.find({ user: req.user.id })
@@ -58,20 +112,22 @@ exports.getSingleOrder = async (req, res, next) => {
 }
 
 exports.allOrders = async (req, res, next) => {
-    const orders = await Order.find()
-    // console.log(orders)
+    const orders = await Order.find();
+
     let totalAmount = 0;
 
     orders.forEach(order => {
-
-        totalAmount += order.totalPrice
-    })
+        totalAmount +=
+            Number(order.itemsPrice || 0) +
+            Number(order.taxPrice || 0) +
+            Number(order.shippingPrice || 0);
+    });
 
     res.status(200).json({
         success: true,
         totalAmount,
         orders
-    })
+    });
 }
 
 
@@ -218,19 +274,23 @@ exports.totalSales = async (req, res, next) => {
         {
             $group: {
                 _id: null,
-                totalSales: { $sum: "$totalPrice" }
+                totalSales: {
+                    $sum: {
+                        $add: [
+                            { $ifNull: ['$itemsPrice', 0] },
+                            { $ifNull: ['$taxPrice', 0] },
+                            { $ifNull: ['$shippingPrice', 0] }
+                        ]
+                    }
+                }
             }
         }
-    ])
-    if (!totalSales) {
-        return res.status(404).json({
-            message: 'error total sales',
-        })
-    }
+    ]);
+
     res.status(200).json({
         success: true,
         totalSales
-    })
+    });
 }
 
 exports.customerSales = async (req, res, next) => {
@@ -241,112 +301,123 @@ exports.customerSales = async (req, res, next) => {
                 localField: 'user',
                 foreignField: '_id',
                 as: 'userDetails'
-            },
-        },
-        // {
-        //     $group: {
-        //         _id: "$user",
-        //         total: { $sum: "$totalPrice" },
-        //     }
-        // },
-
-        { $unwind: "$userDetails" },
-        {
-            $group: {
-                _id: "$user",
-                total: { $sum: "$totalPrice" },
-                doc: { "$first": "$$ROOT" },
-
             }
         },
-
+        {
+            $unwind: '$userDetails'
+        },
+        {
+            $group: {
+                _id: '$user',
+                total: {
+                    $sum: {
+                        $add: [
+                            { $ifNull: ['$itemsPrice', 0] },
+                            { $ifNull: ['$taxPrice', 0] },
+                            { $ifNull: ['$shippingPrice', 0] }
+                        ]
+                    }
+                },
+                doc: { $first: '$$ROOT' }
+            }
+        },
         {
             $replaceRoot: {
-                newRoot: { $mergeObjects: [{ total: '$total' }, '$doc'] },
-            },
+                newRoot: {
+                    $mergeObjects: [
+                        { total: '$total' },
+                        '$doc'
+                    ]
+                }
+            }
         },
-        // {
-        //     $group: {
-        //         _id: "$userDetails.name",
-        //         total: { $sum: "$totalPrice" }
-        //     }
-        // },
         {
             $project: {
                 _id: 0,
-                "userDetails.name": true,
-                total: true,
+                'userDetails.name': true,
+                total: true
             }
         },
-        { $sort: { total: 1 } },
+        {
+            $sort: {
+                total: 1
+            }
+        }
+    ]);
 
-    ])
-    console.log(customerSales)
-    if (!customerSales) {
-        return res.status(404).json({
-            message: 'error customer sales',
-        })
-
-
-    }
-    // return console.log(customerSales)
     res.status(200).json({
         success: true,
         customerSales
-    })
-
+    });
 }
 
 exports.salesPerMonth = async (req, res, next) => {
-    // select monthname(paidAt) sum(price * quantity)
-    // from orders
-    // group by month(date_placed), year(date_placed)
     const salesPerMonth = await Order.aggregate([
-
         {
             $group: {
-                // _id: {month: { $month: "$paidAt" } },
                 _id: {
-                    year: { $year: "$paidAt" },
-                    month: { $month: "$paidAt" }
+                    year: { $year: '$paidAt' },
+                    month: { $month: '$paidAt' }
                 },
-                total: { $sum: "$totalPrice" },
-            },
+                total: {
+                    $sum: {
+                        $add: [
+                            { $ifNull: ['$itemsPrice', 0] },
+                            { $ifNull: ['$taxPrice', 0] },
+                            { $ifNull: ['$shippingPrice', 0] }
+                        ]
+                    }
+                }
+            }
         },
-
         {
             $addFields: {
                 month: {
                     $let: {
                         vars: {
-                            monthsInString: [, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', ' Sept', 'Oct', 'Nov', 'Dec']
+                            monthsInString: [
+                                '',
+                                'Jan',
+                                'Feb',
+                                'Mar',
+                                'Apr',
+                                'May',
+                                'Jun',
+                                'Jul',
+                                'Aug',
+                                'Sep',
+                                'Oct',
+                                'Nov',
+                                'Dec'
+                            ]
                         },
                         in: {
-                            $arrayElemAt: ['$$monthsInString', "$_id.month"]
+                            $arrayElemAt: [
+                                '$$monthsInString',
+                                '$_id.month'
+                            ]
                         }
                     }
                 }
             }
         },
-        { $sort: { "_id.month": 1 } },
+        {
+            $sort: {
+                '_id.year': 1,
+                '_id.month': 1
+            }
+        },
         {
             $project: {
                 _id: 0,
                 month: true,
-                total: true,
+                total: true
             }
         }
+    ]);
 
-    ])
-    if (!salesPerMonth) {
-        return res.status(404).json({
-            message: 'error sales per month',
-        })
-    }
-    // return console.log(customerSales)
     res.status(200).json({
         success: true,
         salesPerMonth
-    })
-
+    });
 }

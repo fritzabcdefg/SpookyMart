@@ -30,25 +30,41 @@ import {
 
 export const createOrder = (order) => async (dispatch) => {
     try {
-        dispatch({ type: CREATE_ORDER_REQUEST })
+        dispatch({ type: CREATE_ORDER_REQUEST });
+
         const config = {
             headers: {
                 'Content-Type': 'application/json'
             },
             withCredentials: true
-        }
-        const { data } = await axios.post(`${import.meta.env.VITE_API}/order/new`, order, config)
+        };
+
+        const { data } = await axios.post(
+            `${import.meta.env.VITE_API}/order/new`,
+            order,
+            config
+        );
+
         dispatch({
             type: CREATE_ORDER_SUCCESS,
             payload: data
-        })
+        });
+
+        return data;
+
     } catch (error) {
+        const message =
+            error.response?.data?.message ||
+            error.message ||
+            'Order creation failed.';
+
         dispatch({
             type: CREATE_ORDER_FAIL,
-            payload: error.response.data.message
-        })
-    }
+            payload: message
+        });
 
+        throw error;
+    }
 }
 
 export const myOrders = () => async (dispatch) => {

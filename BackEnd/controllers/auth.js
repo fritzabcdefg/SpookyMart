@@ -1,39 +1,138 @@
 const User = require('../models/user');
+const Customer = require('../models/customer');
 const crypto = require('crypto')
 const cloudinary = require('cloudinary')
 const sendEmail = require('../utils/sendEmail')
 const sendToken = require('../utils/jwtToken');
 
+
+
 exports.registerUser = async (req, res, next) => {
-    console.log(req.body)
-    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: 'avatars',
-        width: 150,
-        crop: "scale"
-    }, (err, res) => {
-        console.log(err, res);
-    });
-    const { name, email, password, } = req.body;
-    const user = await User.create({
-        name,
-        email,
-        password,
-        avatar: {
-            public_id: result.public_id,
-            url: result.secure_url
-        },
-    })
-    //test token
-    // const token = user.getJwtToken();
+    let uploadedAvatar = null;
+    let createdUser = null;
+    let createdCustomer = null;
 
-    // return res.status(201).json({
-    //     success: true,
-    //     user,
-    //     token
-    // })
-    sendToken(user, 200, res)
+    try {
+        const { name, email, password } = req.body;
+
+        // Validate required registration fields.
+        if (!name || !email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide your name, email, and password.'
+            });
+        }
+
+        // Avatar is required by the existing User model.
+        if (!req.body.avatar) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please choose a profile picture.'
+            });
+        }
+
+        // Parse optional JSON arrays from FormData.
+        const parseOptionalArray = (value, fieldName) => {
+            if (!value) return [];
+
+            let parsed;
+
+            try {
+                parsed = typeof value === 'string'
+                    ? JSON.parse(value)
+                    : value;
+            } catch (error) {
+                throw new Error(`${fieldName} contains invalid JSON.`);
+            }
+
+            if (!Array.isArray(parsed)) {
+                throw new Error(`${fieldName} must be an array.`);
+            }
+
+            return parsed;
+        };
+
+        const addresses = parseOptionalArray(
+            req.body.addresses,
+            'Addresses'
+        );
+
+        const paymentMethods = parseOptionalArray(
+            req.body.paymentMethods,
+            'Payment methods'
+        );
+
+        // Upload the Base64 avatar to Cloudinary.
+        uploadedAvatar = await cloudinary.v2.uploader.upload(
+            req.body.avatar,
+            {
+                folder: 'avatars',
+                width: 150,
+                crop: 'scale'
+            }
+        );
+
+        // Create the user's authentication account.
+        createdUser = await User.create({
+            name,
+            email,
+            password,
+            avatar: {
+                public_id: uploadedAvatar.public_id,
+                url: uploadedAvatar.secure_url
+            }
+        });
+
+        // Accept only safe card metadata.
+        // Never save a full card number or CVV.
+        const safePaymentMethods = paymentMethods.map(method => ({
+            label: method.label || 'My card',
+            type: 'card',
+            cardholderName: method.cardholderName,
+            brand: method.brand,
+            last4: String(method.last4 || ''),
+            expiryMonth: Number(method.expiryMonth),
+            expiryYear: Number(method.expiryYear),
+            isDefault: method.isDefault === true
+        }));
+
+        // Create the customer record linked to the User.
+        // Addresses and payment methods can be empty.
+        createdCustomer = await Customer.create({
+            user: createdUser._id,
+            phoneNo: req.body.phoneNo || '',
+            addresses,
+            paymentMethods: safePaymentMethods
+        });
+
+        // Preserve the existing authentication cookie and response.
+        return sendToken(createdUser, 201, res);
+
+    } catch (error) {
+
+        // Remove the customer record if it was created.
+        if (createdCustomer) {
+            await Customer.findByIdAndDelete(createdCustomer._id);
+        }
+
+        // Remove the incomplete user account.
+        if (createdUser) {
+            await User.findByIdAndDelete(createdUser._id);
+        }
+
+        // Remove the uploaded avatar if registration failed.
+        if (uploadedAvatar?.public_id) {
+            await cloudinary.v2.uploader.destroy(
+                uploadedAvatar.public_id
+            );
+        }
+
+        return res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
 }
-
 
 exports.loginUser = async (req, res, next) => {
     const { email, password } = req.body;
@@ -243,8 +342,6 @@ exports.getUserDetails = async (req, res, next) => {
         user
     })
 }
-
-
 
 exports.updateUser = async (req, res, next) => {
     try {

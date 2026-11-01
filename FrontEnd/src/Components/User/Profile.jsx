@@ -1,88 +1,253 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import Loader from '../Layout/Loader'
-import MetaData from '../Layout/MetaData'
 
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-// import { getToken } from '../Utils/helpers';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+
+import Loader from '../Layout/Loader';
+import MetaData from '../Layout/MetaData';
 
 const Profile = () => {
-    const { user, loading } = useSelector(state => state.auth)
+    const { user, loading } = useSelector(state => state.auth);
 
-    // const [loading, setLoading] = useState(true)
-    // const [user, setUser] = useState({})
+    const [customer, setCustomer] = useState(null);
+    const [customerLoading, setCustomerLoading] = useState(true);
+    const [customerError, setCustomerError] = useState('');
 
+    useEffect(() => {
+        const getCustomer = async () => {
+            try {
+                const { data } = await axios.get(
+                    `${import.meta.env.VITE_API}/customer/me`,
+                    { withCredentials: true }
+                );
 
-    // const getProfile = async () => {
-    //     const config = {
-    //         headers: {
-    //             'Authorization': `Bearer ${getToken()}`
-    //         }
-    //     }
-    //     try {
-    //         const { data } = await axios.get(`http://localhost:4001/api/v1/me`, config)
-    //         console.log(data.user)
-    //         setUser(data.user)
-    //         setLoading(false)
-    //     } catch (error) {
-    //         console.log(error)
-    //         toast.error("invalid user or password", {
-    //             position: 'bottom-center'
-    //         })
-    //     }
+                setCustomer(data.customer || null);
+            } catch (error) {
+                console.error(
+                    'Could not load customer information:',
+                    error.response?.data || error.message
+                );
 
-    // }
+                setCustomerError(
+                    error.response?.data?.message ||
+                    'Could not load saved addresses and payment methods.'
+                );
+            } finally {
+                setCustomerLoading(false);
+            }
+        };
 
-    // useEffect(() => {
+        getCustomer();
+    }, []);
 
-    //     getProfile()
+    if (loading) return <Loader />;
 
-    // }, [])
+    if (!user) {
+        return (
+            <div className="container mt-5">
+                <h3>Please log in to view your profile.</h3>
+                <Link to="/login" className="btn btn-primary mt-3">
+                    Login
+                </Link>
+            </div>
+        );
+    }
+
+    const addresses = customer?.addresses || [];
+    const paymentMethods = customer?.paymentMethods || [];
+
     return (
         <>
-            {loading ? <Loader /> : (
-                <>
-                    <MetaData title={'Your Profile'} />
+            <MetaData title="Your Profile" />
 
-                    <h2 className="mt-5 ml-5">My Profile</h2>
-                    <div className="row justify-content-around mt-5 user-info">
-                        <div className="col-12 col-md-3">
-                            <figure className='avatar avatar-profile'>
-                                <img className="rounded-circle img-fluid" src={user.avatar ? user.avatar.url : null} alt={user.name} />
-                            </figure>
-                            <Link to="/me/update" id="edit_profile" className="btn btn-primary btn-block my-5">
-                                Edit Profile
-                            </Link>
-                        </div>
+            <div className="container mt-5 mb-5">
+                <h2>My Profile</h2>
 
-                        <div className="col-12 col-md-5">
-                            <h4>Full Name</h4>
-                            <p>{user.name}</p>
+                <div className="row mt-4 user-info">
+                    <div className="col-12 col-md-3 text-center">
+                        <figure className="avatar avatar-profile">
+                            <img
+                                className="rounded-circle img-fluid"
+                                src={
+                                    user.avatar?.url ||
+                                    '/images/default_avatar.jpg'
+                                }
+                                alt={user.name}
+                            />
+                        </figure>
 
-                            <h4>Email Address</h4>
-                            <p>{user.email}</p>
-
-                            <h4>Joined On</h4>
-                            <p>{String(user.createdAt).substring(0, 10)}</p>
-
-                            {user.role !== 'admin' && (
-                                <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
-                                    My Orders
-                                </Link>
-                            )}
-
-                            <Link to="/password/update" className="btn btn-primary btn-block mt-3">
-                                Change Password
-                            </Link>
-                        </div>
+                        <Link
+                            to="/me/update"
+                            className="btn btn-primary btn-block my-3"
+                        >
+                            Edit Profile
+                        </Link>
                     </div>
-                </>
-            )}
-        </>
-    )
-}
 
-export default Profile
+                    <div className="col-12 col-md-8">
+                        <h4>Full Name</h4>
+                        <p>{user.name}</p>
+
+                        <h4>Email Address</h4>
+                        <p>{user.email}</p>
+
+                        <h4>Joined On</h4>
+                        <p>
+                            {user.createdAt
+                                ? String(user.createdAt).substring(0, 10)
+                                : 'Not available'}
+                        </p>
+
+                        {user.role !== 'admin' && (
+                            <Link
+                                to="/orders/me"
+                                className="btn btn-danger btn-block mt-3"
+                            >
+                                My Orders
+                            </Link>
+                        )}
+
+                        <Link
+                            to="/password/update"
+                            className="btn btn-primary btn-block mt-3"
+                        >
+                            Change Password
+                        </Link>
+                    </div>
+                </div>
+
+                <hr className="my-5" />
+
+                <div className="row">
+                    <div className="col-12">
+                        <div className="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                            <h3>My Shipping Addresses</h3>
+                            <Link
+                                to="/shipping"
+                                className="btn btn-primary"
+                            >
+                                Add Address at Checkout
+                            </Link>
+                            <Link to="/me/addresses" className="btn btn-outline-primary">
+                                Manage Addresses
+                            </Link>
+                        </div>
+
+                        {customerLoading ? (
+                            <p>Loading saved addresses...</p>
+                        ) : customerError ? (
+                            <div className="alert alert-warning">
+                                {customerError}
+                            </div>
+                        ) : addresses.length === 0 ? (
+                            <p>You have no saved shipping addresses yet.</p>
+                        ) : (
+                            <div className="row">
+                                {addresses.map(address => (
+                                    <div
+                                        className="col-12 col-md-6 mb-3"
+                                        key={address._id}
+                                    >
+                                        <div className="card h-100">
+                                            <div className="card-body">
+                                                <h5>
+                                                    {address.label || 'Address'}
+                                                    {address.isDefault && (
+                                                        <span className="badge badge-success ml-2">
+                                                            Default
+                                                        </span>
+                                                    )}
+                                                </h5>
+
+                                                <p className="mb-1">
+                                                    {address.recipientName}
+                                                </p>
+
+                                                <p className="mb-1">
+                                                    {address.address}
+                                                </p>
+
+                                                <p className="mb-1">
+                                                    {address.city}, {address.postalCode}
+                                                </p>
+
+                                                <p className="mb-1">
+                                                    {address.country}
+                                                </p>
+
+                                                <p className="mb-0">
+                                                    {address.phoneNo}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <hr className="my-5" />
+
+                <div className="row">
+                    <div className="col-12">
+                        <div className="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                            <h3>My Payment Methods</h3>
+
+                            <Link
+                                to="/me/payment-methods"
+                                className="btn btn-primary"
+                            >
+                                Manage Payment Methods
+                            </Link>
+                        </div>
+
+                        {customerLoading ? (
+                            <p>Loading payment methods...</p>
+                        ) : paymentMethods.length === 0 ? (
+                            <p>You have no saved payment methods.</p>
+                        ) : (
+                            <div className="row">
+                                {paymentMethods.map(card => (
+                                    <div
+                                        className="col-12 col-md-6 mb-3"
+                                        key={card._id}
+                                    >
+                                        <div className="card h-100">
+                                            <div className="card-body">
+                                                <h5>
+                                                    {card.brand} ending in {card.last4}
+                                                </h5>
+
+                                                <p className="mb-1">
+                                                    {card.cardholderName}
+                                                </p>
+
+                                                <p className="mb-1">
+                                                    {card.label}
+                                                </p>
+
+                                                <p className="mb-1">
+                                                    Expires: {String(card.expiryMonth).padStart(2, '0')}/{card.expiryYear}
+                                                </p>
+
+                                                {card.isDefault && (
+                                                    <span className="badge badge-success">
+                                                        Default
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Profile;

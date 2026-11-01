@@ -20,19 +20,62 @@ const ListOrders = () => {
     const [confirmingOrderId, setConfirmingOrderId] = useState(null);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
+
     useEffect(() => {
         dispatch(myOrders());
     }, [dispatch]);
 
     useEffect(() => {
         if (error) {
-            toast.error(error, {
-                position: 'bottom-right'
-            });
+            toast.error(
+                typeof error === 'string'
+                    ? error
+                    : 'Unable to load your orders.',
+                { position: 'bottom-right' }
+            );
         }
     }, [error]);
 
-    const openConfirmModal = (orderId) => {
+    const formatDate = date => {
+        if (!date) return 'Not available';
+
+        const parsedDate = new Date(date);
+
+        if (Number.isNaN(parsedDate.getTime())) {
+            return 'Not available';
+        }
+
+        return parsedDate.toLocaleString('en-PH', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        });
+    };
+
+    const formatPaymentMethod = paymentInfo => {
+        if (paymentInfo?.method === 'COD') {
+            return 'Cash on Delivery';
+        }
+
+        if (paymentInfo?.method === 'Card') {
+            return 'Card';
+        }
+
+        return paymentInfo?.method || 'Not specified';
+    };
+
+    const formatPaymentStatus = paymentInfo => {
+        if (paymentInfo?.status === 'succeeded') {
+            return 'Paid';
+        }
+
+        if (paymentInfo?.status === 'pending') {
+            return 'Pending';
+        }
+
+        return 'Not paid';
+    };
+
+    const openConfirmModal = orderId => {
         setSelectedOrderId(orderId);
         setShowConfirmModal(true);
     };
@@ -64,125 +107,184 @@ const ListOrders = () => {
         }
     };
 
-    const columns = [
-        {
-            field: 'id',
-            headerName: 'Order ID',
-            flex: 1,
-            minWidth: 180,
-            renderCell: (params) => (
-                <span style={{ wordBreak: 'break-all' }}>
-                    {params.value}
-                </span>
-            )
-        },
-        {
-            field: 'numOfItems',
-            headerName: 'Num of Items',
-            type: 'number',
-            width: 120,
-            align: 'right',
-            headerAlign: 'right'
-        },
-        {
-            field: 'amount',
-            headerName: 'Amount',
-            width: 120,
-            align: 'right',
-            headerAlign: 'right'
-        },
-        {
-            field: 'status',
-            headerName: 'Order Status',
-            width: 140,
-            renderCell: (params) => (
-                <span
-                    style={{
-                        color: params.value === 'Completed' ||
-                            params.value === 'Delivered'
-                            ? 'green'
-                            : 'red',
-                        fontWeight: 600
-                    }}
-                >
-                    {params.value}
-                </span>
-            )
-        },
-        {
-            field: 'actions',
-            headerName: 'Actions',
-            minWidth: 270,
-            flex: 1,
-            sortable: false,
-            filterable: false,
-            renderCell: (params) => {
-                const order = params.row.order;
-                const isDelivered = order.orderStatus === 'Delivered';
-                const isReceived = order.isReceived === true;
-                const isCompleted = isDelivered && isReceived;
-                const isConfirming = confirmingOrderId === order._id;
+    
 
-                return (
-                    <div
-                        style={{
-                            display: 'flex',
-                            gap: '8px',
-                            alignItems: 'center'
-                        }}
+const columns = [
+    {
+        field: 'actions',
+        headerName: 'Actions',
+        width: 300,
+        minWidth: 300,
+        sortable: false,
+        filterable: false,
+        renderCell: params => {
+            const order = params.row.order;
+
+            const isDelivered =
+                String(order.orderStatus || '').toLowerCase() === 'delivered';
+
+            const isReceived =
+                order.isReceived === true ||
+                String(order.isReceived).toLowerCase() === 'true';
+
+            const isCompleted = isDelivered && isReceived;
+            const isConfirming = confirmingOrderId === order._id;
+
+            return (
+                <div style={{
+                    display: 'flex',
+                    gap: '8px',
+                    alignItems: 'center',
+                    height: '100%'
+                }}>
+                    <Button
+                        component={Link}
+                        to={`/order/${order._id}`}
+                        variant="outlined"
+                        size="small"
                     >
+                        View
+                    </Button>
+
+                    {isDelivered && !isReceived && (
+                        <Button
+                            variant="contained"
+                            color="success"
+                            size="small"
+                            disabled={isConfirming}
+                            onClick={() => openConfirmModal(order._id)}
+                        >
+                            {isConfirming ? 'Confirming...' : 'Order Received'}
+                        </Button>
+                    )}
+
+                    {isCompleted && (
                         <Button
                             component={Link}
                             to={`/order/${order._id}`}
-                            variant="outlined"
+                            variant="contained"
+                            color="primary"
                             size="small"
                         >
-                            View
+                            Review Order
                         </Button>
-
-                        {isDelivered && !isReceived && (
-                            <Button
-                                variant="contained"
-                                color="success"
-                                size="small"
-                                disabled={isConfirming}
-                                onClick={() => openConfirmModal(order._id)}
-                            >
-                                {isConfirming
-                                    ? 'Confirming...'
-                                    : 'Order Received'}
-                            </Button>
-                        )}
-
-                        {isCompleted && (
-                            <Button
-                                component={Link}
-                                to={`/order/${order._id}`}
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                            >
-                                Review Order
-                            </Button>
-                        )}
-                    </div>
-                );
-            }
+                    )}
+                </div>
+            );
         }
-    ];
+    },
+    {
+        field: 'id',
+        headerName: 'Order ID',
+        flex: 1,
+        minWidth: 180,
+        renderCell: params => (
+            <span style={{ wordBreak: 'break-all' }}>
+                {params.value}
+            </span>
+        )
+    },
+    {
+        field: 'orderDate',
+        headerName: 'Order Date',
+        minWidth: 175,
+        flex: 1
+    },
+    {
+        field: 'numOfItems',
+        headerName: 'Items',
+        type: 'number',
+        width: 85,
+        align: 'right',
+        headerAlign: 'right'
+    },
+    {
+        field: 'amount',
+        headerName: 'Total Amount',
+        minWidth: 125,
+        align: 'right',
+        headerAlign: 'right'
+    },
+    {
+        field: 'paymentMethod',
+        headerName: 'Payment Method',
+        minWidth: 145,
+        flex: 1
+    },
+    {
+        field: 'cardDetails',
+        headerName: 'Card Details',
+        minWidth: 155,
+        flex: 1
+    },
+    {
+        field: 'paymentStatus',
+        headerName: 'Payment Status',
+        minWidth: 125,
+        renderCell: params => (
+            <span style={{
+                color: params.value === 'Paid' ? 'green' : 'red',
+                fontWeight: 600
+            }}>
+                {params.value}
+            </span>
+        )
+    },
+    {
+        field: 'status',
+        headerName: 'Order Status',
+        minWidth: 130,
+        renderCell: params => (
+            <span style={{
+                color:
+                    params.value === 'Completed' ||
+                    params.value === 'Delivered'
+                        ? 'green'
+                        : 'red',
+                fontWeight: 600
+            }}>
+                {params.value}
+            </span>
+        )
+    }
+];
+
+
 
     const rows = orders.map(order => {
         const isCompleted =
             order.orderStatus === 'Delivered' &&
             order.isReceived === true;
 
+        const paymentInfo = order.paymentInfo || {};
+
+        const isCard = paymentInfo.method === 'Card';
+
         return {
             id: order._id,
+
+            orderDate: formatDate(order.createdAt),
+
             numOfItems: order.orderItems?.length || 0,
-            amount: `₱${order.totalPrice}`,
+
+            amount: `₱${(
+                Number(order.itemsPrice || 0) +
+                Number(order.taxPrice || 0) +
+                Number(order.shippingPrice || 0)
+            ).toFixed(2)}`,
+
+            paymentMethod: formatPaymentMethod(paymentInfo),
+
+            cardDetails: isCard
+                ? `${paymentInfo.brand || 'Card'} **** ${paymentInfo.last4 || '----'}`
+                : '—',
+
+            paymentStatus: formatPaymentStatus(paymentInfo),
+
             status: isCompleted
                 ? 'Completed'
                 : order.orderStatus || '',
+
             order
         };
     });
@@ -191,24 +293,27 @@ const ListOrders = () => {
         <>
             <MetaData title="My Orders" />
 
-            <h1 className="my-5">My Orders</h1>
+            <div className="container">
+                <h1 className="my-5">My Orders</h1>
 
-            {loading ? (
-                <Loader />
-            ) : (
-                <div style={{ width: '100%' }}>
-                    <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        getRowId={(row) => row.id}
-                        pageSize={5}
-                        rowsPerPageOptions={[5, 10, 25]}
-                        disableSelectionOnClick
-                        showToolbar
-                        autoHeight
-                    />
-                </div>
-            )}
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <div style={{ width: '100%', overflowX: 'auto' }}>
+                        <DataGrid
+                                rows={rows}
+                                columns={columns}
+                                getRowId={row => row.id}
+                                pageSize={5}
+                                rowsPerPageOptions={[5, 10, 25]}
+                                disableSelectionOnClick
+                                autoHeight
+                                rowHeight={65}
+                        />
+                    </div>
+                )}
+            </div>
+
             {showConfirmModal && (
                 <div
                     style={{
@@ -221,7 +326,7 @@ const ListOrders = () => {
                         zIndex: 9999,
                         padding: '20px'
                     }}
-                    onClick={(event) => {
+                    onClick={event => {
                         if (event.target === event.currentTarget) {
                             setShowConfirmModal(false);
                             setSelectedOrderId(null);
@@ -248,9 +353,9 @@ const ListOrders = () => {
                         </h3>
 
                         <p style={{ margin: '18px 0 24px' }}>
-                            Have you received this order? Once confirmed, your order
-                            status will change to Completed, and you can review
-                            the products.
+                            Have you received this order? Once confirmed,
+                            your order status will change to Completed,
+                            and you can review the products.
                         </p>
 
                         <div
@@ -287,7 +392,6 @@ const ListOrders = () => {
                     </div>
                 </div>
             )}
-
         </>
     );
 };

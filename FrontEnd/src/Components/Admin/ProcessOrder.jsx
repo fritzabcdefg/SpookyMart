@@ -26,7 +26,22 @@ const ProcessOrder = () => {
     let navigate = useNavigate()
 
     let { id } = useParams();
-    const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order
+    const {
+        shippingInfo,
+        orderItems,
+        paymentInfo,
+        user,
+        itemsPrice,
+        taxPrice,
+        shippingPrice,
+        orderStatus
+    } = order;
+
+    const totalPrice =
+        Number(itemsPrice || 0) +
+        Number(taxPrice || 0) +
+        Number(shippingPrice || 0);
+
     const orderId = id;
     const errMsg = (message = '') => toast.error(message, {
         position: 'bottom-center'
@@ -124,7 +139,7 @@ const ProcessOrder = () => {
                                     <p><b>Name:</b> {user && user.name}</p>
                                     <p><b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}</p>
                                     <p className="mb-4"><b>Address:</b>{shippingDetails}</p>
-                                    <p><b>Amount:</b> ${totalPrice}</p>
+                                    <p><b>Amount:</b> ₱{totalPrice.toFixed(2)}</p>
                                     <hr />
                                     <h4 className="my-4">Payment</h4>
                                     <p className={isPaid ? "greenColor" : "redColor"}><b>{isPaid ? "PAID" : "NOT PAID"}</b></p>

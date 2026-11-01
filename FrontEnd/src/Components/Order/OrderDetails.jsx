@@ -19,14 +19,21 @@ const OrderDetails = () => {
     } = useSelector(state => state.orderDetails);
 
     const {
-        shippingInfo,
-        orderItems = [],
-        paymentInfo,
-        user,
-        totalPrice,
-        orderStatus,
-        isReceived
+    shippingInfo,
+    orderItems = [],
+    paymentInfo,
+    user,
+    itemsPrice,
+    taxPrice,
+    shippingPrice,
+    orderStatus,
+    isReceived
     } = order;
+
+    const totalPrice =
+        Number(itemsPrice || 0) +
+        Number(taxPrice || 0) +
+        Number(shippingPrice || 0);
 
     const [myReviews, setMyReviews] = useState({});
     const [forms, setForms] = useState({});
@@ -116,6 +123,21 @@ const OrderDetails = () => {
 
     const isPaid = paymentInfo?.status === 'succeeded';
 
+    const orderDate = order.createdAt
+        ? new Date(order.createdAt).toLocaleString('en-PH', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        })
+        : 'Not available';
+
+    const paymentMethod = paymentInfo?.method || 'Not specified';
+
+    const paymentStatus =
+        paymentInfo?.status === 'succeeded'
+            ? 'Paid'
+            : paymentInfo?.status === 'pending'
+                ? 'Pending'
+                : 'Not paid';
     const updateForm = (productId, field, value) => {
         setForms(previous => ({
             ...previous,
@@ -207,18 +229,42 @@ const OrderDetails = () => {
                             Order # {order._id}
                         </h1>
 
+                        <p>
+                            <b>Order Date:</b> {orderDate}
+                        </p>
+
                         <h4 className="mb-4">Shipping Info</h4>
                         <p><b>Name:</b> {user?.name}</p>
                         <p><b>Phone:</b> {shippingInfo?.phoneNo}</p>
                         <p><b>Address:</b> {shippingDetails}</p>
-                        <p><b>Amount:</b> ₱{totalPrice}</p>
+                        <p>
+                                <b>Amount:</b>{' '}
+                                ₱{totalPrice.toFixed(2)}
+                        </p>
 
                         <hr />
 
-                        <h4 className="my-4">Payment</h4>
-                        <p className={isPaid ? 'greenColor' : 'redColor'}>
-                            <b>{isPaid ? 'PAID' : 'NOT PAID'}</b>
-                        </p>
+                            <h4 className="my-4">Payment Information</h4>
+
+                            <p>
+                                <b>Payment Method:</b> {paymentMethod}
+                            </p>
+
+                            {paymentMethod === 'Card' && (
+                                <>
+                                    <p>
+                                        <b>Card Type:</b> {paymentInfo?.brand || 'Not available'}
+                                    </p>
+
+                                    <p>
+                                        <b>Card Number:</b> **** **** **** {paymentInfo?.last4 || '----'}
+                                    </p>
+                                </>
+                            )}
+
+                            <p className={isPaid ? 'greenColor' : 'redColor'}>
+                                <b>Payment Status:</b> {paymentStatus.toUpperCase()}
+                            </p>
 
                         <h4 className="my-4">Order Status</h4>
                         <p className={
