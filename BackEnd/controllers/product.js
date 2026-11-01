@@ -352,12 +352,19 @@ exports.getAdminProducts = async (req, res, next) => {
 
 exports.createProductReview = async (req, res, next) => {
     try {
-        const { rating, comment, productId } = req.body;
+        const { rating, comment, productId, orderId } = req.body;
 
         if (!productId || !comment?.trim()) {
             return res.status(400).json({
                 success: false,
                 message: 'Please provide a rating and comment'
+            });
+        }
+
+        if (orderId && !/^[0-9a-fA-F]{24}$/.test(orderId)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid order ID'
             });
         }
 
@@ -384,39 +391,62 @@ exports.createProductReview = async (req, res, next) => {
             });
         }
 
-        // Only customers who confirmed receipt of an order
-        // containing this product can review it.
-        const hasReceivedProduct = await Order.exists({
+        // If an order ID is provided, verify that exact order.
+        // Otherwise, preserve the old eligibility check.
+        const orderFilter = {
             user: req.user._id,
             orderStatus: 'Delivered',
             isReceived: true,
             'orderItems.product': product._id
-        });
+        };
 
-        if (!hasReceivedProduct) {
+        if (orderId) {
+            orderFilter._id = orderId;
+        }
+
+        const eligibleOrder = await Order.exists(orderFilter);
+
+        if (!eligibleOrder) {
             return res.status(403).json({
                 success: false,
-                message: 'You can review this product after confirming receipt of an order containing it'
+                message: 'You can review this product only after confirming receipt of the order containing it'
             });
         }
 
-        const existingReview = product.reviews.find(
-            review => review.user.toString() === req.user._id.toString()
-        );
+        // A customer can review the same product again in another order.
+        // Within the same order, only one review is allowed.
+        const existingReview = product.reviews.find(review => {
+            const sameUser =
+                review.user.toString() === req.user._id.toString();
+
+            if (!sameUser) return false;
+
+            // Keep the old behavior for requests without an order ID.
+            if (!orderId) return true;
+
+            return review.orderId &&
+                review.orderId.toString() === orderId.toString();
+        });
 
         if (existingReview) {
             return res.status(409).json({
                 success: false,
-                message: 'You have already reviewed this product. Update your review from your Orders page.'
+                message: 'You have already reviewed this product for this order. You can edit your review.'
             });
         }
 
-        product.reviews.push({
+        const newReview = {
             user: req.user._id,
             name: req.user.name,
             rating: numericRating,
             comment: comment.trim()
-        });
+        };
+
+        if (orderId) {
+            newReview.orderId = orderId;
+        }
+
+        product.reviews.push(newReview);
 
         product.numOfReviews = product.reviews.length;
         product.ratings = product.reviews.reduce(
@@ -433,22 +463,33 @@ exports.createProductReview = async (req, res, next) => {
             ratings: product.ratings,
             numOfReviews: product.numOfReviews
         });
+
     } catch (error) {
+        console.error('Create product review error:', error);
+
         return res.status(500).json({
             success: false,
             message: error.message || 'Unable to submit review'
         });
     }
-}
+};
+
 
 exports.updateProductReview = async (req, res, next) => {
     try {
-        const { rating, comment, productId } = req.body;
+        const { rating, comment, productId, orderId } = req.body;
 
         if (!productId || !comment?.trim()) {
             return res.status(400).json({
                 success: false,
                 message: 'Please provide a rating and comment'
+            });
+        }
+
+        if (orderId && !/^[0-9a-fA-F]{24}$/.test(orderId)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid order ID'
             });
         }
 
@@ -475,28 +516,44 @@ exports.updateProductReview = async (req, res, next) => {
             });
         }
 
-        const hasReceivedProduct = await Order.exists({
+        const orderFilter = {
             user: req.user._id,
             orderStatus: 'Delivered',
             isReceived: true,
             'orderItems.product': product._id
-        });
+        };
 
-        if (!hasReceivedProduct) {
+        if (orderId) {
+            orderFilter._id = orderId;
+        }
+
+        const eligibleOrder = await Order.exists(orderFilter);
+
+        if (!eligibleOrder) {
             return res.status(403).json({
                 success: false,
-                message: 'You can update this review only after confirming receipt of the product'
+                message: 'You can update this review only after confirming receipt of the order containing this product'
             });
         }
 
-        const existingReview = product.reviews.find(
-            review => review.user.toString() === req.user._id.toString()
-        );
+        // Find the review belonging to this customer and this order.
+        const existingReview = product.reviews.find(review => {
+            const sameUser =
+                review.user.toString() === req.user._id.toString();
+
+            if (!sameUser) return false;
+
+            // Preserve compatibility for requests without an order ID.
+            if (!orderId) return true;
+
+            return review.orderId &&
+                review.orderId.toString() === orderId.toString();
+        });
 
         if (!existingReview) {
             return res.status(404).json({
                 success: false,
-                message: 'You have not reviewed this product yet'
+                message: 'You have not reviewed this product for this order yet'
             });
         }
 
@@ -518,13 +575,17 @@ exports.updateProductReview = async (req, res, next) => {
             ratings: product.ratings,
             numOfReviews: product.numOfReviews
         });
+
     } catch (error) {
+        console.error('Update product review error:', error);
+
         return res.status(500).json({
             success: false,
             message: error.message || 'Unable to update review'
         });
     }
-}
+};
+
 
 // Public endpoint: everyone can read reviews.
 exports.getProductReviews = async (req, res, next) => {
@@ -547,18 +608,34 @@ exports.getProductReviews = async (req, res, next) => {
             ratings: product.ratings,
             numOfReviews: product.numOfReviews
         });
+
     } catch (error) {
         return res.status(500).json({
             success: false,
             message: error.message || 'Unable to get reviews'
         });
     }
-}
+};
 
-// Authenticated endpoint: returns the current customer's review.
+
+// Authenticated endpoint: returns the customer's review.
+// With orderId: returns only the review for that specific order.
+// Without orderId: preserves the existing product-page behavior.
 exports.getMyProductReview = async (req, res, next) => {
     try {
-        const product = await Product.findById(req.params.productId);
+        const { orderId } = req.query;
+
+        if (orderId && !/^[0-9a-fA-F]{24}$/.test(orderId)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid order ID'
+            });
+        }
+
+        const product = await Product.findOne({
+            _id: req.params.productId,
+            isDeleted: { $ne: true }
+        });
 
         if (!product) {
             return res.status(404).json({
@@ -567,29 +644,54 @@ exports.getMyProductReview = async (req, res, next) => {
             });
         }
 
-        const hasReceivedProduct = await Order.exists({
+        const orderFilter = {
             user: req.user._id,
             orderStatus: 'Delivered',
             isReceived: true,
             'orderItems.product': product._id
-        });
+        };
 
-        const review = product.reviews.find(
-            item => item.user.toString() === req.user._id.toString()
-        );
+        if (orderId) {
+            orderFilter._id = orderId;
+        }
+
+        const eligibleOrder = await Order.exists(orderFilter);
+
+        // Find this customer's review.
+        let review = null;
+
+        for (let i = product.reviews.length - 1; i >= 0; i--) {
+            const item = product.reviews[i];
+
+            const sameUser =
+                item.user.toString() === req.user._id.toString();
+
+            const sameOrder = !orderId || (
+                item.orderId &&
+                item.orderId.toString() === orderId.toString()
+            );
+
+            if (sameUser && sameOrder) {
+                review = item;
+                break;
+            }
+        }
 
         return res.status(200).json({
             success: true,
-            eligible: Boolean(hasReceivedProduct),
+            eligible: Boolean(eligibleOrder),
             review: review || null
         });
+
     } catch (error) {
+        console.error('Get my product review error:', error);
+
         return res.status(500).json({
             success: false,
             message: error.message || 'Unable to get your review'
         });
     }
-}
+};
 
 
 exports.deleteReview = async (req, res, next) => {

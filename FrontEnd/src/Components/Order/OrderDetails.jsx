@@ -70,8 +70,13 @@ const OrderDetails = () => {
             const uniqueProductIds = [
                 ...new Set(
                     order.orderItems
-                        .map(item => item.product)
+                        .map(item =>
+                            typeof item.product === 'object'
+                                ? item.product?._id
+                                : item.product
+                        )
                         .filter(Boolean)
+                        .map(String)
                 )
             ];
 
@@ -79,7 +84,7 @@ const OrderDetails = () => {
                 uniqueProductIds.map(async productId => {
                     try {
                         const { data } = await axios.get(
-                            `${import.meta.env.VITE_API}/review/my/${productId}`,
+                            `${import.meta.env.VITE_API}/review/my/${productId}?orderId=${order._id}`,
                             { withCredentials: true }
                         );
 
@@ -176,6 +181,7 @@ const OrderDetails = () => {
                 `${import.meta.env.VITE_API}${endpoint}`,
                 {
                     productId,
+                    orderId: order._id,
                     rating,
                     comment
                 },
@@ -184,7 +190,7 @@ const OrderDetails = () => {
 
             // Refresh the customer's own review for this product.
             const reviewResponse = await axios.get(
-                `${import.meta.env.VITE_API}/review/my/${productId}`,
+                `${import.meta.env.VITE_API}/review/my/${productId}?orderId=${order._id}`,
                 { withCredentials: true }
             );
 
@@ -287,11 +293,11 @@ const OrderDetails = () => {
                         <h4 className="my-4">Order Items</h4>
 
                         {orderItems.map(item => {
-                            const productId =
+                            const productId = String(
                                 typeof item.product === 'object'
-                                    ? item.product._id
-                                    : item.product;
-
+                                    ? item.product?._id
+                                    : item.product
+                            );
                             const review = myReviews[productId];
                             const form = forms[productId] || {
                                 rating: 5,

@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+
+const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
     name: {
@@ -15,13 +16,12 @@ const productSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: [true, 'Please enter product description'],
+        required: [true, 'Please enter product description']
     },
     ratings: {
         type: Number,
         default: 0
     },
-
     images: [
         {
             public_id: {
@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
             url: {
                 type: String,
                 required: true
-            },
+            }
         }
     ],
     category: {
@@ -66,6 +66,13 @@ const productSchema = new mongoose.Schema({
                 ref: 'User',
                 required: true
             },
+            // Identifies which purchase this review belongs to.
+            // Optional so existing reviews remain valid.
+            orderId: {
+                type: mongoose.Schema.ObjectId,
+                ref: 'Order',
+                required: false
+            },
             name: {
                 type: String,
                 required: true
@@ -82,47 +89,16 @@ const productSchema = new mongoose.Schema({
     ],
     user: {
         type: mongoose.Schema.ObjectId,
-        ref: 'User',
+        ref: 'User'
     },
-    // numOfReviews: {
-    //     type: Number,
-    //     default: 0
-    // },
-    // reviews: [
-    //     {
-    //         user: {
-    //             type: mongoose.Schema.ObjectId,
-    //             ref: 'User',
-    //             required: true
-    //         },
-    //         name: {
-    //             type: String,
-    //             required: true
-    //         },
-    //         rating: {
-    //             type: Number,
-    //             required: true
-    //         },
-    //         comment: {
-    //             type: String,
-    //             required: true
-    //         }
-    //     }
-    // ],
-    // user: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'User',
-
-    // },
     isDeleted: {
-    type: Boolean,
-    default: false
+        type: Boolean,
+        default: false
     },
-    
     createdAt: {
         type: Date,
         default: Date.now
     }
-})
+});
 
 module.exports = mongoose.model('Product', productSchema);
