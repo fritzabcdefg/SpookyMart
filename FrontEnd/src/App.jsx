@@ -10,7 +10,7 @@ import { loadUser } from './actions/userActions';
 import { Header } from './Components/Layout/Header'
 import Footer from './Components/Layout/Footer'
 
-import './App.css'
+import './App.css'\nimport './SpookyMartTheme.css'
 import Home from './Components/Home'
 import ProductDetails from './Components/Product/ProductDetails';
 import Login from './Components/User/Login';
