@@ -438,7 +438,8 @@ exports.updateOrder = async (req, res, next) => {
         const allowedStatuses = [
             'Processing',
             'Shipped',
-            'Delivered'
+            'Delivered',
+            'Cancelled'
         ];
 
         const status = req.body.status;
@@ -452,7 +453,24 @@ exports.updateOrder = async (req, res, next) => {
 
         const previousStatus = order.orderStatus;
 
-        // Stock has already been deducted at checkout.
+        // Cancellation is only permitted before the order is shipped.
+        if (status === 'Cancelled' && previousStatus !== 'Processing') {
+            return res.status(400).json({
+                success: false,
+                message: 'Only processing orders can be cancelled'
+            });
+        }
+
+        // Restore stock once when a Processing order is cancelled by admin.
+        if (status === 'Cancelled' && previousStatus === 'Processing') {
+            await restoreStock(order.orderItems.map(item => ({
+                productId: item.product,
+                quantity: item.quantity
+            })));
+            order.cancelledAt = Date.now();
+            order.cancelledBy = 'admin';
+        }
+
         // Delivery only updates the delivery date.
         if (status === 'Delivered') {
             order.deliveredAt = Date.now();
@@ -508,7 +526,8 @@ exports.updateOrder = async (req, res, next) => {
                 const statusColors = {
                     Processing: '#B7791F',
                     Shipped: '#2563EB',
-                    Delivered: '#15803D'
+                    Delivered: '#15803D',
+                    Cancelled: '#DC2626'
                 };
 
                 const statusColor = statusColors[status] || '#6B21A8';
