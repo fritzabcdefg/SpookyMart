@@ -172,10 +172,10 @@ const Shipping = () => {
             <MetaData title="Shipping Info - SpookyMart" />
             <CheckoutSteps shipping />
 
-            <div className="row wrapper">
-                <div className="col-10 col-lg-5">
+            <div className="row wrapper checkout-form-wrapper shipping-checkout">
+                <div className="col-12 col-md-10 col-lg-7 col-xl-6 checkout-form-column">
                     <form
-                        className="shadow-lg"
+                        className="shadow-lg checkout-form"
                         onSubmit={submitHandler}
                     >
                         <h1 className="mb-4">Shipping Info</h1>
