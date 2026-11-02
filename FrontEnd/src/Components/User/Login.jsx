@@ -85,7 +85,11 @@ const Login = () => {
             const provider = providerName === 'google'
                 ? new GoogleAuthProvider()
                 : new FacebookAuthProvider();
-            provider.setCustomParameters({ prompt: 'select_account' });
+            if (providerName === 'google') {
+                provider.setCustomParameters({ prompt: 'select_account' });
+            } else {
+                provider.addScope('email');
+            }
 
             const result = await signInWithPopup(firebaseAuth, provider);
             const idToken = await result.user.getIdToken();
@@ -104,7 +108,6 @@ const Login = () => {
                 type: LOGIN_FAIL,
                 payload: err.response?.data?.message || err.message || 'Social sign-in failed.'
             });
-            toast.error(err.response?.data?.message || err.message || 'Social sign-in failed.');
         } finally {
             setSocialLoading(false);
         }
