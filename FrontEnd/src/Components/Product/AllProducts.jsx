@@ -32,7 +32,9 @@ const AllProducts = () => {
         filteredProductsCount = 0
     } = useSelector(state => state.products || {});
 
-    const hasMore = products.length < filteredProductsCount;
+    const totalPages = Math.max(1, Math.ceil(filteredProductsCount / resPerPage));
+    const requestedPage = ((currentPage - 1) % totalPages) + 1;
+    const canLoadProducts = filteredProductsCount > 0;
 
     useEffect(() => {
         setSearchInput(keyword);
@@ -41,7 +43,7 @@ const AllProducts = () => {
 
     useEffect(() => {
         dispatch(getProducts(
-            currentPage,
+            requestedPage,
             keyword,
             price,
             category,
@@ -53,11 +55,11 @@ const AllProducts = () => {
 
     useEffect(() => {
         const target = loadMoreRef.current;
-        if (!target || !hasMore || loading) return;
+        if (!target || !canLoadProducts || loading) return;
 
         const observer = new IntersectionObserver(
             entries => {
-                if (entries[0].isIntersecting && !loading && hasMore) {
+                if (entries[0].isIntersecting && !loading && canLoadProducts) {
                     setCurrentPage(page => page + 1);
                 }
             },
@@ -66,7 +68,7 @@ const AllProducts = () => {
 
         observer.observe(target);
         return () => observer.disconnect();
-    }, [hasMore, loading, products.length]);
+    }, [canLoadProducts, loading, products.length]);
 
     const searchHandler = event => {
         event.preventDefault();
@@ -223,15 +225,14 @@ const AllProducts = () => {
                         ) : (
                             <>
                                 <div className="row">
-                                    {products.map(product => (
-                                        <Product key={product._id} product={product} />
+                                    {products.map((product, index) => (
+                                        <Product key={`${product._id}-${index}`} product={product} />
                                     ))}
                                 </div>
 
                                 <div ref={loadMoreRef} className="text-center py-4" aria-live="polite">
                                     {loading && <Loader />}
-                                    {!loading && hasMore && <span>Scroll to load more products...</span>}
-                                    {!hasMore && <span>You have reached the end of the products.</span>}
+                                    {!loading && canLoadProducts && <span>Keep scrolling — more spooky finds are loading...</span>}
                                     {error && <p className="text-danger">{String(error)}</p>}
                                 </div>
                             </>

@@ -53,9 +53,7 @@ export const productsReducer = (state = { products: [] }, action) => {
                 ...state,
                 loading: false,
                 products: action.payload.append
-                    ? [...(state.products || []), ...action.payload.products.filter(
-                        product => !(state.products || []).some(existing => existing._id === product._id)
-                    )]
+                    ? [...(state.products || []), ...action.payload.products]
                     : action.payload.products,
                 productsCount: action.payload.productsCount,
                 resPerPage: action.payload.resPerPage,
