@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -14,7 +14,6 @@ import Loader from '../Layout/Loader';
 const AllProducts = () => {
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-    const loadMoreRef = useRef(null);
 
     const keyword = searchParams.get('keyword') || '';
     const [searchInput, setSearchInput] = useState(keyword);
@@ -30,10 +29,11 @@ const AllProducts = () => {
         loading,
         error,
         products = [],
-        filteredProductsCount = 0
+        filteredProductsCount = 0,
+        resPerPage = 4
     } = useSelector(state => state.products || {});
 
-    const canLoadProducts = products.length < filteredProductsCount;
+    const totalPages = Math.ceil(filteredProductsCount / resPerPage);
 
     useEffect(() => { dispatch(getCategories()); }, [dispatch]);
 
@@ -49,27 +49,9 @@ const AllProducts = () => {
             price,
             category,
             ratings,
-            reviews,
-            currentPage > 1
+            reviews
         ));
     }, [dispatch, currentPage, keyword, price, category, ratings, reviews]);
-
-    useEffect(() => {
-        const target = loadMoreRef.current;
-        if (!target || !canLoadProducts || loading) return;
-
-        const observer = new IntersectionObserver(
-            entries => {
-                if (entries[0].isIntersecting && !loading && canLoadProducts) {
-                    setCurrentPage(page => page + 1);
-                }
-            },
-            { root: null, rootMargin: '300px', threshold: 0 }
-        );
-
-        observer.observe(target);
-        return () => observer.disconnect();
-    }, [canLoadProducts, loading, products.length]);
 
     const searchHandler = event => {
         event.preventDefault();
@@ -232,11 +214,24 @@ const AllProducts = () => {
                                     ))}
                                 </div>
 
-                                <div ref={loadMoreRef} className="text-center py-4" aria-live="polite">
-                                    {loading && <Loader />}
-                                    {!loading && canLoadProducts && <span>Keep scrolling — more spooky finds are loading...</span>}
-                                    {error && <p className="text-danger">{String(error)}</p>}
-                                </div>
+                                {totalPages > 1 && (
+                                    <nav className="mt-4" aria-label="Product pages">
+                                        <ul className="pagination justify-content-center">
+                                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                                <button className="page-link" disabled={currentPage === 1 || loading} onClick={() => setCurrentPage(page => page - 1)}>Previous</button>
+                                            </li>
+                                            {Array.from({ length: totalPages }, (_, index) => index + 1).map(page => (
+                                                <li key={page} className={`page-item ${currentPage === page ? 'active' : ''}`}>
+                                                    <button className="page-link" disabled={loading} onClick={() => setCurrentPage(page)} aria-current={currentPage === page ? 'page' : undefined}>{page}</button>
+                                                </li>
+                                            ))}
+                                            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                                <button className="page-link" disabled={currentPage === totalPages || loading} onClick={() => setCurrentPage(page => page + 1)}>Next</button>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                )}
+                                {error && <p className="text-danger text-center">{String(error)}</p>}
                             </>
                         )}
                     </main>

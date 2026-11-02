@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
@@ -12,7 +12,6 @@ import { getProducts } from '../actions/productActions';
 const Home = () => {
     const [price, setPrice] = useState([1, 10000]);
     const [currentPage, setCurrentPage] = useState(1);
-    const loadMoreRef = useRef(null);
     const { keyword } = useParams();
     const dispatch = useDispatch();
 
@@ -26,32 +25,15 @@ const Home = () => {
     } = useSelector(state => state.products || {});
 
     const totalProducts = keyword ? filteredProductsCount : productsCount;
-    const canLoadProducts = products.length < totalProducts;
+    const totalPages = Math.ceil(totalProducts / resPerPage);
 
     useEffect(() => {
         setCurrentPage(1);
     }, [keyword, price]);
 
     useEffect(() => {
-        dispatch(getProducts(currentPage, keyword || '', price, '', 0, 0, currentPage > 1));
+        dispatch(getProducts(currentPage, keyword || '', price));
     }, [dispatch, currentPage, keyword, price]);
-
-    useEffect(() => {
-        const target = loadMoreRef.current;
-        if (!target || !canLoadProducts || loading) return;
-
-        const observer = new IntersectionObserver(
-            entries => {
-                if (entries[0].isIntersecting && !loading && canLoadProducts) {
-                    setCurrentPage(page => page + 1);
-                }
-            },
-            { root: null, rootMargin: '300px', threshold: 0 }
-        );
-
-        observer.observe(target);
-        return () => observer.disconnect();
-    }, [canLoadProducts, loading, products.length]);
 
     const handlePriceChange = (event, newValue) => {
         setPrice(newValue);
@@ -112,11 +94,24 @@ const Home = () => {
                                 ))}
                             </div>
 
-                            <div ref={loadMoreRef} className="text-center py-4" aria-live="polite">
-                                {loading && <Loader />}
-                                {!loading && canLoadProducts && <span>Keep scrolling — more spooky finds are loading...</span>}
-                                {error && <p className="text-danger">{String(error)}</p>}
-                            </div>
+                            {totalPages > 1 && (
+                                <nav className="mt-4" aria-label="Product pages">
+                                    <ul className="pagination justify-content-center">
+                                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                            <button className="page-link" disabled={currentPage === 1 || loading} onClick={() => setCurrentPage(page => page - 1)}>Previous</button>
+                                        </li>
+                                        {Array.from({ length: totalPages }, (_, index) => index + 1).map(page => (
+                                            <li key={page} className={`page-item ${currentPage === page ? 'active' : ''}`}>
+                                                <button className="page-link" disabled={loading} onClick={() => setCurrentPage(page)} aria-current={currentPage === page ? 'page' : undefined}>{page}</button>
+                                            </li>
+                                        ))}
+                                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                            <button className="page-link" disabled={currentPage === totalPages || loading} onClick={() => setCurrentPage(page => page + 1)}>Next</button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            )}
+                            {error && <p className="text-danger text-center">{String(error)}</p>}
                         </>
                     )}
                 </section>
