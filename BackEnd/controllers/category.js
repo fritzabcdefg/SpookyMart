@@ -2,12 +2,22 @@ const Category = require('../models/category');
 const Product = require('../models/product');
 const slugify = value => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
+// Import existing product categories into the Category collection once they are requested.
+const syncExistingCategories = async () => {
+ const names = await Product.distinct('category');
+ for (const rawName of names) {
+  const name = String(rawName || '').trim();
+  const slug = slugify(name);
+  if (name && slug) await Category.updateOne({ name }, { $setOnInsert: { name, slug } }, { upsert: true });
+ }
+};
+
 exports.getCategories = async (req,res) => {
- try { const categories=await Category.find({isActive:true}).sort({name:1}); return res.status(200).json({success:true,categories}); }
+ try { await syncExistingCategories(); const categories=await Category.find({isActive:true}).sort({name:1}); return res.status(200).json({success:true,categories}); }
  catch(error){ return res.status(500).json({success:false,message:'Unable to load categories'}); }
 };
 exports.getAdminCategories = async (req,res) => {
- try { const categories=await Category.find().sort({createdAt:-1}); return res.status(200).json({success:true,categories}); }
+ try { await syncExistingCategories(); const categories=await Category.find().sort({createdAt:-1}); return res.status(200).json({success:true,categories}); }
  catch(error){ return res.status(500).json({success:false,message:'Unable to load categories'}); }
 };
 exports.createCategory = async (req,res) => {
