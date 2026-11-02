@@ -338,3 +338,65 @@ footer p { margin: 0 !important; color: #f7f1fb !important; font-size: .9rem; }
     font-size: 1.65rem;
   }
 }
+
+
+/* Explicit checkout layout overrides: avoid the generic .wrapper flex sizing. */
+.checkout-form-wrapper {
+  display: flex !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 2rem 0 3rem !important;
+  padding: 0 16px !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  box-sizing: border-box !important;
+}
+.checkout-form-column {
+  flex: 0 1 760px !important;
+  width: 100% !important;
+  max-width: 760px !important;
+  min-width: 0 !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  box-sizing: border-box !important;
+}
+.checkout-form-wrapper .checkout-form {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: clamp(20px, 4vw, 42px) !important;
+  box-sizing: border-box !important;
+}
+.checkout-form-wrapper .checkout-form h1,
+.checkout-form-wrapper .checkout-form h5,
+.checkout-form-wrapper .checkout-form p,
+.checkout-form-wrapper .checkout-form label {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+.checkout-form-wrapper .checkout-form .form-control,
+.checkout-form-wrapper .checkout-form select,
+.checkout-form-wrapper .checkout-form button {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+@media (max-width: 575.98px) {
+  .checkout-form-wrapper {
+    padding: 0 10px !important;
+    margin-top: 1.25rem !important;
+  }
+  .checkout-form-column {
+    padding: 0 !important;
+  }
+  .checkout-form-wrapper .checkout-form {
+    padding: 20px 16px !important;
+  }
+  .checkout-form-wrapper .checkout-form h1 {
+    font-size: 1.6rem;
+  }
+}
