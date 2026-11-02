@@ -300,5 +300,7 @@ footer p { margin: 0 !important; color: #f7f1fb !important; font-size: .9rem; }
   .cart-item { margin: 1rem 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  html {
+    scroll-behavior: auto !important;
+  }
 }
