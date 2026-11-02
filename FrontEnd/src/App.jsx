@@ -145,7 +145,7 @@ function App() {
         </Routes>
       </Router>
       <Footer />
-      <ToastContainer />
+      <ToastContainer position="bottom-right" />
     </>
   )
 }
