@@ -13,6 +13,7 @@ const Home = () => {
     const [price, setPrice] = useState([1, 10000]);
     const [currentPage, setCurrentPage] = useState(1);
     const loadMoreRef = useRef(null);
+    const hasTriggeredLoadRef = useRef(false);
     const { keyword } = useParams();
     const dispatch = useDispatch();
 
@@ -38,15 +39,25 @@ const Home = () => {
 
     useEffect(() => {
         const target = loadMoreRef.current;
-        if (!target || !canLoadProducts || loading) return;
+        if (!target || !canLoadProducts) return;
 
         const observer = new IntersectionObserver(
             entries => {
-                if (entries[0].isIntersecting && !loading && canLoadProducts) {
+                const entry = entries[0];
+
+                // Wait until the user scrolls past the sentinel before allowing
+                // another page request. This prevents loading every page at once.
+                if (!entry.isIntersecting) {
+                    hasTriggeredLoadRef.current = false;
+                    return;
+                }
+
+                if (!loading && !hasTriggeredLoadRef.current) {
+                    hasTriggeredLoadRef.current = true;
                     setCurrentPage(page => page + 1);
                 }
             },
-            { root: null, rootMargin: '300px', threshold: 0 }
+            { root: null, rootMargin: '0px', threshold: 0 }
         );
 
         observer.observe(target);
