@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
 import { getProducts } from '../../actions/productActions';
+import { getCategories } from '../../actions/categoryActions';
 import Product from './Product';
 import MetaData from '../Layout/MetaData';
 import Loader from '../Layout/Loader';
@@ -24,6 +25,7 @@ const AllProducts = () => {
     const [reviews, setReviews] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
 
+    const { categories = [] } = useSelector(state => state.categories || {});
     const {
         loading,
         error,
@@ -32,10 +34,9 @@ const AllProducts = () => {
         filteredProductsCount = 0
     } = useSelector(state => state.products || {});
 
-    const totalPages = Math.max(1, Math.ceil(filteredProductsCount / resPerPage));
-    const requestedPage = ((currentPage - 1) % totalPages) + 1;
-    const canLoadProducts = filteredProductsCount > 0;
+    useEffect(() => { dispatch(getCategories()); }, [dispatch]);
 
+    // Synchronize search input with URL.
     useEffect(() => {
         setSearchInput(keyword);
         setCurrentPage(1);
@@ -174,8 +175,7 @@ const AllProducts = () => {
                                 <h4>Category</h4>
                                 <select className="form-control" value={category} onChange={categoryChangeHandler}>
                                     <option value="">All Categories</option>
-                                    <option value="Decorations">Decorations</option>
-                                    <option value="Costumes">Costumes</option>
+                                    {categories.map(item => <option key={item._id} value={item.name}>{item.name}</option>)}
                                 </select>
                             </div>
 

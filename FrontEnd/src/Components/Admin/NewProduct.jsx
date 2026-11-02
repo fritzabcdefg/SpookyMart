@@ -15,11 +15,7 @@ import {
 } from '../../actions/productActions';
 
 import { NEW_PRODUCT_RESET } from '../../constants/productConstants';
-
-const categories = [
-    'Decorations',
-    'Costumes'
-];
+import { getCategories } from '../../actions/categoryActions';
 
 // Yup validation rules
 const productSchema = Yup.object({
@@ -37,9 +33,7 @@ const productSchema = Yup.object({
         .trim()
         .required('Product description is required'),
 
-    category: Yup.string()
-        .oneOf(categories, 'Please select a valid category')
-        .required('Category is required'),
+    category: Yup.string().required('Category is required'),
 
     stock: Yup.number()
         .typeError('Stock must be a number')
@@ -59,6 +53,8 @@ const productSchema = Yup.object({
 const NewProduct = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { categories = [] } = useSelector(state => state.categories || {});
+    useEffect(() => { dispatch(getCategories()); }, [dispatch]);
 
     const {
         loading,
@@ -71,7 +67,7 @@ const NewProduct = () => {
             name: '',
             price: '',
             description: '',
-            category: 'Decorations',
+            category: '',
             stock: '',
             seller: '',
             images: []
@@ -96,6 +92,10 @@ const NewProduct = () => {
             dispatch(newProduct(formData));
         }
     });
+
+    useEffect(() => {
+        if (!values.category && categories.length) setFieldValue('category', categories[0].name);
+    }, [categories, values.category, setFieldValue]);
 
     const {
         values,
@@ -295,12 +295,10 @@ const NewProduct = () => {
                                     value={values.category}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
+                                    disabled={categories.length === 0}
                                 >
-                                    {categories.map(item => (
-                                        <option key={item} value={item}>
-                                            {item}
-                                        </option>
-                                    ))}
+                                    <option value="">Select a category</option>
+                                    {categories.map(item => <option key={item._id} value={item.name}>{item.name}</option>)}
                                 </select>
 
                                 {showError('category') && (

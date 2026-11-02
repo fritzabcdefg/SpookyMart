@@ -25,6 +25,10 @@ const Sidebar = () => {
                     </li>
 
                     <li>
+                        <Link to="/admin/categories"><i className="fa fa-tags"></i> Categories</Link>
+                    </li>
+
+                    <li>
                         <Link to="/admin/orders"><i className="fa fa-shopping-basket"></i> Orders</Link>
                     </li>
 
