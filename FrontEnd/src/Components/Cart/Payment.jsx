@@ -158,9 +158,9 @@ const Payment = () => {
             <CheckoutSteps shipping confirmOrder payment />
 
             <div className="row wrapper">
-                <div className="col-10 col-lg-5">
+                <div className="col-12 col-sm-10 col-md-7 col-lg-5 mx-auto">
                     <form
-                        className="shadow-lg"
+                        className="shadow-lg payment-form"
                         onSubmit={submitHandler}
                     >
                         <h1 className="mb-4">Payment</h1>
