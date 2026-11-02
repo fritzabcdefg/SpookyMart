@@ -17,6 +17,7 @@ const AllProducts = () => {
     const loadMoreRef = useRef(null);
 
     const keyword = searchParams.get('keyword') || '';
+
     const [searchInput, setSearchInput] = useState(keyword);
     const [price, setPrice] = useState([1, 10000]);
     const [draftPrice, setDraftPrice] = useState([1, 10000]);
@@ -25,7 +26,10 @@ const AllProducts = () => {
     const [reviews, setReviews] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const { categories = [] } = useSelector(state => state.categories || {});
+    const { categories = [] } = useSelector(
+        state => state.categories || {}
+    );
+
     const {
         loading,
         error,
@@ -34,7 +38,23 @@ const AllProducts = () => {
         filteredProductsCount = 0
     } = useSelector(state => state.products || {});
 
-    useEffect(() => { dispatch(getCategories()); }, [dispatch]);
+    // Calculate pagination and infinite-scroll values.
+    const totalProducts = filteredProductsCount;
+
+    const totalPages = Math.max(
+        1,
+        Math.ceil(totalProducts / resPerPage)
+    );
+
+    const requestedPage = ((currentPage - 1) % totalPages) + 1;
+
+    const canLoadProducts =
+        totalProducts > 0 && products.length < totalProducts;
+
+    // Load categories.
+    useEffect(() => {
+        dispatch(getCategories());
+    }, [dispatch]);
 
     // Synchronize search input with URL.
     useEffect(() => {
@@ -42,48 +62,80 @@ const AllProducts = () => {
         setCurrentPage(1);
     }, [keyword]);
 
+    // Fetch products whenever search, filters, or page changes.
     useEffect(() => {
-        dispatch(getProducts(
-            requestedPage,
-            keyword,
-            price,
-            category,
-            ratings,
-            reviews,
-            currentPage > 1
-        ));
-    }, [dispatch, currentPage, keyword, price, category, ratings, reviews]);
+        dispatch(
+            getProducts(
+                requestedPage,
+                keyword,
+                price,
+                category,
+                ratings,
+                reviews,
+                currentPage > 1
+            )
+        );
+    }, [
+        dispatch,
+        currentPage,
+        requestedPage,
+        keyword,
+        price,
+        category,
+        ratings,
+        reviews
+    ]);
 
+    // Infinite scrolling.
     useEffect(() => {
         const target = loadMoreRef.current;
-        if (!target || !canLoadProducts || loading) return;
+
+        if (!target || !canLoadProducts || loading) {
+            return;
+        }
 
         const observer = new IntersectionObserver(
             entries => {
-                if (entries[0].isIntersecting && !loading && canLoadProducts) {
+                if (
+                    entries[0].isIntersecting &&
+                    !loading &&
+                    canLoadProducts
+                ) {
                     setCurrentPage(page => page + 1);
                 }
             },
-            { root: null, rootMargin: '300px', threshold: 0 }
+            {
+                root: document.querySelector('.app-content'),
+                rootMargin: '300px',
+                threshold: 0
+            }
         );
 
         observer.observe(target);
+
         return () => observer.disconnect();
     }, [canLoadProducts, loading, products.length]);
 
+    // Search products.
     const searchHandler = event => {
         event.preventDefault();
+
         const searchTerm = searchInput.trim();
+
         setCurrentPage(1);
-        setSearchParams(searchTerm ? { keyword: searchTerm } : {});
+        setSearchParams(
+            searchTerm ? { keyword: searchTerm } : {}
+        );
     };
 
+    // Clear search.
     const clearSearch = () => {
         setSearchInput('');
         setCurrentPage(1);
         setSearchParams({});
     };
 
+    // Clear all filters.
     const clearFilters = () => {
         setPrice([1, 10000]);
         setDraftPrice([1, 10000]);
@@ -93,7 +145,9 @@ const AllProducts = () => {
         setCurrentPage(1);
     };
 
-    const priceChangeHandler = (event, newValue) => setDraftPrice(newValue);
+    const priceChangeHandler = (event, newValue) => {
+        setDraftPrice(newValue);
+    };
 
     const priceChangeCommittedHandler = (event, newValue) => {
         setPrice(newValue);
@@ -120,94 +174,185 @@ const AllProducts = () => {
             <MetaData title="All Products - SpookyMart" />
 
             <div className="container products-page">
+
                 <div className="products-page-heading">
                     <h1 id="products_heading">All Products</h1>
                     <p>Find something spooky for every occasion.</p>
                 </div>
 
-                <form className="products-search-form" onSubmit={searchHandler}>
+                {/* Search */}
+                <form
+                    className="products-search-form"
+                    onSubmit={searchHandler}
+                >
                     <input
                         type="text"
                         className="form-control"
                         placeholder="Search products..."
                         value={searchInput}
-                        onChange={event => setSearchInput(event.target.value)}
+                        onChange={event =>
+                            setSearchInput(event.target.value)
+                        }
                     />
-                    <button type="submit" className="btn">Search</button>
+
+                    <button type="submit" className="btn">
+                        Search
+                    </button>
+
                     {keyword && (
-                        <button type="button" className="btn clear-search-btn" onClick={clearSearch}>
+                        <button
+                            type="button"
+                            className="btn clear-search-btn"
+                            onClick={clearSearch}
+                        >
                             Clear Search
                         </button>
                     )}
                 </form>
 
                 <div className="row products-catalog-layout">
+
+                    {/* Filters */}
                     <aside className="col-12 col-md-3">
                         <div className="products-filter-panel">
+
                             <div className="filter-panel-heading">
                                 <h3>Filters</h3>
-                                <button type="button" onClick={clearFilters} className="clear-filters-btn">
+
+                                <button
+                                    type="button"
+                                    onClick={clearFilters}
+                                    className="clear-filters-btn"
+                                >
                                     Clear Filters
                                 </button>
                             </div>
 
+                            {/* Price */}
                             <div className="product-filter">
                                 <h4>Price Range</h4>
+
                                 <Box sx={{ width: '100%', px: 1 }}>
                                     <Slider
                                         value={draftPrice}
                                         onChange={priceChangeHandler}
-                                        onChangeCommitted={priceChangeCommittedHandler}
+                                        onChangeCommitted={
+                                            priceChangeCommittedHandler
+                                        }
                                         valueLabelDisplay="auto"
                                         min={1}
                                         max={10000}
                                         step={100}
-                                        sx={{ color: '#ff6600' }}
+                                        sx={{
+                                            color: '#ff6600'
+                                        }}
                                     />
                                 </Box>
+
                                 <div className="price-range-labels">
-                                    <span>₱{draftPrice[0].toLocaleString()}</span>
-                                    <span>₱{draftPrice[1].toLocaleString()}</span>
+                                    <span>
+                                        ₱{draftPrice[0].toLocaleString()}
+                                    </span>
+
+                                    <span>
+                                        ₱{draftPrice[1].toLocaleString()}
+                                    </span>
                                 </div>
                             </div>
 
+                            {/* Category */}
                             <div className="product-filter">
                                 <h4>Category</h4>
-                                <select className="form-control" value={category} onChange={categoryChangeHandler}>
-                                    <option value="">All Categories</option>
-                                    {categories.map(item => <option key={item._id} value={item.name}>{item.name}</option>)}
+
+                                <select
+                                    className="form-control"
+                                    value={category}
+                                    onChange={categoryChangeHandler}
+                                >
+                                    <option value="">
+                                        All Categories
+                                    </option>
+
+                                    {categories.map(item => (
+                                        <option
+                                            key={item._id}
+                                            value={item.name}
+                                        >
+                                            {item.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
+                            {/* Ratings */}
                             <div className="product-filter">
                                 <h4>Minimum Rating</h4>
-                                <select className="form-control" value={ratings} onChange={ratingsChangeHandler}>
-                                    <option value="0">All Ratings</option>
-                                    <option value="1">1 Star & Up</option>
-                                    <option value="2">2 Stars & Up</option>
-                                    <option value="3">3 Stars & Up</option>
-                                    <option value="4">4 Stars & Up</option>
-                                    <option value="5">5 Stars Only</option>
+
+                                <select
+                                    className="form-control"
+                                    value={ratings}
+                                    onChange={ratingsChangeHandler}
+                                >
+                                    <option value="0">
+                                        All Ratings
+                                    </option>
+                                    <option value="1">
+                                        1 Star & Up
+                                    </option>
+                                    <option value="2">
+                                        2 Stars & Up
+                                    </option>
+                                    <option value="3">
+                                        3 Stars & Up
+                                    </option>
+                                    <option value="4">
+                                        4 Stars & Up
+                                    </option>
+                                    <option value="5">
+                                        5 Stars Only
+                                    </option>
                                 </select>
                             </div>
 
+                            {/* Reviews */}
                             <div className="product-filter">
                                 <h4>Minimum Reviews</h4>
-                                <select className="form-control" value={reviews} onChange={reviewsChangeHandler}>
-                                    <option value="0">All Reviews</option>
-                                    <option value="1">1+ Reviews</option>
-                                    <option value="5">5+ Reviews</option>
-                                    <option value="10">10+ Reviews</option>
-                                    <option value="20">20+ Reviews</option>
+
+                                <select
+                                    className="form-control"
+                                    value={reviews}
+                                    onChange={reviewsChangeHandler}
+                                >
+                                    <option value="0">
+                                        All Reviews
+                                    </option>
+                                    <option value="1">
+                                        1+ Reviews
+                                    </option>
+                                    <option value="5">
+                                        5+ Reviews
+                                    </option>
+                                    <option value="10">
+                                        10+ Reviews
+                                    </option>
+                                    <option value="20">
+                                        20+ Reviews
+                                    </option>
                                 </select>
                             </div>
+
                         </div>
                     </aside>
 
+                    {/* Product Results */}
                     <main className="col-12 col-md-9">
+
                         <div className="products-results-heading">
                             <h3>Products</h3>
-                            <span>{filteredProductsCount} product(s) found</span>
+
+                            <span>
+                                {filteredProductsCount} product(s) found
+                            </span>
                         </div>
 
                         {products.length === 0 && loading ? (
@@ -220,23 +365,43 @@ const AllProducts = () => {
                         ) : products.length === 0 ? (
                             <div className="products-message">
                                 <h4>No products found</h4>
-                                <p>Try changing your search or filters.</p>
+                                <p>
+                                    Try changing your search or filters.
+                                </p>
                             </div>
                         ) : (
                             <>
                                 <div className="row">
                                     {products.map((product, index) => (
-                                        <Product key={`${product._id}-${index}`} product={product} />
+                                        <Product
+                                            key={`${product._id}-${index}`}
+                                            product={product}
+                                        />
                                     ))}
                                 </div>
 
-                                <div ref={loadMoreRef} className="text-center py-4" aria-live="polite">
+                                <div
+                                    ref={loadMoreRef}
+                                    className="text-center py-4"
+                                    aria-live="polite"
+                                >
                                     {loading && <Loader />}
-                                    {!loading && canLoadProducts && <span>Keep scrolling — more spooky finds are loading...</span>}
-                                    {error && <p className="text-danger">{String(error)}</p>}
+
+                                    {!loading && canLoadProducts && (
+                                        <span>
+                                            Keep scrolling — more spooky finds are loading...
+                                        </span>
+                                    )}
+
+                                    {error && (
+                                        <p className="text-danger">
+                                            {String(error)}
+                                        </p>
+                                    )}
                                 </div>
                             </>
                         )}
+
                     </main>
                 </div>
             </div>
