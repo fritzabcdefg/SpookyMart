@@ -64,8 +64,8 @@ const OrdersList = () => {
             headerName: 'Status',
             width: 150,
             renderCell: params => {
-                const delivered =
-                    String(params.value).toLowerCase() === 'delivered';
+                const delivered = String(params.value).toLowerCase() === 'delivered';
+                const cancelled = String(params.value).toLowerCase() === 'cancelled';
 
                 return (
                     <span
@@ -74,10 +74,8 @@ const OrdersList = () => {
                             borderRadius: '20px',
                             fontSize: '12px',
                             fontWeight: 600,
-                            background: delivered
-                                ? 'rgba(34, 197, 94, 0.15)'
-                                : 'rgba(245, 158, 11, 0.15)',
-                            color: delivered ? '#22c55e' : '#f59e0b'
+                            background: delivered ? 'rgba(34, 197, 94, 0.15)' : cancelled ? 'rgba(220, 38, 38, 0.15)' : 'rgba(245, 158, 11, 0.15)',
+                            color: delivered ? '#22c55e' : cancelled ? '#dc2626' : '#f59e0b'
                         }}
                     >
                         {params.value}

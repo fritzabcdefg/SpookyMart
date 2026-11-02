@@ -93,6 +93,10 @@ const NewProduct = () => {
         }
     });
 
+    useEffect(() => {
+        if (!values.category && categories.length) setFieldValue('category', categories[0].name);
+    }, [categories, values.category, setFieldValue]);
+
     const {
         values,
         errors,
@@ -103,10 +107,6 @@ const NewProduct = () => {
         setFieldValue,
         setFieldTouched
     } = formik;
-
-    useEffect(() => {
-        if (!values.category && categories.length) setFieldValue('category', categories[0].name);
-    }, [categories, values.category, setFieldValue]);
 
     // Convert selected images to Base64
     const onChange = async (e) => {

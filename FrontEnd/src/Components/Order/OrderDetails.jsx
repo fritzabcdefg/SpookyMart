@@ -222,6 +222,25 @@ const OrderDetails = () => {
         }
     };
     const [downloadingReceipt, setDownloadingReceipt] = useState(false);
+    const [cancellingOrder, setCancellingOrder] = useState(false);
+
+    const cancelOrder = async () => {
+        if (!window.confirm('Are you sure you want to cancel this order? This cannot be undone.')) return;
+        try {
+            setCancellingOrder(true);
+            const { data } = await axios.post(
+                `${import.meta.env.VITE_API}/order/${id}/cancel`,
+                {},
+                { withCredentials: true }
+            );
+            toast.success(data.message || 'Order cancelled successfully.');
+            dispatch(getOrderDetails(id));
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Unable to cancel this order.');
+        } finally {
+            setCancellingOrder(false);
+        }
+    };
 
     const downloadReceipt = async () => {
         try {
@@ -271,6 +290,11 @@ const OrderDetails = () => {
                         <h1 className="my-5">
                             Order # {order._id}
                         </h1>
+                        {orderStatus === 'Processing' && (
+                            <button type="button" className="btn btn-danger mb-4 mr-2" onClick={cancelOrder} disabled={cancellingOrder}>
+                                {cancellingOrder ? 'Cancelling...' : 'Cancel Order'}
+                            </button>
+                        )}
                         <button
                             type="button"
                             className="btn btn-warning mb-4"
