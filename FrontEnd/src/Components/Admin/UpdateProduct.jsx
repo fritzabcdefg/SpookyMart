@@ -13,6 +13,7 @@ import {
 } from '../../actions/productActions';
 
 import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants';
+import { getCategories } from '../../actions/categoryActions';
 
 const UpdateProduct = () => {
     const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const UpdateProduct = () => {
         isUpdated
     } = useSelector(state => state.product);
 
+    const { categories = [] } = useSelector(state => state.categories || {});
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
@@ -41,7 +43,7 @@ const UpdateProduct = () => {
     const [imagesPreview, setImagesPreview] = useState([]);
     const [removedImages, setRemovedImages] = useState([]);
 
-    const categories = ['Decorations', 'Costumes'];
+    useEffect(() => { dispatch(getCategories()); }, [dispatch]);
 
     useEffect(() => {
         dispatch(getProductDetails(id));
@@ -225,11 +227,8 @@ const UpdateProduct = () => {
                                         value={category}
                                         onChange={e => setCategory(e.target.value)}
                                     >
-                                        {categories.map(item => (
-                                            <option key={item} value={item}>
-                                                {item}
-                                            </option>
-                                        ))}
+                                        {!categories.some(item => item.name === category) && category && <option value={category}>{category}</option>}
+                                        {categories.map(item => <option key={item._id} value={item.name}>{item.name}</option>)}
                                     </select>
                                 </div>
 

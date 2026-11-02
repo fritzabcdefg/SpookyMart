@@ -10,6 +10,7 @@ const order = require('./routes/order');
 const customer = require('./routes/customer');
 const cart = require('./routes/cart');
 const firebaseAuth = require('./routes/firebaseAuth');
+const categories = require('./routes/category');
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -27,6 +28,7 @@ app.use(express.urlencoded({
 app.use('/api/v1', products);
 app.use('/api/v1', auth);
 app.use('/api/v1', firebaseAuth);
+app.use('/api/v1', categories);
 app.use('/api/v1', order);
 app.use('/api/v1', customer);
 app.use('/api/v1', cart);

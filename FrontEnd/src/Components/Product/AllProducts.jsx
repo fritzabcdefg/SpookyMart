@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 
 import { getProducts } from '../../actions/productActions';
+import { getCategories } from '../../actions/categoryActions';
 import Product from './Product';
 import MetaData from '../Layout/MetaData';
 import Loader from '../Layout/Loader';
@@ -28,6 +29,7 @@ const AllProducts = () => {
     const [reviews, setReviews] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
 
+    const { categories = [] } = useSelector(state => state.categories || {});
     const {
         loading,
         error,
@@ -35,6 +37,8 @@ const AllProducts = () => {
         resPerPage = 4,
         filteredProductsCount = 0
     } = useSelector(state => state.products || {});
+
+    useEffect(() => { dispatch(getCategories()); }, [dispatch]);
 
     // Synchronize search input with URL.
     useEffect(() => {
@@ -218,12 +222,7 @@ const AllProducts = () => {
                                     onChange={categoryChangeHandler}
                                 >
                                     <option value="">All Categories</option>
-                                    <option value="Decorations">
-                                        Decorations
-                                    </option>
-                                    <option value="Costumes">
-                                        Costumes
-                                    </option>
+                                    {categories.map(item => <option key={item._id} value={item.name}>{item.name}</option>)}
                                 </select>
                             </div>
 
