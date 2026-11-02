@@ -18,6 +18,7 @@ const ListOrders = () => {
     );
 
     const [confirmingOrderId, setConfirmingOrderId] = useState(null);
+    const [cancellingOrderId, setCancellingOrderId] = useState(null);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
 
@@ -109,6 +110,25 @@ const ListOrders = () => {
 
     
 
+
+    const handleCancelOrder = async orderId => {
+        if (!window.confirm('Are you sure you want to cancel this order? This cannot be undone.')) return;
+        try {
+            setCancellingOrderId(orderId);
+            const { data } = await axios.post(
+                `${import.meta.env.VITE_API}/order/${orderId}/cancel`,
+                {},
+                { withCredentials: true }
+            );
+            toast.success(data.message || 'Order cancelled successfully.');
+            dispatch(myOrders());
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Unable to cancel this order.');
+        } finally {
+            setCancellingOrderId(null);
+        }
+    };
+
 const columns = [
     {
         field: 'actions',
@@ -122,6 +142,7 @@ const columns = [
 
             const isDelivered =
                 String(order.orderStatus || '').toLowerCase() === 'delivered';
+            const canCancel = order.orderStatus === 'Processing';
 
             const isReceived =
                 order.isReceived === true ||
@@ -129,6 +150,7 @@ const columns = [
 
             const isCompleted = isDelivered && isReceived;
             const isConfirming = confirmingOrderId === order._id;
+            const isCancelling = cancellingOrderId === order._id;
 
             return (
                 <div style={{
@@ -145,6 +167,12 @@ const columns = [
                     >
                         View
                     </Button>
+
+                    {canCancel && (
+                        <Button variant="outlined" color="error" size="small" disabled={isCancelling} onClick={() => handleCancelOrder(order._id)}>
+                            {isCancelling ? 'Cancelling...' : 'Cancel Order'}
+                        </Button>
+                    )}
 
                     {isDelivered && !isReceived && (
                         <Button
@@ -237,10 +265,9 @@ const columns = [
         renderCell: params => (
             <span style={{
                 color:
-                    params.value === 'Completed' ||
-                    params.value === 'Delivered'
+                    params.value === 'Completed' || params.value === 'Delivered'
                         ? 'green'
-                        : 'red',
+                        : params.value === 'Cancelled' ? '#dc2626' : '#d97706',
                 fontWeight: 600
             }}>
                 {params.value}
