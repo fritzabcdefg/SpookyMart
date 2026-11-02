@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
@@ -11,6 +11,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { login, clearErrors } from '../../actions/userActions';
+
+import { useState } from 'react';
+import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth';
+import { firebaseAuth, isFirebaseConfigured } from '../../firebase';
+import axios from 'axios';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL } from '../../constants/userConstants';
+import { loadCartForUser } from '../../actions/cartActions';
+
 
 const loginSchema = Yup.object({
     email: Yup.string()
@@ -30,6 +38,7 @@ const Login = () => {
         loading
     } = useSelector(state => state.auth);
 
+    const [socialLoading, setSocialLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -63,6 +72,44 @@ const Login = () => {
             dispatch(clearErrors());
         }
     }, [error, isAuthenticated, dispatch, navigate, redirect]);
+
+
+    const socialLogin = async (providerName) => {
+        if (!isFirebaseConfigured || !firebaseAuth) {
+            toast.error('Firebase is not configured. Add the Firebase web settings to FrontEnd/.env.');
+            return;
+        }
+
+        setSocialLoading(true);
+        dispatch({ type: LOGIN_REQUEST });
+        try {
+            const provider = providerName === 'google'
+                ? new GoogleAuthProvider()
+                : new FacebookAuthProvider();
+            provider.setCustomParameters({ prompt: 'select_account' });
+
+            const result = await signInWithPopup(firebaseAuth, provider);
+            const idToken = await result.user.getIdToken();
+            const { data } = await axios.post(
+                `${import.meta.env.VITE_API}/auth/firebase`,
+                { idToken },
+                { withCredentials: true }
+            );
+
+            dispatch({ type: LOGIN_SUCCESS, payload: data.user });
+            if (data.user?._id) dispatch(loadCartForUser(data.user._id));
+            toast.success(`Signed in with ${providerName === 'google' ? 'Google' : 'Facebook'}!`);
+        } catch (err) {
+            console.error('Social login error:', err);
+            dispatch({
+                type: LOGIN_FAIL,
+                payload: err.response?.data?.message || err.message || 'Social sign-in failed.'
+            });
+            toast.error(err.response?.data?.message || err.message || 'Social sign-in failed.');
+        } finally {
+            setSocialLoading(false);
+        }
+    };
 
     const showError = field =>
         formik.touched[field] && formik.errors[field];
@@ -142,6 +189,31 @@ const Login = () => {
                                     disabled={loading}
                                 >
                                     LOGIN
+                                </button>
+
+
+                                <div className="text-center my-3">
+                                    <span>OR CONTINUE WITH</span>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    className="btn btn-block py-3 mb-2"
+                                    style={{ backgroundColor: '#ffffff', color: '#333333', border: '1px solid #cccccc' }}
+                                    disabled={socialLoading || loading}
+                                    onClick={() => socialLogin('google')}
+                                >
+                                    <strong>G</strong> &nbsp; Continue with Google
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="btn btn-block py-3 mb-3"
+                                    style={{ backgroundColor: '#1877F2', color: '#ffffff' }}
+                                    disabled={socialLoading || loading}
+                                    onClick={() => socialLogin('facebook')}
+                                >
+                                    Continue with Facebook
                                 </button>
 
                                 <Link
