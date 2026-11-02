@@ -34,23 +34,37 @@ import {
 export const productsReducer = (state = { products: [] }, action) => {
     switch (action.type) {
         case ALL_PRODUCTS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+                products: action.meta?.append ? (state.products || []) : []
+            }
         case ADMIN_PRODUCTS_REQUEST:
             return {
                 ...state,
                 loading: true,
                 products: []
             }
-        case ALL_PRODUCTS_SUCCESS:
-
+        case ALL_PRODUCTS_SUCCESS: {
+            const incomingProducts = action.payload.products || [];
+            const combinedProducts = action.meta?.append
+                ? [...(state.products || []), ...incomingProducts]
+                : incomingProducts;
+            const uniqueProducts = Array.from(
+                new Map(combinedProducts.map(product => [product._id, product])).values()
+            );
 
             return {
                 ...state,
                 loading: false,
-                products: action.payload.products,
+                products: uniqueProducts,
                 productsCount: action.payload.productsCount,
                 resPerPage: action.payload.resPerPage,
-                filteredProductsCount: action.payload.filteredProductsCount
-            }
+                filteredProductsCount: action.payload.filteredProductsCount,
+                error: null
+            };
+        }
         case ADMIN_PRODUCTS_SUCCESS:
             return {
                 ...state,
