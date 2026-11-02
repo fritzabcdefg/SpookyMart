@@ -157,10 +157,10 @@ const Payment = () => {
 
             <CheckoutSteps shipping confirmOrder payment />
 
-            <div className="row wrapper">
-                <div className="col-12 col-sm-10 col-md-7 col-lg-5 mx-auto">
+            <div className="row wrapper checkout-form-wrapper payment-checkout">
+                <div className="col-12 col-md-10 col-lg-7 col-xl-6 checkout-form-column">
                     <form
-                        className="shadow-lg payment-form"
+                        className="shadow-lg checkout-form payment-form"
                         onSubmit={submitHandler}
                     >
                         <h1 className="mb-4">Payment</h1>
