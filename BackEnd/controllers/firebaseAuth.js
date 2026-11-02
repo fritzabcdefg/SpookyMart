@@ -56,6 +56,11 @@ exports.firebaseLogin = async (req, res) => {
         }
 
         const decoded = await verifyFirebaseIdToken(idToken);
+        const providerId = decoded.firebase?.sign_in_provider;
+        if (!['google.com', 'facebook.com'].includes(providerId)) {
+            return res.status(403).json({ success: false, message: 'Only Google and Facebook sign-in are supported.' });
+        }
+
         const email = String(decoded.email || '').trim().toLowerCase();
 
         if (!email) {
@@ -89,17 +94,18 @@ exports.firebaseLogin = async (req, res) => {
                 email,
                 password: crypto.randomBytes(48).toString('hex'),
                 avatar: {
-                    public_id: `firebase-${decoded.uid}`,
+                    public_id: `firebase-${decoded.sub}`,
                     url: photoURL
                 }
             });
 
-            await Customer.updateOne(
-                { user: user._id },
-                { $setOnInsert: { user: user._id } },
-                { upsert: true }
-            );
         }
+
+        await Customer.updateOne(
+            { user: user._id },
+            { $setOnInsert: { user: user._id } },
+            { upsert: true }
+        );
 
         return sendToken(user, 200, res);
     } catch (error) {
