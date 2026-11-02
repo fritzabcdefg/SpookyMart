@@ -1,127 +1,162 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 
-import Loader from '../Layout/Loader'
+import React, { useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import Loader from '../Layout/Loader';
 import MetaData from '../Layout/MetaData';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import axios from 'axios';
-// import { getUser, authenticate } from '../Utils/helpers';
-import { useDispatch, useSelector } from 'react-redux'
-import { login, clearErrors } from '../../actions/userActions'
+
+import { login, clearErrors } from '../../actions/userActions';
+
+const loginSchema = Yup.object({
+    email: Yup.string()
+        .trim()
+        .email('Please enter a valid email address')
+        .required('Email is required'),
+
+    password: Yup.string()
+        .required('Password is required')
+        .min(6, 'Password must be at least 6 characters')
+});
 
 const Login = () => {
-    const { isAuthenticated, error, loading, } = useSelector(state => state.auth)
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    // const [loading, setLoading] = useState(false)
-    let navigate = useNavigate()
-    let location = useLocation()
-    const dispatch = useDispatch()
+    const {
+        isAuthenticated,
+        error,
+        loading
+    } = useSelector(state => state.auth);
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        dispatch(login(email, password))
-    }
+    const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useDispatch();
 
-    // const login = async (email, password) => {
-    //     try {
-    //         const config = {
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             }
-    //         }
-    //         const { data } = await axios.post(`http://localhost:4001/api/v1/login`, { email, password }, config)
-    //         console.log(data)
-    //         authenticate(data, () => navigate("/"))
+    const redirect = location.search
+        ? new URLSearchParams(location.search).get('redirect')
+        : '';
 
-    //     } catch (error) {
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: ''
+        },
 
-    //         toast.error("invalid user or password", {
-    //             position: 'bottom-right'
-    //         })
-    //     }
-    // }
+        validationSchema: loginSchema,
 
-    const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : ''
-    console.log(redirect)
-    // useEffect(() => {
-    //     if (getUser()) {
-    //         navigate('/')
-    //     }
-    // }, [])
-
-    // useEffect(() => {
-    //     if (getUser() && redirect === 'shipping') {
-    //         navigate(`/${redirect}`)
-    //     }
-    // }, [])
+        onSubmit: values => {
+            dispatch(login(values.email.trim(), values.password));
+        }
+    });
 
     useEffect(() => {
         if (isAuthenticated && redirect === 'shipping') {
-            navigate(`/${redirect}`)
+            navigate(`/${redirect}`);
+        } else if (isAuthenticated) {
+            navigate('/');
         }
-        else if (isAuthenticated)
-            navigate('/')
+
         if (error) {
             toast.error(error);
             dispatch(clearErrors());
         }
-    }, [error, isAuthenticated, dispatch, navigate, redirect])
+    }, [error, isAuthenticated, dispatch, navigate, redirect]);
+
+    const showError = field =>
+        formik.touched[field] && formik.errors[field];
 
     return (
         <>
-            {loading ? <Loader /> : (
+            {loading ? (
+                <Loader />
+            ) : (
                 <>
-                    <MetaData title={'Login'} />
+                    <MetaData title="Login" />
 
                     <div className="row wrapper">
                         <div className="col-10 col-lg-5">
-                            <form className="shadow-lg"
-                                onSubmit={submitHandler}
+                            <form
+                                className="shadow-lg"
+                                onSubmit={formik.handleSubmit}
+                                noValidate
                             >
                                 <h1 className="mb-3">Login</h1>
+
                                 <div className="form-group">
-                                    <label htmlFor="email_field">Email</label>
+                                    <label htmlFor="email_field">
+                                        Email
+                                    </label>
+
                                     <input
                                         type="email"
                                         id="email_field"
+                                        name="email"
                                         className="form-control"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={formik.values.email}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
                                     />
+
+                                    {showError('email') && (
+                                        <small className="text-danger">
+                                            {formik.errors.email}
+                                        </small>
+                                    )}
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="password_field">Password</label>
+                                    <label htmlFor="password_field">
+                                        Password
+                                    </label>
+
                                     <input
                                         type="password"
                                         id="password_field"
+                                        name="password"
                                         className="form-control"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={formik.values.password}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
                                     />
+
+                                    {showError('password') && (
+                                        <small className="text-danger">
+                                            {formik.errors.password}
+                                        </small>
+                                    )}
                                 </div>
 
-                                <Link to="/password/forgot" className="float-right mb-4">Forgot Password?</Link>
+                                <Link
+                                    to="/password/forgot"
+                                    className="float-right mb-4"
+                                >
+                                    Forgot Password?
+                                </Link>
 
                                 <button
                                     id="login_button"
                                     type="submit"
                                     className="btn btn-block py-3"
+                                    disabled={loading}
                                 >
                                     LOGIN
                                 </button>
 
-                                <Link to="/register" className="float-right mt-3">New User?</Link>
+                                <Link
+                                    to="/register"
+                                    className="float-right mt-3"
+                                >
+                                    New User?
+                                </Link>
                             </form>
                         </div>
                     </div>
-
-
                 </>
             )}
         </>
-    )
-}
-export default Login
+    );
+};
+
+export default Login;

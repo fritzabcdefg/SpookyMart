@@ -1,12 +1,15 @@
+
 const Order = require('../models/order');
 const Product = require('../models/product');
 const Customer = require('../models/customer');
 const sendEmail = require('../utils/sendEmail');
 const generateReceiptPDF = require('../utils/generateReceiptPDF');
 const jwt = require('jsonwebtoken');
-// Create a new order   =>  /api/v1/order/new
 
-// Create a new order => /api/v1/order/new
+// ============================================
+// CREATE A NEW ORDER
+// POST /api/v1/order/new
+// ============================================
 exports.newOrder = async (req, res, next) => {
     try {
         const {
@@ -19,6 +22,7 @@ exports.newOrder = async (req, res, next) => {
             paymentInfo
         } = req.body;
 
+        // Validate cart.
         if (!orderItems || orderItems.length === 0) {
             return res.status(400).json({
                 success: false,
@@ -26,6 +30,7 @@ exports.newOrder = async (req, res, next) => {
             });
         }
 
+        // Validate shipping information.
         if (!shippingInfo) {
             return res.status(400).json({
                 success: false,
@@ -38,8 +43,7 @@ exports.newOrder = async (req, res, next) => {
             user: req.user._id
         });
 
-        // Existing checkout requests without a method are treated as Card
-        // to preserve compatibility with the previous checkout frontend.
+        // Existing checkout requests without a method are treated as Card.
         const method = paymentInfo?.method || 'Card';
 
         if (!['COD', 'Card'].includes(method)) {
@@ -55,28 +59,43 @@ exports.newOrder = async (req, res, next) => {
             method === 'Card' &&
             paymentInfo?.status === 'succeeded';
 
-        const order = await Order.create({
-            orderItems,
-            shippingInfo,
-            itemsPrice,
-            taxPrice,
-            shippingPrice,
-            totalPrice,
+        // Reserve stock only after checkout validation.
+        const reservedStock = await reserveStock(orderItems);
 
-            paymentInfo: {
-                id: method === 'Card' ? (paymentInfo?.id || '') : '',
-                status: isCardPaid ? 'succeeded' : 'pending',
-                method,
-                brand: method === 'Card' ? (paymentInfo?.brand || '') : '',
-                last4: method === 'Card' ? (paymentInfo?.last4 || '') : ''
-            },
+        // Create the order.
+        let order;
 
-            paidAt: isCardPaid ? Date.now() : null,
+        try {
+            order = await Order.create({
+                orderItems,
+                shippingInfo,
+                itemsPrice,
+                taxPrice,
+                shippingPrice,
+                totalPrice,
 
-            user: req.user._id,
-            customer: customer ? customer._id : null
-        });
-        // Send order confirmation email after checkout
+                paymentInfo: {
+                    id: method === 'Card' ? (paymentInfo?.id || '') : '',
+                    status: isCardPaid ? 'succeeded' : 'pending',
+                    method,
+                    brand: method === 'Card' ? (paymentInfo?.brand || '') : '',
+                    last4: method === 'Card' ? (paymentInfo?.last4 || '') : ''
+                },
+
+                paidAt: isCardPaid ? Date.now() : null,
+
+                user: req.user._id,
+                customer: customer ? customer._id : null
+            });
+
+        } catch (orderError) {
+            // Restore stock if order creation fails.
+            await restoreStock(reservedStock);
+            throw orderError;
+        }
+
+        // Send order confirmation email after checkout.
+        // Email failure must not undo a successfully created order.
         try {
             const customerEmail = req.user.email;
             const customerName = req.user.name || 'Valued Customer';
@@ -87,6 +106,7 @@ exports.newOrder = async (req, res, next) => {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
                     })}`;
+
                 const emailSubtotal = Number(order.itemsPrice || 0);
                 const emailTax = Number(order.taxPrice || 0);
                 const emailShipping = Number(order.shippingPrice || 0);
@@ -95,6 +115,7 @@ exports.newOrder = async (req, res, next) => {
                     Number(order.totalPrice || 0) > 0
                         ? Number(order.totalPrice)
                         : emailSubtotal + emailTax + emailShipping;
+
                 const receiptPDF = await generateReceiptPDF(order);
 
                 const productRows = order.orderItems.map(item => `
@@ -110,6 +131,7 @@ exports.newOrder = async (req, res, next) => {
                         </td>
                     </tr>
                 `).join('');
+
                 const receiptToken = jwt.sign(
                     {
                         orderId: order._id.toString(),
@@ -120,97 +142,95 @@ exports.newOrder = async (req, res, next) => {
                         expiresIn: '7d'
                     }
                 );
+
                 const emailHTML = `
                 <div style="background:#f4f1f8;padding:30px;font-family:Arial,sans-serif;">
                     <div style="max-width:600px;margin:auto;background:white;border-radius:12px;overflow:hidden;">
+
                         <div style="background:#24133f;padding:30px;color:white;">
-                    <h1 style="margin:0;">SPOOKY<span style="color:#f28c28;">MART</span></h1>
-                    <p style="color:#ddd;">ORDER CONFIRMATION</p>
-                </div>
+                            <h1 style="margin:0;">SPOOKY<span style="color:#f28c28;">MART</span></h1>
+                            <p style="color:#ddd;">ORDER CONFIRMATION</p>
+                        </div>
 
-                <div style="padding:30px;color:#292333;">
-                    <h2>Thank you for your order, ${customerName}!</h2>
-                    <p>We've successfully received your order. Here are your transaction details.</p>
+                        <div style="padding:30px;color:#292333;">
+                            <h2>Thank you for your order, ${customerName}!</h2>
+                            <p>We've successfully received your order. Here are your transaction details.</p>
 
-                    <p><strong>Order ID:</strong> ${order._id}</p>
-                    <p><strong>Order Status:</strong> ${order.orderStatus}</p>
+                            <p><strong>Order ID:</strong> ${order._id}</p>
+                            <p><strong>Order Status:</strong> ${order.orderStatus}</p>
 
-                    <h3>Order Summary</h3>
+                            <h3>Order Summary</h3>
 
-                    <table width="100%" cellspacing="0" cellpadding="0"
-                        style="border-collapse:collapse;font-size:13px;">
-                        <thead>
-                            <tr style="background:#24133f;color:white;">
-                                <th align="left" style="padding:12px;">Product</th>
-                                <th style="padding:12px;">Qty</th>
-                                <th align="right" style="padding:12px;">Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>${productRows}</tbody>
-                    </table>
+                            <table width="100%" cellspacing="0" cellpadding="0"
+                                style="border-collapse:collapse;font-size:13px;">
+                                <thead>
+                                    <tr style="background:#24133f;color:white;">
+                                        <th align="left" style="padding:12px;">Product</th>
+                                        <th style="padding:12px;">Qty</th>
+                                        <th align="right" style="padding:12px;">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${productRows}</tbody>
+                            </table>
 
-                    <div style="margin-top:20px;text-align:right;">
-                        <p>Subtotal: ${formatPrice(emailSubtotal)}</p>
-                        <p>Tax: ${formatPrice(emailTax)}</p>
-                        <p>Shipping: ${formatPrice(emailShipping)}</p>
+                            <div style="margin-top:20px;text-align:right;">
+                                <p>Subtotal: ${formatPrice(emailSubtotal)}</p>
+                                <p>Tax: ${formatPrice(emailTax)}</p>
+                                <p>Shipping: ${formatPrice(emailShipping)}</p>
 
-                        <h2 style="color:#f28c28;">
-                            Grand Total: ${formatPrice(emailGrandTotal)}
-                        </h2>
+                                <h2 style="color:#f28c28;">
+                                    Grand Total: ${formatPrice(emailGrandTotal)}
+                                </h2>
+                            </div>
+
+                            <div style="text-align:center;margin:30px 0;">
+                                <a
+                                    href="${process.env.BACKEND_URL}/api/v1/order/${order._id}/receipt/${receiptToken}"
+                                    style="display:inline-block;background:#f28c28;color:#ffffff;padding:15px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:15px;"
+                                >
+                                    Download PDF Receipt
+                                </a>
+                            </div>
+
+                            <div style="background:#f7f4fa;padding:18px;border-radius:8px;margin-top:20px;">
+                                <strong>Your PDF receipt is attached!</strong>
+                                <p style="font-size:13px;">Keep the attached receipt for your records.</p>
+                            </div>
+                        </div>
+
+                        <div style="background:#24133f;padding:22px;text-align:center;color:white;">
+                            Thank you for shopping with SpookyMart!
+                        </div>
+
                     </div>
-                    <div style="text-align:center;margin:30px 0;">
-                        <a
-                            href="${process.env.BACKEND_URL}/api/v1/order/${order._id}/receipt/${receiptToken}"
-                            style="
-                                display:inline-block;
-                                background:#f28c28;
-                                color:#ffffff;
-                                padding:15px 28px;
-                                border-radius:8px;
-                                text-decoration:none;
-                                font-weight:bold;
-                                font-size:15px;
-                            "
-                        >
-                            Download PDF Receipt
-                        </a>
-                    </div>
-                    <div style="background:#f7f4fa;padding:18px;border-radius:8px;margin-top:20px;">
-                        <strong>Your PDF receipt is attached!</strong>
-                        <p style="font-size:13px;">Keep the attached receipt for your records.</p>
-                    </div>
-                </div>
+                </div>`;
 
-                <div style="background:#24133f;padding:22px;text-align:center;color:white;">
-                    Thank you for shopping with SpookyMart!
-                </div>
-            </div>
-        </div>`;
+                await sendEmail({
+                    email: customerEmail,
+                    subject: 'SpookyMart | Your Order Confirmation',
+                    html: emailHTML,
+                    attachments: [{
+                        filename: `SpookyMart-Receipt-${order._id}.pdf`,
+                        content: receiptPDF,
+                        contentType: 'application/pdf'
+                    }]
+                });
 
-        await sendEmail({
-            email: customerEmail,
-            subject: 'SpookyMart | Your Order Confirmation',
-            html: emailHTML,
-            attachments: [{
-                filename: `SpookyMart-Receipt-${order._id}.pdf`,
-                content: receiptPDF,
-                contentType: 'application/pdf'
-            }]
-        });
+                console.log('Checkout confirmation email sent to:', customerEmail);
 
-        console.log('Checkout confirmation email sent to:', customerEmail);
-    } else {
-        console.log('Checkout email skipped: customer email not found.');
-    }
+            } else {
+                console.log('Checkout email skipped: customer email not found.');
+            }
 
-} catch (emailError) {
-    console.error('Checkout confirmation email failed:', emailError);
-}
+        } catch (emailError) {
+            console.error('Checkout confirmation email failed:', emailError);
+        }
 
         return res.status(201).json({
             success: true,
             order
         });
+
     } catch (error) {
         return res.status(400).json({
             success: false,
@@ -220,30 +240,42 @@ exports.newOrder = async (req, res, next) => {
 };
 
 
+// ============================================
+// GET LOGGED-IN USER ORDERS
+// ============================================
 exports.myOrders = async (req, res, next) => {
-    const orders = await Order.find({ user: req.user.id })
-    // console.log(req.user)
+    const orders = await Order.find({ user: req.user.id });
+
     res.status(200).json({
         success: true,
         orders
-    })
-}
+    });
+};
 
+
+// ============================================
+// GET SINGLE ORDER
+// ============================================
 exports.getSingleOrder = async (req, res, next) => {
-    const order = await Order.findById(req.params.id).populate('user', 'name email')
-    if (!order) {
-        res.status(404).json({
-            message: 'No Order found with this ID',
+    const order = await Order.findById(req.params.id)
+        .populate('user', 'name email');
 
-        })
+    if (!order) {
+        return res.status(404).json({
+            message: 'No Order found with this ID'
+        });
     }
-    res.status(200).json({
+
+    return res.status(200).json({
         success: true,
         order
-    })
-}
+    });
+};
 
-// Get all orders (Admin) => /api/v1/admin/orders
+
+// ============================================
+// GET ALL ORDERS (ADMIN)
+// ============================================
 exports.allOrders = async (req, res, next) => {
     try {
         const orders = await Order.find()
@@ -269,6 +301,10 @@ exports.allOrders = async (req, res, next) => {
     }
 };
 
+
+// ============================================
+// UPDATE ORDER STATUS (ADMIN)
+// ============================================
 exports.updateOrder = async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id)
@@ -305,11 +341,9 @@ exports.updateOrder = async (req, res, next) => {
 
         const previousStatus = order.orderStatus;
 
+        // Stock has already been deducted at checkout.
+        // Delivery only updates the delivery date.
         if (status === 'Delivered') {
-            for (const item of order.orderItems) {
-                await updateStock(item.product, item.quantity);
-            }
-
             order.deliveredAt = Date.now();
         }
 
@@ -487,8 +521,7 @@ exports.updateOrder = async (req, res, next) => {
                         </tr>
                     </table>
                 </body>
-                </html>
-                `;
+                </html>`;
 
                 // Generate the PDF receipt.
                 const receiptPDF = await generateReceiptPDF(order);
@@ -508,6 +541,7 @@ exports.updateOrder = async (req, res, next) => {
                 });
 
                 console.log(`Order update email sent to ${order.user.email}`);
+
             } catch (emailError) {
                 // Do not undo a successfully saved order update if email fails.
                 console.error('Order update email / PDF failed:', emailError);
@@ -528,6 +562,9 @@ exports.updateOrder = async (req, res, next) => {
 };
 
 
+// ============================================
+// CUSTOMER CONFIRMS ORDER RECEIVED
+// ============================================
 exports.confirmOrderReceived = async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id);
@@ -571,23 +608,105 @@ exports.confirmOrderReceived = async (req, res, next) => {
             message: 'Order marked as completed',
             order
         });
+
     } catch (error) {
         return res.status(500).json({
             success: false,
             message: error.message || 'Unable to confirm receipt'
         });
     }
+};
+
+
+// ============================================
+// RESERVE PRODUCT STOCK AT CHECKOUT
+// ============================================
+async function reserveStock(orderItems) {
+    const reserved = [];
+
+    try {
+        for (const item of orderItems) {
+            const quantity = Number(item.quantity);
+            const productId = item.product?._id || item.product;
+
+            if (
+                !Number.isSafeInteger(quantity) ||
+                quantity <= 0
+            ) {
+                throw new Error('Invalid product quantity.');
+            }
+
+            // Atomic update: deduct only if enough stock is available.
+            const product = await Product.findOneAndUpdate(
+                {
+                    _id: productId,
+                    stock: { $gte: quantity }
+                },
+                {
+                    $inc: { stock: -quantity }
+                },
+                {
+                    new: true
+                }
+            );
+
+            if (!product) {
+                const existingProduct = await Product.findById(productId);
+
+                if (!existingProduct) {
+                    throw new Error(
+                        'A product in your cart no longer exists.'
+                    );
+                }
+
+                throw new Error(
+                    `Insufficient stock for ${item.name}. Available stock: ${existingProduct.stock}.`
+                );
+            }
+
+            reserved.push({
+                productId,
+                quantity
+            });
+        }
+
+        return reserved;
+
+    } catch (error) {
+        // Restore any stock already reserved if another item fails.
+        await restoreStock(reserved);
+        throw error;
+    }
 }
 
 
-async function updateStock(id, quantity) {
-    const product = await Product.findById(id);
+// ============================================
+// RESTORE RESERVED STOCK
+// ============================================
+async function restoreStock(items) {
+    for (const item of items) {
+        try {
+            await Product.updateOne(
+                { _id: item.productId },
+                {
+                    $inc: { stock: item.quantity }
+                }
+            );
 
-    product.stock = product.stock - quantity;
-
-    await product.save({ validateBeforeSave: false })
+        } catch (error) {
+            console.error(
+                'Stock restoration failed:',
+                item.productId,
+                error
+            );
+        }
+    }
 }
 
+
+// ============================================
+// TOTAL ORDERS
+// ============================================
 exports.totalOrders = async (req, res, next) => {
     const totalOrders = await Order.aggregate([
         {
@@ -596,19 +715,24 @@ exports.totalOrders = async (req, res, next) => {
                 count: { $sum: 1 }
             }
         }
-    ])
+    ]);
+
     if (!totalOrders) {
         return res.status(404).json({
-            message: 'error total orders',
-        })
+            message: 'error total orders'
+        });
     }
+
     res.status(200).json({
         success: true,
         totalOrders
-    })
+    });
+};
 
-}
 
+// ============================================
+// TOTAL SALES
+// ============================================
 exports.totalSales = async (req, res, next) => {
     const totalSales = await Order.aggregate([
         {
@@ -631,8 +755,12 @@ exports.totalSales = async (req, res, next) => {
         success: true,
         totalSales
     });
-}
+};
 
+
+// ============================================
+// CUSTOMER SALES
+// ============================================
 exports.customerSales = async (req, res, next) => {
     const customerSales = await Order.aggregate([
         {
@@ -689,8 +817,12 @@ exports.customerSales = async (req, res, next) => {
         success: true,
         customerSales
     });
-}
+};
 
+
+// ============================================
+// SALES PER MONTH
+// ============================================
 exports.salesPerMonth = async (req, res, next) => {
     const salesPerMonth = await Order.aggregate([
         {
@@ -760,9 +892,12 @@ exports.salesPerMonth = async (req, res, next) => {
         success: true,
         salesPerMonth
     });
-}
+};
 
-// Download order receipt PDF
+
+// ============================================
+// DOWNLOAD ORDER RECEIPT PDF
+// ============================================
 exports.downloadOrderReceipt = async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id);
@@ -803,15 +938,18 @@ exports.downloadOrderReceipt = async (req, res, next) => {
     }
 };
 
-// Download receipt using a secure email token
+
+// ============================================
+// DOWNLOAD RECEIPT USING SECURE EMAIL TOKEN
+// ============================================
 exports.downloadReceiptWithToken = async (req, res) => {
     try {
         const { id, token } = req.params;
 
-        // Verify the download token
+        // Verify the download token.
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Ensure this token is specifically for this receipt
+        // Ensure this token is specifically for this receipt.
         if (
             decoded.purpose !== 'receipt' ||
             decoded.orderId !== id

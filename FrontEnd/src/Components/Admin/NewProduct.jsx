@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
 import MetaData from '../Layout/MetaData';
@@ -13,6 +16,46 @@ import {
 
 import { NEW_PRODUCT_RESET } from '../../constants/productConstants';
 
+const categories = [
+    'Decorations',
+    'Costumes'
+];
+
+// Yup validation rules
+const productSchema = Yup.object({
+    name: Yup.string()
+        .trim()
+        .max(100, 'Product name cannot exceed 100 characters')
+        .required('Product name is required'),
+
+    price: Yup.number()
+        .typeError('Price must be a number')
+        .positive('Price must be greater than 0')
+        .required('Price is required'),
+
+    description: Yup.string()
+        .trim()
+        .required('Product description is required'),
+
+    category: Yup.string()
+        .oneOf(categories, 'Please select a valid category')
+        .required('Category is required'),
+
+    stock: Yup.number()
+        .typeError('Stock must be a number')
+        .integer('Stock must be a whole number')
+        .min(0, 'Stock cannot be negative')
+        .required('Stock is required'),
+
+    seller: Yup.string()
+        .trim()
+        .required('Seller name is required'),
+
+    images: Yup.array()
+        .min(1, 'Please upload at least one product image')
+        .max(10, 'You can upload a maximum of 10 images')
+});
+
 const NewProduct = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -23,28 +66,53 @@ const NewProduct = () => {
         success
     } = useSelector(state => state.newProduct);
 
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('Decorations');
-    const [stock, setStock] = useState('');
-    const [seller, setSeller] = useState('');
-    const [images, setImages] = useState([]);
-    const [imagesPreview, setImagesPreview] = useState([]);
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            price: '',
+            description: '',
+            category: 'Decorations',
+            stock: '',
+            seller: '',
+            images: []
+        },
 
-    const categories = [
-        'Decorations',
-        'Costumes'
-    ];
+        validationSchema: productSchema,
 
+        onSubmit: (values) => {
+            const formData = new FormData();
+
+            formData.set('name', values.name.trim());
+            formData.set('price', values.price);
+            formData.set('description', values.description.trim());
+            formData.set('category', values.category);
+            formData.set('stock', values.stock);
+            formData.set('seller', values.seller.trim());
+
+            values.images.forEach(image => {
+                formData.append('images', image);
+            });
+
+            dispatch(newProduct(formData));
+        }
+    });
+
+    const {
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        setFieldValue,
+        setFieldTouched
+    } = formik;
+
+    // Convert selected images to Base64
     const onChange = async (e) => {
         const files = Array.from(e.target.files || []);
 
-        if (files.length > 10) {
-            toast.error('You can upload a maximum of 10 images');
-            e.target.value = '';
-            return;
-        }
+        if (!files.length) return;
 
         if (files.some(file => !file.type.startsWith('image/'))) {
             toast.error('Please select image files only');
@@ -54,6 +122,12 @@ const NewProduct = () => {
 
         if (files.some(file => file.size > 5 * 1024 * 1024)) {
             toast.error('Each image must be 5 MB or smaller');
+            e.target.value = '';
+            return;
+        }
+
+        if (values.images.length + files.length > 10) {
+            toast.error('You can upload a maximum of 10 images');
             e.target.value = '';
             return;
         }
@@ -72,46 +146,28 @@ const NewProduct = () => {
                 }))
             );
 
-            setImages(convertedImages);
-            setImagesPreview(convertedImages);
+            const updatedImages = [
+                ...values.images,
+                ...convertedImages
+            ];
+
+            setFieldValue('images', updatedImages);
+            setFieldTouched('images', true, false);
 
         } catch (error) {
             toast.error(error.message);
         }
+
+        e.target.value = '';
     };
 
-    const submitHandler = (e) => {
-        e.preventDefault();
+    const removeImage = (imageToRemove) => {
+        const updatedImages = values.images.filter(
+            image => image !== imageToRemove
+        );
 
-        if (!name.trim() || !description.trim() || !seller.trim()) {
-            toast.error('Please complete all required fields');
-            return;
-        }
-
-        if (Number(price) <= 0 || !Number.isFinite(Number(price))) {
-            toast.error('Please enter a valid product price');
-            return;
-        }
-
-        if (!Number.isInteger(Number(stock)) || Number(stock) < 0) {
-            toast.error('Please enter a valid stock quantity');
-            return;
-        }
-
-        const formData = new FormData();
-
-        formData.set('name', name.trim());
-        formData.set('price', price);
-        formData.set('description', description.trim());
-        formData.set('category', category);
-        formData.set('stock', stock);
-        formData.set('seller', seller.trim());
-
-        images.forEach(image => {
-            formData.append('images', image);
-        });
-
-        dispatch(newProduct(formData));
+        setFieldValue('images', updatedImages);
+        setFieldTouched('images', true, false);
     };
 
     useEffect(() => {
@@ -133,6 +189,9 @@ const NewProduct = () => {
         }
     }, [error, success, dispatch, navigate]);
 
+    const showError = (field) =>
+        touched[field] && errors[field];
+
     return (
         <>
             <MetaData title="New Product" />
@@ -146,51 +205,84 @@ const NewProduct = () => {
                     <div className="wrapper my-5">
                         <form
                             className="shadow-lg"
-                            onSubmit={submitHandler}
+                            onSubmit={handleSubmit}
+                            noValidate
                         >
                             <h1 className="mb-4">New Product</h1>
 
+                            {/* Product Name */}
                             <div className="form-group">
-                                <label htmlFor="name_field">Name</label>
+                                <label htmlFor="name_field">
+                                    Name
+                                </label>
+
                                 <input
                                     type="text"
                                     id="name_field"
+                                    name="name"
                                     className="form-control"
-                                    value={name}
-                                    onChange={e => setName(e.target.value)}
-                                    required
+                                    value={values.name}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                     maxLength={100}
                                 />
+
+                                {showError('name') && (
+                                    <small className="text-danger">
+                                        {errors.name}
+                                    </small>
+                                )}
                             </div>
 
+                            {/* Price */}
                             <div className="form-group">
-                                <label htmlFor="price_field">Price</label>
+                                <label htmlFor="price_field">
+                                    Price
+                                </label>
+
                                 <input
                                     type="number"
                                     id="price_field"
+                                    name="price"
                                     className="form-control"
-                                    value={price}
-                                    onChange={e => setPrice(e.target.value)}
+                                    value={values.price}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                     min="0.01"
                                     step="0.01"
-                                    required
                                 />
+
+                                {showError('price') && (
+                                    <small className="text-danger">
+                                        {errors.price}
+                                    </small>
+                                )}
                             </div>
 
+                            {/* Description */}
                             <div className="form-group">
                                 <label htmlFor="description_field">
                                     Description
                                 </label>
+
                                 <textarea
                                     className="form-control"
                                     id="description_field"
+                                    name="description"
                                     rows="8"
-                                    value={description}
-                                    onChange={e => setDescription(e.target.value)}
-                                    required
+                                    value={values.description}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                 />
+
+                                {showError('description') && (
+                                    <small className="text-danger">
+                                        {errors.description}
+                                    </small>
+                                )}
                             </div>
 
+                            {/* Category */}
                             <div className="form-group">
                                 <label htmlFor="category_field">
                                     Category
@@ -199,9 +291,10 @@ const NewProduct = () => {
                                 <select
                                     className="form-control"
                                     id="category_field"
-                                    value={category}
-                                    onChange={e => setCategory(e.target.value)}
-                                    required
+                                    name="category"
+                                    value={values.category}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                 >
                                     {categories.map(item => (
                                         <option key={item} value={item}>
@@ -209,36 +302,63 @@ const NewProduct = () => {
                                         </option>
                                     ))}
                                 </select>
+
+                                {showError('category') && (
+                                    <small className="text-danger">
+                                        {errors.category}
+                                    </small>
+                                )}
                             </div>
 
+                            {/* Stock */}
                             <div className="form-group">
-                                <label htmlFor="stock_field">Stock</label>
+                                <label htmlFor="stock_field">
+                                    Stock
+                                </label>
+
                                 <input
                                     type="number"
                                     id="stock_field"
+                                    name="stock"
                                     className="form-control"
-                                    value={stock}
-                                    onChange={e => setStock(e.target.value)}
+                                    value={values.stock}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                     min="0"
                                     step="1"
-                                    required
                                 />
+
+                                {showError('stock') && (
+                                    <small className="text-danger">
+                                        {errors.stock}
+                                    </small>
+                                )}
                             </div>
 
+                            {/* Seller */}
                             <div className="form-group">
                                 <label htmlFor="seller_field">
                                     Seller Name
                                 </label>
+
                                 <input
                                     type="text"
                                     id="seller_field"
+                                    name="seller"
                                     className="form-control"
-                                    value={seller}
-                                    onChange={e => setSeller(e.target.value)}
-                                    required
+                                    value={values.seller}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                 />
+
+                                {showError('seller') && (
+                                    <small className="text-danger">
+                                        {errors.seller}
+                                    </small>
+                                )}
                             </div>
 
+                            {/* Product Images */}
                             <div className="form-group">
                                 <label htmlFor="customFile">
                                     Product Images (Maximum 10)
@@ -255,24 +375,43 @@ const NewProduct = () => {
                                 />
 
                                 <small className="form-text text-muted">
-                                    You can select multiple images. Maximum
-                                    5 MB per image.
+                                    Maximum 10 images, 5 MB per image.
                                 </small>
 
+                                {touched.images && errors.images && (
+                                    <small className="text-danger d-block">
+                                        {errors.images}
+                                    </small>
+                                )}
+
                                 <div className="d-flex flex-wrap">
-                                    {imagesPreview.map((img, index) => (
-                                        <img
-                                            src={img}
+                                    {values.images.map((img, index) => (
+                                        <div
                                             key={index}
-                                            alt={`Product preview ${index + 1}`}
                                             className="mt-3 mr-2"
-                                            width="80"
-                                            height="80"
                                             style={{
-                                                objectFit: 'cover',
+                                                position: 'relative',
                                                 marginRight: '10px'
                                             }}
-                                        />
+                                        >
+                                            <img
+                                                src={img}
+                                                alt={`Product preview ${index + 1}`}
+                                                width="80"
+                                                height="80"
+                                                style={{
+                                                    objectFit: 'cover'
+                                                }}
+                                            />
+
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger btn-sm"
+                                                onClick={() => removeImage(img)}
+                                            >
+                                                ×
+                                            </button>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
@@ -292,4 +431,4 @@ const NewProduct = () => {
     );
 };
 
-export default NewProduct
+export default NewProduct;
