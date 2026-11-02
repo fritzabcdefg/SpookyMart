@@ -1,22 +1,48 @@
 const crypto = require('crypto');
-const admin = require('firebase-admin');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Customer = require('../models/customer');
 const sendToken = require('../utils/jwtToken');
 
-function getFirebaseAdmin() {
-    if (admin.apps.length) return admin;
+let cachedCertificates = null;
+let certificatesExpireAt = 0;
 
-    const serviceAccountValue = process.env.FIREBASE_SERVICE_ACCOUNT;
-    if (!serviceAccountValue) {
-        throw new Error('Firebase Admin is not configured on the server.');
+async function getFirebaseCertificate(kid) {
+    if (!cachedCertificates || Date.now() >= certificatesExpireAt) {
+        const response = await fetch(
+            'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'
+        );
+        if (!response.ok) throw new Error('Unable to retrieve Firebase signing certificates.');
+        cachedCertificates = await response.json();
+
+        const cacheControl = response.headers.get('cache-control') || '';
+        const maxAge = Number((cacheControl.match(/max-age=(\d+)/) || [])[1] || 3600);
+        certificatesExpireAt = Date.now() + maxAge * 1000;
     }
 
-    const serviceAccount = JSON.parse(serviceAccountValue);
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount)
+    const certificate = cachedCertificates[kid];
+    if (!certificate) {
+        cachedCertificates = null;
+        throw new Error('Firebase token signing key was not found.');
+    }
+    return certificate;
+}
+
+async function verifyFirebaseIdToken(idToken) {
+    const decodedHeader = jwt.decode(idToken, { complete: true });
+    if (!decodedHeader?.header?.kid || decodedHeader.header.alg !== 'RS256') {
+        throw new Error('Invalid Firebase ID token.');
+    }
+
+    const projectId = process.env.FIREBASE_PROJECT_ID;
+    if (!projectId) throw new Error('FIREBASE_PROJECT_ID is not configured on the server.');
+
+    const certificate = await getFirebaseCertificate(decodedHeader.header.kid);
+    return jwt.verify(idToken, certificate, {
+        algorithms: ['RS256'],
+        audience: projectId,
+        issuer: `https://securetoken.google.com/${projectId}`
     });
-    return admin;
 }
 
 exports.firebaseLogin = async (req, res) => {
@@ -29,8 +55,7 @@ exports.firebaseLogin = async (req, res) => {
             });
         }
 
-        const firebase = getFirebaseAdmin();
-        const decoded = await firebase.auth().verifyIdToken(idToken);
+        const decoded = await verifyFirebaseIdToken(idToken);
         const email = String(decoded.email || '').trim().toLowerCase();
 
         if (!email) {
@@ -43,7 +68,6 @@ exports.firebaseLogin = async (req, res) => {
         let user = await User.findOne({ email });
 
         if (user) {
-            // Do not allow an unverified social email to take over an existing account.
             if (!decoded.email_verified) {
                 return res.status(403).json({
                     success: false,
@@ -63,8 +87,6 @@ exports.firebaseLogin = async (req, res) => {
             user = await User.create({
                 name,
                 email,
-                // The account is authenticated by Firebase; this random password
-                // prevents password-based login without exposing a generated secret.
                 password: crypto.randomBytes(48).toString('hex'),
                 avatar: {
                     public_id: `firebase-${decoded.uid}`,
@@ -72,7 +94,11 @@ exports.firebaseLogin = async (req, res) => {
                 }
             });
 
-            await Customer.create({ user: user._id });
+            await Customer.updateOne(
+                { user: user._id },
+                { $setOnInsert: { user: user._id } },
+                { upsert: true }
+            );
         }
 
         return sendToken(user, 200, res);
@@ -80,7 +106,7 @@ exports.firebaseLogin = async (req, res) => {
         console.error('Firebase sign-in failed:', error.message);
         return res.status(401).json({
             success: false,
-            message: error.message === 'Firebase Admin is not configured on the server.'
+            message: error.message.includes('FIREBASE_PROJECT_ID')
                 ? error.message
                 : 'Social sign-in failed. Please try again.'
         });
