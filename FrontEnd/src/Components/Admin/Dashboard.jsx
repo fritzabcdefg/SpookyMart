@@ -139,7 +139,8 @@ const Dashboard = () => {
                                         style={{
                                             margin: '6px 0 0',
                                             fontSize: '30px',
-                                            fontWeight: 700
+                                            fontWeight: 700,
+                                            color: '#f8f4ff'
                                         }}
                                     >
                                         {ordersLoading
@@ -209,7 +210,8 @@ const Dashboard = () => {
                                                     style={{
                                                         margin: '7px 0 0',
                                                         fontSize: '28px',
-                                                        fontWeight: 700
+                                                        fontWeight: 700,
+                                                        color: '#f8f4ff'
                                                     }}
                                                 >
                                                     {card.count}
