@@ -183,6 +183,9 @@ const ProcessOrder = () => {
                                             <option value="Processing">Processing</option>
                                             <option value="Shipped">Shipped</option>
                                             <option value="Delivered">Delivered</option>
+                                            {orderStatus === 'Processing' && (
+                                                <option value="Cancelled">Cancelled</option>
+                                            )}
                                         </select>
                                     </div>
                                     <button className="btn btn-primary btn-block" onClick={() => updateOrderHandler(order._id)}>
