@@ -32,12 +32,11 @@ export const getProducts =
         price = [1, 10000],
         category = '',
         ratings = 0,
-        reviews = 0,
-        append = false
+        reviews = 0
     ) =>
     async (dispatch) => {
         try {
-            dispatch({ type: ALL_PRODUCTS_REQUEST, meta: { append } });
+            dispatch({ type: ALL_PRODUCTS_REQUEST });
 
             let link = `${import.meta.env.VITE_API}/products?page=${currentPage}&keyword=${encodeURIComponent(keyword)}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
 
@@ -62,16 +61,14 @@ export const getProducts =
                 payload: {
                     ...data,
                     products: Array.isArray(data.products) ? data.products : []
-                },
-                meta: { append }
+                }
             });
         } catch (error) {
             console.error('Failed to fetch products:', error);
 
             dispatch({
                 type: ALL_PRODUCTS_FAIL,
-                payload: error.response?.data?.message || error.message,
-                meta: { append }
+                payload: error.response?.data?.message || error.message
             });
         }
     };
