@@ -4,9 +4,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-
-import { firebaseAuth } from '../../firebase';
 
 import Loader from '../Layout/Loader';
 import MetaData from '../Layout/MetaData';
@@ -15,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { login, clearErrors } from '../../actions/userActions';
 
-import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth, isFirebaseConfigured } from '../../firebase';
 import axios from 'axios';
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL } from '../../constants/userConstants';
@@ -94,40 +91,38 @@ const Login = () => {
         }
     };
 
-    useEffect(() => {
-        if (isAuthenticated && redirect === 'shipping') {
-            navigate(`/${redirect}`);
-        } else if (isAuthenticated) {
-            navigate('/');
-        }
+        useEffect(() => {
+            if (isAuthenticated) {
+                if (redirect === 'shipping') {
+                    navigate('/shipping', { replace: true });
+                } else {
+                    navigate('/', { replace: true });
+                }
+            }
 
-        if (error) {
-            toast.error(error);
-            dispatch(clearErrors());
-        }
-    }, [error, isAuthenticated, dispatch, navigate, redirect]);
+            if (error) {
+                toast.error(error);
+                dispatch(clearErrors());
+            }
+        }, [error, isAuthenticated, dispatch, navigate, redirect]);
 
 
-    const socialLogin = async (providerName) => {
+    const socialLogin = async () => {
         if (!isFirebaseConfigured || !firebaseAuth) {
-            toast.error('Firebase is not configured. Add the Firebase web settings to FrontEnd/.env.');
+            toast.error('Firebase is not configured.');
             return;
         }
 
         setSocialLoading(true);
         dispatch({ type: LOGIN_REQUEST });
+
         try {
-            const provider = providerName === 'google'
-                ? new GoogleAuthProvider()
-                : new FacebookAuthProvider();
-            if (providerName === 'google') {
-                provider.setCustomParameters({ prompt: 'select_account' });
-            } else {
-                provider.addScope('email');
-            }
+            const provider = new GoogleAuthProvider();
+            provider.setCustomParameters({ prompt: 'select_account' });
 
             const result = await signInWithPopup(firebaseAuth, provider);
             const idToken = await result.user.getIdToken();
+
             const { data } = await axios.post(
                 `${import.meta.env.VITE_API}/auth/firebase`,
                 { idToken },
@@ -135,13 +130,17 @@ const Login = () => {
             );
 
             dispatch({ type: LOGIN_SUCCESS, payload: data.user });
-            if (data.user?._id) dispatch(loadCartForUser(data.user._id));
-            toast.success(`Signed in with ${providerName === 'google' ? 'Google' : 'Facebook'}!`);
+
+            if (data.user?._id) {
+                dispatch(loadCartForUser(data.user._id));
+            }
+
+            toast.success('Signed in with Google!');
         } catch (err) {
-            console.error('Social login error:', err);
+            console.error('Google login error:', err);
             dispatch({
                 type: LOGIN_FAIL,
-                payload: err.response?.data?.message || err.message || 'Social sign-in failed.'
+                payload: err.response?.data?.message || err.message || 'Google sign-in failed.'
             });
         } finally {
             setSocialLoading(false);
@@ -228,42 +227,19 @@ const Login = () => {
                                     LOGIN
                                 </button>
 
-<<<<<<< HEAD
-                                <div className="text-center my-3">
-                                    <span>OR</span>
-=======
 
                                 <div className="text-center my-3">
                                     <span>OR CONTINUE WITH</span>
->>>>>>> 8036755b73fc33ff842d9c308c830d0d623add16
                                 </div>
 
                                 <button
                                     type="button"
-<<<<<<< HEAD
-                                    className="btn btn-block py-3"
-                                    onClick={googleLogin}
-                                >
-                                    <i className="fab fa-google mr-2"></i>
-                                    Continue with Google
-=======
                                     className="btn btn-block py-3 mb-2"
                                     style={{ backgroundColor: '#ffffff', color: '#333333', border: '1px solid #cccccc' }}
                                     disabled={socialLoading || loading}
-                                    onClick={() => socialLogin('google')}
+                                    onClick={socialLogin}
                                 >
                                     <strong>G</strong> &nbsp; Continue with Google
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="btn btn-block py-3 mb-3"
-                                    style={{ backgroundColor: '#1877F2', color: '#ffffff' }}
-                                    disabled={socialLoading || loading}
-                                    onClick={() => socialLogin('facebook')}
-                                >
-                                    Continue with Facebook
->>>>>>> 8036755b73fc33ff842d9c308c830d0d623add16
                                 </button>
 
                                 <Link

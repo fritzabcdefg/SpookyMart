@@ -1735,3 +1735,18 @@ ul.CTAs a {
         align-items: flex-start;
     }
 }
+.avatar-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.avatar-initials {
+    color: #ff6600;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1;
+}
