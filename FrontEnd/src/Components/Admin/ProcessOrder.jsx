@@ -19,6 +19,7 @@ const ProcessOrder = () => {
     const { error, isUpdated } = useSelector(state => state.order)
 
     const [status, setStatus] = useState('')
+    const [showCancelModal, setShowCancelModal] = useState(false)
     // const [loading, setLoading] = useState(true)
     // const [error, setError] = useState('')
     // const [order, setOrder] = useState({})
@@ -118,6 +119,12 @@ const ProcessOrder = () => {
         const formData = new FormData();
         formData.set('status', status);
         dispatch(updateOrder(id, formData))
+        setShowCancelModal(false)
+    }
+
+    const handleStatusUpdate = () => {
+        if (status === 'Cancelled') { setShowCancelModal(true); return; }
+        updateOrderHandler(order._id);
     }
 
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
@@ -188,7 +195,7 @@ const ProcessOrder = () => {
                                             )}
                                         </select>
                                     </div>
-                                    <button className="btn btn-primary btn-block" onClick={() => updateOrderHandler(order._id)}>
+                                    <button className="btn btn-primary btn-block" onClick={handleStatusUpdate}>
                                         Update Status
                                     </button>
                                 </div>
@@ -197,6 +204,19 @@ const ProcessOrder = () => {
                     </>
                 </div>
             </div>
+            {showCancelModal && (
+                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000, padding: '20px' }}
+                    onClick={event => { if (event.target === event.currentTarget) setShowCancelModal(false); }}>
+                    <div role="dialog" aria-modal="true" aria-labelledby="admin-cancel-title" style={{ background: '#fff', color: '#292333', borderRadius: '14px', padding: '28px', width: '100%', maxWidth: '420px', textAlign: 'center', boxShadow: '0 10px 35px rgba(0,0,0,0.3)' }}>
+                        <h3 id="admin-cancel-title">Cancel this order?</h3>
+                        <p style={{ margin: '16px 0 24px' }}>Are you sure you want to cancel this Processing order? The customer will be notified by email.</p>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                            <button type="button" className="btn btn-outline-secondary" onClick={() => { setShowCancelModal(false); setStatus(orderStatus || 'Processing'); }}>No, Go Back</button>
+                            <button type="button" className="btn btn-danger" onClick={() => updateOrderHandler(order._id)}>Yes, Cancel Order</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 }
