@@ -124,10 +124,10 @@ const Login = () => {
                 <>
                     <MetaData title="Login" />
 
-                    <div className="row wrapper">
-                        <div className="col-10 col-lg-5">
+                    <div className="login-page">
+                        <div className="login-card-column">
                             <form
-                                className="shadow-lg"
+                                className="shadow-lg login-form"
                                 onSubmit={formik.handleSubmit}
                                 noValidate
                             >
@@ -187,7 +187,7 @@ const Login = () => {
                                 <button
                                     id="login_button"
                                     type="submit"
-                                    className="btn btn-block py-3"
+                                    className="btn btn-block py-3 login-submit-button"
                                     disabled={loading}
                                 >
                                     LOGIN
@@ -200,7 +200,7 @@ const Login = () => {
 
                                 <button
                                     type="button"
-                                    className="btn btn-block py-3 mb-2"
+                                    className="btn btn-block py-3 mb-2 login-social-button login-google-button"
                                     style={{ backgroundColor: '#ffffff', color: '#333333', border: '1px solid #cccccc' }}
                                     disabled={socialLoading || loading}
                                     onClick={() => socialLogin('google')}
@@ -210,7 +210,7 @@ const Login = () => {
 
                                 <button
                                     type="button"
-                                    className="btn btn-block py-3 mb-3"
+                                    className="btn btn-block py-3 mb-3 login-social-button login-facebook-button"
                                     style={{ backgroundColor: '#1877F2', color: '#ffffff' }}
                                     disabled={socialLoading || loading}
                                     onClick={() => socialLogin('facebook')}
@@ -225,6 +225,7 @@ const Login = () => {
                                     New User?
                                 </Link>
                             </form>
+                        </div>
                         </div>
                     </div>
                 </>
