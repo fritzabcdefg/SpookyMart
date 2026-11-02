@@ -53,12 +53,10 @@ function App() {
     <>
 
       <Router>
-        {/* <Header cartItems={state.cartItems} /> */}
         <Header />
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
           <Route path="/products" element={<AllProducts />} />
-          {/* <Route path="/product/:id" element={<ProductDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" /> */}
           <Route path="/product/:id" element={<ProductDetails />} exact="true" />
 
           <Route path="/search/:keyword" element={<Home />} exact="true" />
@@ -83,7 +81,6 @@ function App() {
           <Route path="/order/:id" element={<OrderDetails />} />
 
           <Route path="/dashboard" element={<Dashboard />} />
-          {/* <Route path="/admin/products" element={<ProductsList />} /> */}
           <Route path="/admin/product" element={
             <ProtectedRoute isAdmin={true} >
               <NewProduct />
@@ -91,17 +88,9 @@ function App() {
           <Route
             path="/admin/product/:id"
             element={<UpdateProduct />} />
-          {/* <Route
-            path="/admin/orders"
-            element={<OrdersList />}
-
-          /> */}
           <Route
             path="/admin/order/:id"
             element={<ProcessOrder />} />
-          {/* <Route
-            path="/admin/users"
-            element={<UsersList />} /> */}
           <Route path="/admin/user/:id" element={<UpdateUser />} />
 
           <Route
@@ -144,10 +133,7 @@ function App() {
               <ProtectedRoute isAdmin={true} >
                 <ProductReviews />
               </ProtectedRoute>} />
-
         </Routes>
-
-
       </Router>
       <Footer />
       <ToastContainer />
