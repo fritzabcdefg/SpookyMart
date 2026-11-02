@@ -4,6 +4,9 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
+import { firebaseAuth } from '../../firebase';
 
 import Loader from '../Layout/Loader';
 import MetaData from '../Layout/MetaData';
@@ -50,6 +53,38 @@ const Login = () => {
             dispatch(login(values.email.trim(), values.password));
         }
     });
+
+    const googleLogin = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+
+            const result = await signInWithPopup(firebaseAuth, provider);
+            const idToken = await result.user.getIdToken();
+
+            const response = await fetch(
+                `${import.meta.env.VITE_API}/auth/firebase`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ idToken })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Google login failed');
+            }
+
+            window.location.reload();
+        } catch (error) {
+            console.error('Google login error:', error);
+            toast.error(error.message || 'Unable to login with Google');
+        }
+    };
 
     useEffect(() => {
         if (isAuthenticated && redirect === 'shipping') {
@@ -142,6 +177,19 @@ const Login = () => {
                                     disabled={loading}
                                 >
                                     LOGIN
+                                </button>
+
+                                <div className="text-center my-3">
+                                    <span>OR</span>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    className="btn btn-block py-3"
+                                    onClick={googleLogin}
+                                >
+                                    <i className="fab fa-google mr-2"></i>
+                                    Continue with Google
                                 </button>
 
                                 <Link
