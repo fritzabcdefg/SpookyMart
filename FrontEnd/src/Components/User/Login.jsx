@@ -12,7 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { login, clearErrors } from '../../actions/userActions';
 
-import { useState } from 'react';
 import { GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth, isFirebaseConfigured } from '../../firebase';
 import axios from 'axios';
