@@ -160,7 +160,14 @@ function App() {
 
       </Router>
       <Footer />
-      <ToastContainer position="bottom-right" />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        closeOnClick={false}
+        pauseOnHover
+        pauseOnFocusLoss
+        draggable={false}
+      />
     </>
   )
 }
