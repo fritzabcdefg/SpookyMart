@@ -779,11 +779,24 @@ exports.productSales = async (req, res, next) => {
         {
             $group: {
                 _id: null,
-                total: { $sum: "$itemsPrice" }
-
-            },
-
-        },
+                total: {
+                    $sum: {
+                        $sum: {
+                            $map: {
+                                input: { $ifNull: ['$orderItems', []] },
+                                as: 'item',
+                                in: {
+                                    $multiply: [
+                                        { $ifNull: ['$item.price', 0] },
+                                        { $ifNull: ['$item.quantity', 0] }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     ])
     console.log(totalSales)
     const sales = await Order.aggregate([

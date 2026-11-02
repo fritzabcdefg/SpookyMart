@@ -59,15 +59,37 @@ exports.newOrder = async (req, res, next) => {
             method === 'Card' &&
             paymentInfo?.status === 'succeeded';
 
+        // Build trusted order item snapshots from current database product data.
+        const verifiedOrderItems = [];
+        for (const item of orderItems) {
+            const productId = item.product?._id || item.product;
+            const product = await Product.findById(productId);
+            if (!product) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'A product in your cart no longer exists.'
+                });
+            }
+
+            verifiedOrderItems.push({
+                product: product._id,
+                name: product.name,
+                image: item.image || product.images?.[0]?.url || '',
+                quantity: Number(item.quantity),
+                price: Number(product.price || 0),
+                costPrice: Number(product.costPrice || 0)
+            });
+        }
+
         // Reserve stock only after checkout validation.
-        const reservedStock = await reserveStock(orderItems);
+        const reservedStock = await reserveStock(verifiedOrderItems);
 
         // Create the order.
         let order;
 
         try {
             order = await Order.create({
-                orderItems,
+                orderItems: verifiedOrderItems,
                 shippingInfo,
                 itemsPrice,
                 taxPrice,
@@ -283,7 +305,11 @@ exports.allOrders = async (req, res, next) => {
             .sort({ createdAt: -1 });
 
         const totalAmount = orders.reduce(
-            (total, order) => total + Number(order.totalPrice || 0),
+            (total, order) => total + (order.orderItems || []).reduce(
+                (orderTotal, item) =>
+                    orderTotal + Number(item.price || 0) * Number(item.quantity || 0),
+                0
+            ),
             0
         );
 
@@ -739,14 +765,19 @@ exports.totalSales = async (req, res, next) => {
             $group: {
                 _id: null,
                 totalSales: {
-                    $sum: {
-                        $add: [
-                            { $ifNull: ['$itemsPrice', 0] },
-                            { $ifNull: ['$taxPrice', 0] },
-                            { $ifNull: ['$shippingPrice', 0] }
-                        ]
+                        $sum: {
+                            $map: {
+                                input: { $ifNull: ['$orderItems', []] },
+                                as: 'item',
+                                in: {
+                                    $multiply: [
+                                        { $ifNull: ['$item.price', 0] },
+                                        { $ifNull: ['$item.quantity', 0] }
+                                    ]
+                                }
+                            }
+                        }
                     }
-                }
             }
         }
     ]);
@@ -778,14 +809,19 @@ exports.customerSales = async (req, res, next) => {
             $group: {
                 _id: '$user',
                 total: {
-                    $sum: {
-                        $add: [
-                            { $ifNull: ['$itemsPrice', 0] },
-                            { $ifNull: ['$taxPrice', 0] },
-                            { $ifNull: ['$shippingPrice', 0] }
-                        ]
-                    }
-                },
+                        $sum: {
+                            $map: {
+                                input: { $ifNull: ['$orderItems', []] },
+                                as: 'item',
+                                in: {
+                                    $multiply: [
+                                        { $ifNull: ['$item.price', 0] },
+                                        { $ifNull: ['$item.quantity', 0] }
+                                    ]
+                                }
+                            }
+                        }
+                    },
                 doc: { $first: '$$ROOT' }
             }
         },
@@ -950,17 +986,16 @@ exports.salesByDateRange = async (req, res) => {
                     },
                     totalSales: {
                         $sum: {
-                            $cond: [
-                                { $gt: [{ $ifNull: ['$totalPrice', 0] }, 0] },
-                                '$totalPrice',
-                                {
-                                    $add: [
-                                        { $ifNull: ['$itemsPrice', 0] },
-                                        { $ifNull: ['$taxPrice', 0] },
-                                        { $ifNull: ['$shippingPrice', 0] }
+                            $map: {
+                                input: { $ifNull: ['$orderItems', []] },
+                                as: 'item',
+                                in: {
+                                    $multiply: [
+                                        { $ifNull: ['$item.price', 0] },
+                                        { $ifNull: ['$item.quantity', 0] }
                                     ]
                                 }
-                            ]
+                            }
                         }
                     },
                     totalOrders: { $sum: 1 }

@@ -31,6 +31,7 @@ const UpdateProduct = () => {
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
+    const [costPrice, setCostPrice] = useState('0');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('Decorations');
     const [stock, setStock] = useState('');
@@ -51,6 +52,7 @@ const UpdateProduct = () => {
         if (product && product._id === id) {
             setName(product.name || '');
             setPrice(product.price ?? '');
+            setCostPrice(product.costPrice ?? 0);
             setDescription(product.description || '');
             setCategory(product.category || 'Decorations');
             setStock(product.stock ?? '');
@@ -119,6 +121,7 @@ const UpdateProduct = () => {
 
         formData.set('name', name);
         formData.set('price', price);
+        formData.set('costPrice', costPrice);
         formData.set('description', description);
         formData.set('category', category);
         formData.set('stock', stock);
@@ -196,6 +199,20 @@ const UpdateProduct = () => {
                                         value={price}
                                         onChange={e => setPrice(e.target.value)}
                                         min="0.01"
+                                        step="0.01"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="cost_price_field">Cost Price</label>
+                                    <input
+                                        type="number"
+                                        id="cost_price_field"
+                                        className="form-control"
+                                        value={costPrice}
+                                        onChange={e => setCostPrice(e.target.value)}
+                                        min="0"
                                         step="0.01"
                                         required
                                     />

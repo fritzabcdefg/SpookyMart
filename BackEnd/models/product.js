@@ -14,6 +14,11 @@ const productSchema = new mongoose.Schema({
         maxLength: [5, 'Product name cannot exceed 5 characters'],
         default: 0.0
     },
+    costPrice: {
+        type: Number,
+        min: [0, 'Cost price cannot be negative'],
+        default: 0
+    },
     description: {
         type: String,
         required: [true, 'Please enter product description']
