@@ -3,6 +3,11 @@ const Order = require('../models/order')
 const cloudinary = require('cloudinary')
 const APIFeatures = require('../utils/apiFeatures');
 
+const badWords = require('bad-words');
+
+const Filter = badWords.Filter || badWords.default || badWords;
+const profanityFilter = new Filter();
+
 exports.newProduct = async (req, res, next) => {
     try {
         let images = req.body.images || [];
@@ -435,12 +440,15 @@ exports.createProductReview = async (req, res, next) => {
             });
         }
 
+        // Filter inappropriate words before saving the review.
+        const filteredComment = profanityFilter.clean(comment.trim());
+
         const newReview = {
             user: req.user._id,
             name: req.user.name,
             rating: numericRating,
-            comment: comment.trim()
-        };
+            comment: filteredComment
+        }
 
         if (orderId) {
             newReview.orderId = orderId;
@@ -557,8 +565,9 @@ exports.updateProductReview = async (req, res, next) => {
             });
         }
 
+        // Filter inappropriate words when a customer edits a review.
         existingReview.rating = numericRating;
-        existingReview.comment = comment.trim();
+        existingReview.comment = profanityFilter.clean(comment.trim());
 
         product.numOfReviews = product.reviews.length;
         product.ratings = product.reviews.reduce(
