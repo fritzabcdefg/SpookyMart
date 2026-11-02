@@ -303,6 +303,117 @@ exports.allOrders = async (req, res, next) => {
 
 
 // ============================================
+// CANCEL ORDER (CUSTOMER)
+// POST /api/v1/order/:id/cancel
+// ============================================
+exports.cancelMyOrder = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id)
+            .populate('user', 'name email');
+
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
+        if (order.user._id.toString() !== req.user._id.toString()) {
+            return res.status(403).json({
+                success: false,
+                message: 'You are not authorized to cancel this order'
+            });
+        }
+
+        if (order.orderStatus !== 'Processing') {
+            return res.status(400).json({
+                success: false,
+                message: 'Only processing orders can be cancelled'
+            });
+        }
+
+        await restoreStock(order.orderItems.map(item => ({
+            productId: item.product,
+            quantity: item.quantity
+        })));
+
+        order.orderStatus = 'Cancelled';
+        order.cancelledAt = Date.now();
+        order.cancelledBy = 'customer';
+        await order.save();
+
+        // Email confirmation is best-effort; the cancellation remains saved if email fails.
+        if (order.user?.email) {
+            try {
+                const safeName = String(order.user.name || 'Customer')
+                    .replace(/[&<>"']/g, character => ({
+                        '&': '&amp;', '<': '&lt;', '>': '&gt;',
+                        '"': '&quot;', "'": '&#39;'
+                    })[character]);
+
+                const safeOrderId = String(order._id);
+                const productRows = order.orderItems.map(item => {
+                    const safeProduct = String(item.name || 'Product')
+                        .replace(/[&<>"']/g, character => ({
+                            '&': '&amp;', '<': '&lt;', '>': '&gt;',
+                            '"': '&quot;', "'": '&#39;'
+                        })[character]);
+                    return `<tr>
+                        <td style="padding:10px;border-bottom:1px solid #eee;">${safeProduct}</td>
+                        <td style="padding:10px;text-align:center;border-bottom:1px solid #eee;">${Number(item.quantity || 0)}</td>
+                    </tr>`;
+                }).join('');
+
+                const html = `<div style="background:#f4f1f8;padding:30px;font-family:Arial,sans-serif;color:#292333;">
+                    <div style="max-width:600px;margin:auto;background:#fff;border-radius:12px;overflow:hidden;">
+                        <div style="background:#24133f;padding:25px;color:#fff;">
+                            <h1 style="margin:0;">SPOOKY<span style="color:#f28c28;">MART</span></h1>
+                            <p style="margin-bottom:0;">ORDER CANCELLATION CONFIRMATION</p>
+                        </div>
+                        <div style="padding:30px;">
+                            <h2>Hello ${safeName},</h2>
+                            <p>Your order has been successfully cancelled as requested.</p>
+                            <p><strong>Order ID:</strong> ${safeOrderId}</p>
+                            <p><strong>Status:</strong> <span style="color:#dc2626;font-weight:bold;">CANCELLED</span></p>
+                            <h3>Cancelled items</h3>
+                            <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                                <thead><tr style="background:#24133f;color:#fff;">
+                                    <th align="left" style="padding:10px;">Product</th>
+                                    <th style="padding:10px;">Quantity</th>
+                                </tr></thead>
+                                <tbody>${productRows}</tbody>
+                            </table>
+                            <p style="margin-top:24px;">If you did not request this cancellation, please contact our support team.</p>
+                        </div>
+                        <div style="background:#24133f;padding:20px;text-align:center;color:#fff;">Thank you for choosing SpookyMart.</div>
+                    </div>
+                </div>`;
+
+                await sendEmail({
+                    email: order.user.email,
+                    subject: `SpookyMart | Order ${safeOrderId} Cancelled`,
+                    html
+                });
+            } catch (emailError) {
+                console.error('Order cancellation email failed:', emailError);
+            }
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Your order has been cancelled successfully.',
+            order
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Unable to cancel order'
+        });
+    }
+};
+
+
+// ============================================
 // UPDATE ORDER STATUS (ADMIN)
 // ============================================
 exports.updateOrder = async (req, res, next) => {
