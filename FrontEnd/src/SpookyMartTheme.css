@@ -304,3 +304,37 @@ footer p { margin: 0 !important; color: #f7f1fb !important; font-size: .9rem; }
     scroll-behavior: auto !important;
   }
 }
+
+
+/* Payment page: prevent the checkout form from collapsing on narrow screens. */
+.wrapper .payment-form {
+  width: 100% !important;
+  max-width: 560px !important;
+  min-width: 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.payment-form h1,
+.payment-form h5 {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.payment-form .custom-control-label {
+  display: inline-block;
+  max-width: calc(100% - 1.5rem);
+}
+.payment-form .alert {
+  overflow-wrap: break-word;
+}
+.payment-form #pay_btn {
+  width: 100%;
+  white-space: normal;
+}
+@media (max-width: 575.98px) {
+  .wrapper .payment-form {
+    padding: 1.25rem !important;
+  }
+  .payment-form h1 {
+    font-size: 1.65rem;
+  }
+}
