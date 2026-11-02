@@ -33,7 +33,7 @@ npm run dev
 
 ## 3. Backend environment
 
-Add the Firebase project ID to `BackEnd/config/.env`:
+Copy `BackEnd/config/.env.example` to `BackEnd/config/.env`, then add the Firebase project ID:
 
 ```env
 FIREBASE_PROJECT_ID=your-project-id
@@ -46,7 +46,7 @@ Install dependencies and restart the backend:
 ```bash
 cd BackEnd
 npm install
-npm start
+node server.js
 ```
 
 ## 4. Test
