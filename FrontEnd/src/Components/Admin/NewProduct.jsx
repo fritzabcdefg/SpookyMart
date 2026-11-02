@@ -33,6 +33,11 @@ const productSchema = Yup.object({
         .positive('Price must be greater than 0')
         .required('Price is required'),
 
+    costPrice: Yup.number()
+        .typeError('Cost price must be a number')
+        .min(0, 'Cost price cannot be negative')
+        .required('Cost price is required'),
+
     description: Yup.string()
         .trim()
         .required('Product description is required'),
@@ -70,6 +75,7 @@ const NewProduct = () => {
         initialValues: {
             name: '',
             price: '',
+            costPrice: '',
             description: '',
             category: 'Decorations',
             stock: '',
@@ -84,6 +90,7 @@ const NewProduct = () => {
 
             formData.set('name', values.name.trim());
             formData.set('price', values.price);
+            formData.set('costPrice', values.costPrice);
             formData.set('description', values.description.trim());
             formData.set('category', values.category);
             formData.set('stock', values.stock);
@@ -255,6 +262,31 @@ const NewProduct = () => {
                                 {showError('price') && (
                                     <small className="text-danger">
                                         {errors.price}
+                                    </small>
+                                )}
+                            </div>
+
+                            {/* Cost Price */}
+                            <div className="form-group">
+                                <label htmlFor="cost_price_field">
+                                    Cost Price
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="cost_price_field"
+                                    name="costPrice"
+                                    className="form-control"
+                                    value={values.costPrice}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    min="0"
+                                    step="0.01"
+                                />
+
+                                {showError('costPrice') && (
+                                    <small className="text-danger">
+                                        {errors.costPrice}
                                     </small>
                                 )}
                             </div>
