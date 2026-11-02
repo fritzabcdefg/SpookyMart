@@ -59,15 +59,37 @@ exports.newOrder = async (req, res, next) => {
             method === 'Card' &&
             paymentInfo?.status === 'succeeded';
 
+        // Build trusted order item snapshots from current database product data.
+        const verifiedOrderItems = [];
+        for (const item of orderItems) {
+            const productId = item.product?._id || item.product;
+            const product = await Product.findById(productId);
+            if (!product) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'A product in your cart no longer exists.'
+                });
+            }
+
+            verifiedOrderItems.push({
+                product: product._id,
+                name: product.name,
+                image: item.image || product.images?.[0]?.url || '',
+                quantity: Number(item.quantity),
+                price: Number(product.price || 0),
+                costPrice: Number(product.costPrice || 0)
+            });
+        }
+
         // Reserve stock only after checkout validation.
-        const reservedStock = await reserveStock(orderItems);
+        const reservedStock = await reserveStock(verifiedOrderItems);
 
         // Create the order.
         let order;
 
         try {
             order = await Order.create({
-                orderItems,
+                orderItems: verifiedOrderItems,
                 shippingInfo,
                 itemsPrice,
                 taxPrice,
