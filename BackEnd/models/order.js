@@ -137,6 +137,17 @@ const orderSchema = new mongoose.Schema({
         type: Date
     },
 
+    cancelledAt: {
+        type: Date,
+        default: null
+    },
+
+    cancelledBy: {
+        type: String,
+        enum: ['admin', 'customer'],
+        default: null
+    },
+
     isReceived: {
         type: Boolean,
         default: false
