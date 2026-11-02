@@ -59,7 +59,7 @@ const Profile = () => {
 
     return (
         <>
-            <MetaData title="Your Profile" />
+            <MetaData title="Profile - SpookyMart" />
 
             <div className="container mt-5 mb-5">
                 <h2>My Profile</h2>

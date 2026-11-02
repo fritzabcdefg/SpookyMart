@@ -116,7 +116,7 @@ const Cart = () => {
 
     return (
         <>
-            <MetaData title="Shopping Cart - SpookyMart" />
+            <MetaData title="Cart - SpookyMart" />
 
             <div className="container spooky-cart-page">
                 <div className="cart-page-heading">

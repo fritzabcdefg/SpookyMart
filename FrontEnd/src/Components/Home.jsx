@@ -64,7 +64,7 @@ const Home = () => {
 
     return (
         <>
-            <MetaData title="Shop Here - SpookyMart" />
+            <MetaData title="SpookyMart" />
             <div className="container container-fluid">
                 <h1 id="products_heading">{keyword ? `Search Results for "${keyword}"` : 'Latest Products'}</h1>
 
