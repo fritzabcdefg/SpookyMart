@@ -1,165 +1,127 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import Product from './Product/Product'
-// import products from '../products.json'
-import Stack from '@mui/material/Stack'
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import MetaData from './Layout/MetaData'
-import Loader from './Layout/Loader';
-import Pagination from '@mui/material/Pagination';
-import axios from 'axios'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { getProducts } from '../actions/productActions'
+import Product from './Product/Product';
+import MetaData from './Layout/MetaData';
+import Loader from './Layout/Loader';
+import { getProducts } from '../actions/productActions';
 
 const Home = () => {
-    // console.log(products)
-    // const [products, setProducts] = useState([])
     const [price, setPrice] = useState([1, 10000]);
-    // const [loading, setLoading] = useState(true)
-    // const [productsCount, setProductsCount] = useState(0)
-    // const [resPerPage, setResPerPage] = useState(0)
-    // const [filteredProductsCount, setFilteredProductsCount] = useState(0)
-    const [currentPage, setCurrentPage] = useState(1)
-    let { keyword } = useParams();
+    const [currentPage, setCurrentPage] = useState(1);
+    const loadMoreRef = useRef(null);
+    const { keyword } = useParams();
     const dispatch = useDispatch();
+
     const {
         loading,
         error,
         products = [],
         productsCount = 0,
-        resPerPage = 0,
-        filteredProductsCount = 0
+        filteredProductsCount = 0,
+        resPerPage = 4
     } = useSelector(state => state.products || {});
 
-    let count = productsCount;
+    const totalProducts = keyword ? filteredProductsCount : productsCount;
+    const hasMore = products.length < totalProducts;
 
-    if (keyword) {
-        count = filteredProductsCount
-    }
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [keyword, price]);
 
+    useEffect(() => {
+        dispatch(getProducts(currentPage, keyword || '', price, '', 0, 0, currentPage > 1));
+    }, [dispatch, currentPage, keyword, price]);
 
+    useEffect(() => {
+        const target = loadMoreRef.current;
+        if (!target || !hasMore || loading) return;
 
-    // const getProducts = async (keyword = '', price, page = 1) => {
+        const observer = new IntersectionObserver(
+            entries => {
+                if (entries[0].isIntersecting && !loading && hasMore) {
+                    setCurrentPage(page => page + 1);
+                }
+            },
+            { root: null, rootMargin: '300px', threshold: 0 }
+        );
 
-    //     let link = `http://localhost:4001/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&page=${page}`
-    //     // http://localhost:4001/api/v1/products?keyword=''
-    //     // http://localhost:4001/api/v1/products?keyword=adid&page=1&price[gte]=100&price[lte]=1000
-    //     let res = await axios.get(link)
-    //     console.log(res.data.products)
-    //     setProducts(res.data.products)
-    //     setProductsCount(res.data.productsCount)
-    //     setFilteredProductsCount(res.data.filteredProductsCount)
-    //     setResPerPage(res.data.resPerPage)
-    //     setLoading(false)
-    // }
+        observer.observe(target);
+        return () => observer.disconnect();
+    }, [hasMore, loading, products.length]);
 
-    const handleChange = (event, newValue) => {
+    const handlePriceChange = (event, newValue) => {
         setPrice(newValue);
+        setCurrentPage(1);
     };
 
-    function valuetext(price) {
-        return `P${price.toString()}`;
-    }
-    // getProducts()
-    // useEffect(() => {
-    //     // getProducts(keyword, price, currentPage)
-    // }, [keyword, price, currentPage]);
-    useEffect(() => {
-        dispatch(getProducts(currentPage, keyword, price,))
-    }, [dispatch, currentPage, keyword, price,]);
+    const priceText = value => `₱${value.toLocaleString()}`;
 
     return (
         <>
-            <MetaData title={'shop Here'} />
-            {loading ? (
-                <Loader />
-            ) : error ? (
-                <div className="container mt-5">
-                    <h3>Failed to load products</h3>
-                    <p>{String(error)}</p>
-                </div>
-            ) : (
-                <div className="container container-fluid">
-                <h1 id="products_heading">Latest Products</h1>
+            <MetaData title="Shop Here - SpookyMart" />
+            <div className="container container-fluid">
+                <h1 id="products_heading">{keyword ? `Search Results for "${keyword}"` : 'Latest Products'}</h1>
+
                 <section id="products" className="container mt-5">
-                    {/* <div className="row">
-                        {products && products.map(product => (
-                            <Product key={product._id} product={product} />
-                            // <Product product={product} />
-
-
-                        ))}
-                    </div> */}
-                    <div className="row">
-                        {keyword ? (
-                            <>
-                                <div className="col-6 col-md-3 mt-5 mb-5">
-                                    <Box sx={{ width: 150 }}>
-                                        <Slider
-                                            getAriaLabel={() => 'Price Filter'}
-                                            value={price}
-                                            onChange={handleChange}
-                                            valueLabelDisplay="on"
-                                            getAriaValueText={valuetext}
-                                            min={1}
-                                            max={10000}
-
-                                        />
-                                    </Box>
-                                    <div className="mt-5">
-                                        <h4 className="mb-3">
-                                            Categories
-                                        </h4>
-
-                                    </div>
-
-
-
+                    {keyword && (
+                        <div className="row mb-4">
+                            <div className="col-12 col-md-3">
+                                <h4>Price Filter</h4>
+                                <Box sx={{ width: '100%', px: 1 }}>
+                                    <Slider
+                                        getAriaLabel={() => 'Price Filter'}
+                                        value={price}
+                                        onChange={handlePriceChange}
+                                        valueLabelDisplay="auto"
+                                        min={1}
+                                        max={10000}
+                                        step={100}
+                                        sx={{ color: '#ff6600' }}
+                                    />
+                                </Box>
+                                <div className="d-flex justify-content-between">
+                                    <span>{priceText(price[0])}</span>
+                                    <span>{priceText(price[1])}</span>
                                 </div>
-
-                                <div className="col-6 col-md-9">
-                                    <div className="row">
-                                        {products.map(product => (
-                                            <Product key={product._id} product={product} />
-                                        ))}
-                                    </div>
-                                </div>
-                            </>
-                        ) : (
-                            products.map(product => (
-                                <Product key={product._id} product={product} />
-                            ))
-                        )}
-
-                    </div>
-                    {resPerPage < count && (
-                        <div className="d-flex justify-content-center mt-5">
-                            <Stack spacing={2}>
-                                <Pagination
-                                    count={Math.ceil(count / resPerPage)}
-                                    page={currentPage}
-                                    onChange={(event, value) => setCurrentPage(value)}
-                                    // onChange={setCurrentPageNo}
-                                    color="primary"
-                                    variant="outlined"
-                                    shape="rounded"
-                                    showFirstButton
-                                    showLastButton
-                                    size="large"
-                                    sx={{
-                                        backgroundColor: 'white',
-
-                                    }}
-                                />
-                            </Stack>
+                            </div>
                         </div>
                     )}
-                </section>
-            </div>)}
-        </>
-    )
-}
 
-export default Home
+                    {error && products.length === 0 ? (
+                        <div className="container mt-5">
+                            <h3>Failed to load products</h3>
+                            <p>{String(error)}</p>
+                        </div>
+                    ) : products.length === 0 && loading ? (
+                        <Loader />
+                    ) : products.length === 0 ? (
+                        <div className="text-center py-5">
+                            <h4>No products found</h4>
+                        </div>
+                    ) : (
+                        <>
+                            <div className="row">
+                                {products.map(product => (
+                                    <Product key={product._id} product={product} />
+                                ))}
+                            </div>
+
+                            <div ref={loadMoreRef} className="text-center py-4" aria-live="polite">
+                                {loading && <Loader />}
+                                {!loading && hasMore && <span>Scroll to load more products...</span>}
+                                {!hasMore && <span>You have reached the end of the products.</span>}
+                                {error && <p className="text-danger">{String(error)}</p>}
+                            </div>
+                        </>
+                    )}
+                </section>
+            </div>
+        </>
+    );
+};
+
+export default Home;
