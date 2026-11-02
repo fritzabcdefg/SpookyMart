@@ -1,25 +1,28 @@
-const sendToken = (user, statusCode, res) => {
 
-    // Create Jwt token
+const sendToken = (user, statusCode, res) => {
     const token = user.getJwtToken();
-    // console.log("token1", token)
-    // Options for cookie
+
+    const isProduction = process.env.NODE_ENV === 'production';
+
     const options = {
         expires: new Date(
-            Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000
+            Date.now() +
+            Number(process.env.COOKIE_EXPIRES_TIME || 7) *
+            24 * 60 * 60 * 1000
         ),
-        // domain: ".localhost",
         httpOnly: true,
-        secure: true,
-        sameSite: 'none',
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : 'lax',
+        path: '/'
+    };
 
-    }
-    res.status(statusCode).cookie('token', token, options).json({
-        success: true,
-        // token,
-        user
-    })
-
-}
+    return res
+        .status(statusCode)
+        .cookie('token', token, options)
+        .json({
+            success: true,
+            user
+        });
+};
 
 module.exports = sendToken;

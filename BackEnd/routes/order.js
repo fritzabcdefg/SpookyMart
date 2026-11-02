@@ -12,6 +12,7 @@ const {
     totalSales,
     customerSales,
     salesPerMonth,
+    salesByDateRange,
     downloadOrderReceipt,
     downloadReceiptWithToken
 } = require('../controllers/order');
@@ -29,6 +30,7 @@ router.get('/admin/total-orders', totalOrders);
 router.get('/admin/total-sales', totalSales);
 router.get('/admin/customer-sales', customerSales);
 router.get('/admin/sales-per-month', salesPerMonth);
+router.get('/admin/sales-date-range', isAuthenticatedUser, authorizeRoles('admin'), salesByDateRange);
 router.get('/order/:id/receipt', isAuthenticatedUser, downloadOrderReceipt);
 router.get('/order/:id/receipt/:token',downloadReceiptWithToken);
 module.exports = router;

@@ -894,6 +894,103 @@ exports.salesPerMonth = async (req, res, next) => {
     });
 };
 
+// Get daily sales within a selected date range (Admin)
+exports.salesByDateRange = async (req, res) => {
+    try {
+        const { startDate, endDate } = req.query;
+
+        // Validate date format
+        const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+
+        if (
+            !datePattern.test(startDate || '') ||
+            !datePattern.test(endDate || '')
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide valid start and end dates.'
+            });
+        }
+
+        // Use Philippine local dates for the report
+        const start = new Date(`${startDate}T00:00:00.000+08:00`);
+        const endExclusive = new Date(`${endDate}T00:00:00.000+08:00`);
+
+        if (
+            Number.isNaN(start.getTime()) ||
+            Number.isNaN(endExclusive.getTime()) ||
+            start > endExclusive
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid date range.'
+            });
+        }
+
+        // Include the entire selected end date
+        endExclusive.setDate(endExclusive.getDate() + 1);
+
+        const salesByDate = await Order.aggregate([
+            {
+                $match: {
+                    createdAt: {
+                        $gte: start,
+                        $lt: endExclusive
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        $dateToString: {
+                            format: '%Y-%m-%d',
+                            date: '$createdAt',
+                            timezone: 'Asia/Manila'
+                        }
+                    },
+                    totalSales: {
+                        $sum: {
+                            $cond: [
+                                { $gt: [{ $ifNull: ['$totalPrice', 0] }, 0] },
+                                '$totalPrice',
+                                {
+                                    $add: [
+                                        { $ifNull: ['$itemsPrice', 0] },
+                                        { $ifNull: ['$taxPrice', 0] },
+                                        { $ifNull: ['$shippingPrice', 0] }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    totalOrders: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { _id: 1 }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    date: '$_id',
+                    totalSales: 1,
+                    totalOrders: 1
+                }
+            }
+        ]);
+
+        return res.status(200).json({
+            success: true,
+            salesByDate
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Unable to retrieve sales report.'
+        });
+    }
+};
 
 // ============================================
 // DOWNLOAD ORDER RECEIPT PDF
