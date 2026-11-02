@@ -13,7 +13,10 @@ const firebaseAuth = require('./routes/firebaseAuth');
 const categories = require('./routes/category');
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: [
+        'http://localhost:5173',
+        'https://spookymart-frontend.onrender.com'
+    ],
     credentials: true
 }));
 
