@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MetaData from '../Layout/MetaData';
-import { addItemToCart, removeItemFromCart } from '../../actions/cartActions';
+import { addItemToCart, removeItemFromCart, removePurchasedItemsFromCart } from '../../actions/cartActions';
 
 const Cart = () => {
     const dispatch = useDispatch();
@@ -85,13 +85,12 @@ const Cart = () => {
         setSelectedIds(previous => previous.filter(itemId => itemId !== id));
     };
 
-    const bulkRemoveHandler = () => {
+    const bulkRemoveHandler = async () => {
         if (selectedIds.length === 0) return;
 
-        selectedIds.forEach(id => {
-            dispatch(removeItemFromCart(id));
-        });
-
+        // Send one bulk request so each response cannot overwrite another.
+        const productIds = [...selectedIds];
+        await dispatch(removePurchasedItemsFromCart(productIds));
         setSelectedIds([]);
     };
 
