@@ -7,6 +7,7 @@ const {
     getSingleOrder,
     allOrders,
     updateOrder,
+    cancelMyOrder,
     confirmOrderReceived,
     totalOrders,
     totalSales,
@@ -20,6 +21,7 @@ const {
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth')
 
 router.post('/order/new', isAuthenticatedUser, newOrder);
+router.post('/order/:id/cancel', isAuthenticatedUser, cancelMyOrder);
 router.get('/orders/me', isAuthenticatedUser, myOrders);
 router.post('/order/:id/received', isAuthenticatedUser, confirmOrderReceived);
 router.get('/order/:id', isAuthenticatedUser, getSingleOrder);
