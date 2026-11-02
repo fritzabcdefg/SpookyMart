@@ -1,181 +1,266 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import MetaData from '../Layout/MetaData'
-import Loader from '../Layout/Loader'
-import Sidebar from './SideBar'
-import { getToken } from '../Utils/helpers';
-import axios from 'axios'
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import MetaData from '../Layout/MetaData';
+import Sidebar from './SideBar';
+
 import ProductSalesChart from './ProductSalesChart';
-import UserSalesChart from './UserSalesChart';
 import MonthlySalesChart from './MonthlySalesChart';
 import DateRangeSalesChart from './DateRangeSalesChart';
-import { useDispatch, useSelector } from 'react-redux'
 
+import { getAdminProducts } from '../../actions/productActions';
+import { allOrders } from '../../actions/orderActions';
+import { allUsers } from '../../actions/userActions';
+import './SalesCharts.css';
 
 const Dashboard = () => {
-    const { loading, error, products } = useSelector(state => state.products)
+    const dispatch = useDispatch();
 
-    // const [products, setProducts] = useState([])
-    // const [error, setError] = useState('')
-    // const [users, setUsers] = useState([])
-    // const [orders, setOrders] = useState([])
-    // const [loading, setLoading] = useState(false)
-    // const [totalAmount, setTotalAmount] = useState([])
-    let outOfStock = 0;
-    // products.forEach(product => {
-    //     if (product.stock === 0) {
-    //         outOfStock += 1;
-    //     }
-    // })
-    // const getAdminProducts = async () => {
-    //     try {
+    const { products = [], loading: productsLoading } =
+        useSelector(state => state.products || {});
 
-    //         const config = {
-    //             headers: {
-    //                 'Authorization': `Bearer ${getToken()}`
-    //             }
-    //         }
+    const { orders = [], totalAmount, loading: ordersLoading } =
+        useSelector(state => state.allOrders || {});
 
-    //         const { data } = await axios.get(`${import.meta.env.VITE_API}/admin/products`, config)
-    //         console.log(data)
-    //         setProducts(data.products)
-    //         setLoading(false)
-    //     } catch (error) {
+    const { users = [], loading: usersLoading } =
+        useSelector(state => state.allUsers || {});
 
-    //         setError(error.response.data.message)
+    useEffect(() => {
+        dispatch(getAdminProducts(false));
+        dispatch(allOrders());
+        dispatch(allUsers());
+    }, [dispatch]);
 
-    //     }
-    // }
+    const productCount = products.length;
+    const orderCount = orders.length;
+    const userCount = users.length;
 
-    // useEffect(() => {
-    //     getAdminProducts()
-    //     // allOrders()
-    //     // allUsers()
-    // }, [])
+    const outOfStock = products.filter(
+        product => Number(product.stock) <= 0
+    ).length;
 
+    const formatCurrency = amount =>
+        `₱${Number(amount || 0).toLocaleString('en-PH', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        })}`;
 
-return (
-    <>
-        <div className="row">
+    const summaryCards = [
+        {
+            title: 'Products',
+            count: productsLoading ? '...' : productCount,
+            icon: 'fa-cube',
+            color: '#7c3aed',
+            link: '/admin/products',
+            footer: 'Manage Products'
+        },
+        {
+            title: 'Orders',
+            count: ordersLoading ? '...' : orderCount,
+            icon: 'fa-shopping-bag',
+            color: '#e04455',
+            link: '/admin/orders',
+            footer: 'View Orders'
+        },
+        {
+            title: 'Users',
+            count: usersLoading ? '...' : userCount,
+            icon: 'fa-users',
+            color: '#159db0',
+            link: '/admin/users',
+            footer: 'Manage Users'
+        },
+        {
+            title: 'Out of Stock',
+            count: productsLoading ? '...' : outOfStock,
+            icon: 'fa-exclamation-triangle',
+            color: '#d97706',
+            link: '/admin/products',
+            footer: 'Check Inventory'
+        }
+    ];
 
-            {/* Sidebar */}
-            <div className="col-12 col-md-2">
-                <Sidebar />
-            </div>
+    return (
+        <>
+            <MetaData title="Admin Dashboard" />
 
-            {/* Dashboard Content */}
-            <div className="col-12 col-md-10">
-
-                <h1 className="my-4">Dashboard</h1>
-
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <>
-                        <MetaData title="Admin Dashboard" />
-
-                        {/* Total Amount Card */}
-                        <div className="row pr-4">
-                            <div className="col-xl-12 col-sm-12 mb-3">
-                                <div className="card text-white bg-primary o-hidden h-100">
-                                    <div className="card-body">
-                                        {/* Total Amount content */}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Dashboard Summary Cards */}
-                        <div className="row pr-4">
-
-                            {/* Products */}
-                            <div className="col-xl-3 col-sm-6 mb-3">
-                                <div className="card text-white bg-success o-hidden h-100">
-                                    <div className="card-body">
-                                        <div className="text-center card-font-size">
-                                            Products<br />
-                                            <b>{products && products.length}</b>
-                                        </div>
-                                    </div>
-
-                                    <Link
-                                        className="card-footer text-white clearfix small z-1"
-                                        to="/admin/products"
-                                    >
-                                        <span className="float-left">View Details</span>
-                                        <span className="float-right">
-                                            <i className="fa fa-angle-right"></i>
-                                        </span>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            {/* Orders */}
-                            <div className="col-xl-3 col-sm-6 mb-3">
-                                <div className="card text-white bg-danger o-hidden h-100">
-                                    <Link
-                                        className="card-footer text-white clearfix small z-1"
-                                        to="/admin/orders"
-                                    >
-                                        <span className="float-left">View Details</span>
-                                        <span className="float-right">
-                                            <i className="fa fa-angle-right"></i>
-                                        </span>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            {/* Users */}
-                            <div className="col-xl-3 col-sm-6 mb-3">
-                                <div className="card text-white bg-info o-hidden h-100">
-                                    <Link
-                                        className="card-footer text-white clearfix small z-1"
-                                        to="/admin/users"
-                                    >
-                                        <span className="float-left">View Details</span>
-                                        <span className="float-right">
-                                            <i className="fa fa-angle-right"></i>
-                                        </span>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            {/* Out of Stock */}
-                            <div className="col-xl-3 col-sm-6 mb-3">
-                                <div className="card text-white bg-warning o-hidden h-100">
-                                    <div className="card-body">
-                                        <div className="text-center card-font-size">
-                                            Out of Stock<br />
-                                            <b>{outOfStock}</b>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </>
-                )}
-
-                {/* Sales Charts */}
-                <div className="dashboard mt-4">
-
-                    <ProductSalesChart />
-
-                    <UserSalesChart />
-
-                    <MonthlySalesChart />
-
-                    <DateRangeSalesChart />
-
+            <div className="row">
+                <div className="col-12 col-md-2">
+                    <Sidebar />
                 </div>
 
-            </div>
-        </div>
-    </>
-);
-}
+                <div className="col-12 col-md-10">
+                    <main style={{ padding: '20px 24px' }}>
+                        <h1
+                            style={{
+                                color: '#f5f0ff',
+                                fontSize: '32px',
+                                fontWeight: 700,
+                                marginBottom: '25px'
+                            }}
+                        >
+                            Dashboard
+                        </h1>
 
-export default Dashboard
+                        {/* Total Sales */}
+                        <div
+                            style={{
+                                background: 'linear-gradient(120deg, #21102f, #35104b)',
+                                border: '1px solid #8b2be2',
+                                borderRadius: '12px',
+                                padding: '22px 26px',
+                                marginBottom: '25px',
+                                color: '#fff',
+                                boxShadow: '0 5px 18px rgba(0,0,0,0.2)'
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    flexWrap: 'wrap',
+                                    gap: '12px'
+                                }}
+                            >
+                                <div>
+                                    <p
+                                        style={{
+                                            margin: 0,
+                                            color: '#c9a7e8',
+                                            fontSize: '14px'
+                                        }}
+                                    >
+                                        Total Sales
+                                    </p>
+
+                                    <h2
+                                        style={{
+                                            margin: '6px 0 0',
+                                            fontSize: '30px',
+                                            fontWeight: 700
+                                        }}
+                                    >
+                                        {ordersLoading
+                                            ? 'Loading...'
+                                            : formatCurrency(totalAmount)}
+                                    </h2>
+                                </div>
+
+                                <div
+                                    style={{
+                                        width: '52px',
+                                        height: '52px',
+                                        borderRadius: '12px',
+                                        background: 'rgba(168, 85, 247, 0.2)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: '#d8b4fe',
+                                        fontSize: '24px'
+                                    }}
+                                >
+                                    <i className="fa fa-money" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Summary Cards */}
+                        <div className="row">
+                            {summaryCards.map(card => (
+                                <div
+                                    className="col-12 col-sm-6 col-xl-3 mb-4"
+                                    key={card.title}
+                                >
+                                    <div
+                                        style={{
+                                            height: '100%',
+                                            minHeight: '155px',
+                                            background: '#160d22',
+                                            border: `1px solid ${card.color}`,
+                                            borderRadius: '12px',
+                                            overflow: 'hidden',
+                                            color: '#fff',
+                                            boxShadow: '0 4px 14px rgba(0,0,0,0.18)'
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                padding: '20px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                gap: '10px'
+                                            }}
+                                        >
+                                            <div>
+                                                <p
+                                                    style={{
+                                                        margin: 0,
+                                                        color: '#c9bdd6',
+                                                        fontSize: '14px'
+                                                    }}
+                                                >
+                                                    {card.title}
+                                                </p>
+
+                                                <h2
+                                                    style={{
+                                                        margin: '7px 0 0',
+                                                        fontSize: '28px',
+                                                        fontWeight: 700
+                                                    }}
+                                                >
+                                                    {card.count}
+                                                </h2>
+                                            </div>
+
+                                            <i
+                                                className={`fa ${card.icon}`}
+                                                style={{
+                                                    color: card.color,
+                                                    fontSize: '30px',
+                                                    opacity: 0.9
+                                                }}
+                                            />
+                                        </div>
+
+                                        <Link
+                                            to={card.link}
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center',
+                                                padding: '11px 18px',
+                                                background: card.color,
+                                                color: '#fff',
+                                                textDecoration: 'none',
+                                                fontSize: '13px',
+                                                fontWeight: 600
+                                            }}
+                                        >
+                                            {card.footer}
+                                            <i className="fa fa-arrow-right" />
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                    {/* Sales Charts */}
+                    <div className="sales-charts-grid">
+                        <ProductSalesChart />
+
+                        <MonthlySalesChart />
+                        <DateRangeSalesChart />
+
+                    </div>
+                    </main>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Dashboard;

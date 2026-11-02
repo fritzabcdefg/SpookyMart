@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
+
 import {
     BarChart,
     Bar,
@@ -6,64 +7,116 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend,
     ResponsiveContainer,
-    Cell,
-} from "recharts";
-import { getToken } from "../Utils/helpers";
-import axios from "axios";
-import Loader from '../Layout/Loader';
+    Cell
+} from 'recharts';
+
+import { getToken } from '../Utils/helpers';
+import axios from 'axios';
 
 const UserSalesChart = () => {
-    const [sales, setSales] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState('')
-    const userSales = async () => {
+    const [sales, setSales] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
-        try {
-            const config = {
-                headers: {
+    const barColors = ['#a855f7', '#ec4899', '#06b6d4'];
 
-                    'Authorization': `Bearer ${getToken()}`
-                }
-            }
-
-            const { data } = await axios.get(`${import.meta.env.VITE_API}/admin/customer-sales`, config)
-            setSales(data.customerSales)
-            setLoading(false)
-        } catch (error) {
-            setError(error.response.data.message)
-        }
-    }
-    const barColors = ["#1f77b4", "#ff7f0e", "#2ca02c"]
     useEffect(() => {
-        userSales()
-        // allUsers()
-    }, [])
+        const userSales = async () => {
+            try {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${getToken()}`
+                    }
+                };
+
+                const { data } = await axios.get(
+                    `${import.meta.env.VITE_API}/admin/customer-sales`,
+                    config
+                );
+
+                setSales(data.customerSales || []);
+            } catch (err) {
+                setError(
+                    err.response?.data?.message ||
+                    'Unable to load customer sales.'
+                );
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        userSales();
+    }, []);
 
     return (
-        <ResponsiveContainer width="90%" height={600}>
-            {loading ? <Loader /> : (<BarChart
-                data={sales}
-            >
-                <CartesianGrid strokeDasharray="2 2" />
-                <XAxis dataKey="userDetails.name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
+        <div className="sales-chart-card">
+            <h3 className="sales-chart-title">Customer Sales</h3>
 
-                <Bar dataKey="total" stroke="#000000"
-                    strokeWidth={5} >
-                    {
-                        sales.map((item, index) => (
-                            <Cell key={`cell-${index}`} fill={barColors[index % 20]} />
-                        ))
-                    }
-                </Bar>
-            </BarChart>)}
-        </ResponsiveContainer>
+            {loading ? (
+                <p className="text-center text-white">Loading chart...</p>
+            ) : error ? (
+                <p className="text-center text-danger">{error}</p>
+            ) : sales.length === 0 ? (
+                <p className="text-center text-white">
+                    No customer sales data available.
+                </p>
+            ) : (
+                <ResponsiveContainer width="100%" height={280}>
+                    <BarChart
+                        data={sales}
+                        margin={{
+                            top: 10,
+                            right: 10,
+                            left: 0,
+                            bottom: 25
+                        }}
+                    >
+                        <CartesianGrid
+                            strokeDasharray="3 3"
+                            stroke="#493456"
+                        />
 
+                        <XAxis
+                            dataKey="userDetails.name"
+                            tick={{ fill: '#ffffff', fontSize: 10 }}
+                            angle={-15}
+                            textAnchor="end"
+                            interval={0}
+                        />
 
+                        <YAxis
+                            tick={{ fill: '#ffffff', fontSize: 10 }}
+                        />
+
+                        <Tooltip
+                            contentStyle={{
+                                background: '#241333',
+                                border: '1px solid #8b45bd',
+                                borderRadius: '8px',
+                                color: '#fff'
+                            }}
+                            itemStyle={{ color: '#fff' }}
+                            labelStyle={{ color: '#fff' }}
+                        />
+
+                        <Bar
+                            dataKey="total"
+                            name="Total Sales"
+                            radius={[5, 5, 0, 0]}
+                        >
+                            {sales.map((item, index) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={barColors[index % barColors.length]}
+                                />
+                            ))}
+                        </Bar>
+                    </BarChart>
+                </ResponsiveContainer>
+            )}
+        </div>
     );
-}
-export default UserSalesChart
+};
+
+export default UserSalesChart;

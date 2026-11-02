@@ -1,0 +1,165 @@
+/* Two charts per row */
+.sales-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Individual chart cards */
+.sales-chart-card {
+    min-width: 0;
+    padding: 18px;
+    background: #160d22;
+    border: 1px solid #7134a8;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+.sales-chart-title {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* Recharts text */
+.sales-chart-card .recharts-text,
+.sales-chart-card .recharts-cartesian-axis-tick-value,
+.sales-chart-card .recharts-legend-item-text {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    font-size: 11px;
+}
+
+.sales-chart-card .recharts-cartesian-grid line {
+    stroke: #493456;
+}
+
+.sales-chart-card .recharts-tooltip-wrapper {
+    outline: none;
+}
+
+.sales-chart-tooltip {
+    background: #241333;
+    border: 1px solid #8b45bd;
+    border-radius: 8px;
+    padding: 10px;
+    color: #ffffff;
+}
+
+.sales-chart-tooltip p {
+    color: #ffffff;
+    margin: 3px 0;
+    font-size: 12px;
+}
+
+/* Date range report */
+.sales-chart-card .form-label {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.sales-chart-card .form-control {
+    background: #241333;
+    color: #ffffff;
+    border: 1px solid #7134a8;
+    font-size: 12px;
+}
+
+.sales-chart-card .form-control:focus {
+    background: #241333;
+    color: #ffffff;
+    border-color: #c084fc;
+    box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.2);
+}
+
+.sales-chart-card .form-control::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.sales-chart-summary {
+    background: #241333;
+    border: 1px solid #493456;
+    border-radius: 8px;
+    padding: 10px;
+    color: #ffffff;
+}
+
+.sales-chart-summary h6 {
+    color: #c9a7e8;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.sales-chart-summary h4 {
+    color: #ffffff;
+    font-size: 17px;
+    margin: 0;
+}
+
+/* Tablet and mobile */
+@media (max-width: 900px) {
+    .sales-charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .sales-chart-card {
+        padding: 12px;
+    }
+
+    .sales-chart-title {
+        font-size: 16px;
+    }
+}
+/* =========================================
+   SALES CHART LAYOUT
+   ========================================= */
+
+/* Product Sales and Monthly Sales - First Row */
+.sales-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Product Sales - Left Side */
+.sales-charts-grid > :nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+/* Monthly Sales - Right Side */
+.sales-charts-grid > :nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+/* Sales Report - Full Width Second Row */
+.sales-charts-grid > :nth-child(3) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+}
+
+/* =========================================
+   TABLET AND MOBILE LAYOUT
+   ========================================= */
+
+@media (max-width: 900px) {
+    .sales-charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sales-charts-grid > :nth-child(1),
+    .sales-charts-grid > :nth-child(2),
+    .sales-charts-grid > :nth-child(3) {
+        grid-column: 1;
+        grid-row: auto;
+    }
+}

@@ -72,14 +72,9 @@ const ProductsList = () => {
             dispatch(getAdminProducts(showDeleted));
             dispatch({ type: RESTORE_PRODUCT_RESET });
         }
-    }, [
-        isDeleted,
-        isRestored,
-        showDeleted,
-        dispatch
-    ]);
+    }, [isDeleted, isRestored, showDeleted, dispatch]);
 
-    const deleteProductHandler = async (id) => {
+    const deleteProductHandler = async id => {
         const result = await Swal.fire({
             title: 'Move product to Deleted Products?',
             text: 'You can restore this product later.',
@@ -95,7 +90,7 @@ const ProductsList = () => {
         if (result.isConfirmed) {
             dispatch(deleteProduct(id));
         }
-    }
+    };
 
     const bulkDeleteHandler = async () => {
         if (selectedIds.length === 0) {
@@ -125,7 +120,7 @@ const ProductsList = () => {
         }
     };
 
-    const restoreProductHandler = (id) => {
+    const restoreProductHandler = id => {
         const confirmed = window.confirm(
             'Restore this product and make it available in the store again?'
         );
@@ -156,18 +151,45 @@ const ProductsList = () => {
         {
             field: 'category',
             headerName: 'Category',
-            width: 140
+            width: 160
         },
         {
             field: 'price',
             headerName: 'Price',
             width: 120,
-            valueFormatter: value => `₱${value}`
+            valueFormatter: value =>
+                `₱${Number(value || 0).toFixed(2)}`
         },
         {
             field: 'stock',
             headerName: 'Stock',
-            width: 100
+            width: 100,
+            renderCell: params => {
+                const stock = Number(params.value || 0);
+
+                return (
+                    <span
+                        style={{
+                            padding: '5px 10px',
+                            borderRadius: '20px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            background: stock <= 0
+                                ? 'rgba(239, 68, 68, 0.15)'
+                                : stock <= 5
+                                    ? 'rgba(245, 158, 11, 0.15)'
+                                    : 'rgba(34, 197, 94, 0.15)',
+                            color: stock <= 0
+                                ? '#ef4444'
+                                : stock <= 5
+                                    ? '#f59e0b'
+                                    : '#22c55e'
+                        }}
+                    >
+                        {stock}
+                    </span>
+                );
+            }
         },
         {
             field: 'actions',
@@ -181,7 +203,7 @@ const ProductsList = () => {
                         <>
                             <Link
                                 to={`/admin/product/${params.row.id}`}
-                                className="btn btn-primary py-1 px-2"
+                                className="btn btn-primary btn-sm"
                                 title="Edit product"
                             >
                                 <i className="fa fa-pencil" />
@@ -189,8 +211,10 @@ const ProductsList = () => {
 
                             <button
                                 type="button"
-                                className="btn btn-danger py-1 px-2 ml-2"
-                                onClick={() => deleteProductHandler(params.row.id)}
+                                className="btn btn-danger btn-sm ml-2"
+                                onClick={() =>
+                                    deleteProductHandler(params.row.id)
+                                }
                                 title="Move product to deleted products"
                             >
                                 <i className="fa fa-trash" />
@@ -201,8 +225,10 @@ const ProductsList = () => {
                     {showDeleted && (
                         <button
                             type="button"
-                            className="btn btn-success py-1 px-2"
-                            onClick={() => restoreProductHandler(params.row.id)}
+                            className="btn btn-success btn-sm"
+                            onClick={() =>
+                                restoreProductHandler(params.row.id)
+                            }
                         >
                             <i className="fa fa-undo" /> Restore
                         </button>
@@ -216,7 +242,7 @@ const ProductsList = () => {
         id: product._id,
         name: product.name,
         category: product.category,
-        price: Number(product.price),
+        price: Number(product.price || 0),
         stock: product.stock
     }));
 
@@ -232,70 +258,181 @@ const ProductsList = () => {
                 </div>
 
                 <div className="col-12 col-md-10">
-                    <div className="d-flex flex-wrap justify-content-between align-items-center my-5">
-                        <h1>
-                            {showDeleted ? 'Deleted Products' : 'All Products'}
-                        </h1>
-
-                        <button
-                            type="button"
-                            className={`btn ${
-                                showDeleted ? 'btn-primary' : 'btn-secondary'
-                            }`}
-                            onClick={() => setShowDeleted(current => !current)}
+                    <div style={{ padding: '20px 24px' }}>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                                gap: '12px',
+                                marginBottom: '25px'
+                            }}
                         >
-                            {showDeleted
-                                ? 'View Active Products'
-                                : 'View Deleted Products'}
-                        </button>
-                    </div>
+                            <div>
+                                <h1 style={{ margin: 0, color: '#f5f0ff' }}>
+                                    {showDeleted
+                                        ? 'Deleted Products'
+                                        : 'All Products'}
+                                </h1>
 
-                    {!showDeleted && (
-                        <div className="mb-3">
+                                <p style={{ color: '#aaa', margin: '7px 0 0' }}>
+                                    {showDeleted
+                                        ? 'Restore products that were previously deleted.'
+                                        : 'Manage your store inventory and products.'}
+                                </p>
+                            </div>
+
                             <button
                                 type="button"
-                                className="btn btn-danger"
-                                onClick={bulkDeleteHandler}
-                                disabled={selectedIds.length === 0}
+                                className={`btn ${
+                                    showDeleted
+                                        ? 'btn-primary'
+                                        : 'btn-secondary'
+                                }`}
+                                onClick={() => setShowDeleted(current => !current)}
                             >
-                                <i className="fa fa-trash" /> Delete Selected
-                                ({selectedIds.length})
+                                {showDeleted
+                                    ? 'View Active Products'
+                                    : 'View Deleted Products'}
                             </button>
                         </div>
-                    )}
 
-                    {loading ? (
-                        <Loader />
-                    ) : (
-                        <div style={{ width: '100%' }}>
-                            <DataGrid
-                                rows={rows}
-                                columns={columns}
-                                checkboxSelection={!showDeleted}
-                                disableRowSelectionOnClick
-                                rowSelectionModel={{
-                                    type: 'include',
-                                    ids: new Set(selectedIds)
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                                gap: '12px',
+                                marginBottom: '15px'
+                            }}
+                        >
+                            <span
+                                style={{
+                                    background: '#241333',
+                                    color: '#d8b4fe',
+                                    border: '1px solid #7134a8',
+                                    borderRadius: '8px',
+                                    padding: '9px 15px',
+                                    fontWeight: 600
                                 }}
-                                onRowSelectionModelChange={model => {
-                                    setSelectedIds(
-                                        Array.from(model.ids || []).map(String)
-                                    );
-                                }}
-                                pageSizeOptions={[5, 10, 25]}
-                                initialState={{
-                                    pagination: {
-                                        paginationModel: {
-                                            pageSize: 5,
-                                            page: 0
-                                        }
-                                    }
-                                }}
-                                autoHeight
-                                showToolbar
-                            />
+                            >
+                                {products.length} Products
+                            </span>
+
+                            {!showDeleted && (
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={bulkDeleteHandler}
+                                    disabled={selectedIds.length === 0}
+                                >
+                                    <i className="fa fa-trash" /> Delete
+                                    Selected ({selectedIds.length})
+                                </button>
+                            )}
                         </div>
-                    )}
+
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <div
+                                style={{
+                                    width: '100%',
+                                    background: '#160d22',
+                                    border: '1px solid #45245e',
+                                    borderRadius: '12px',
+                                    padding: '12px',
+                                    overflowX: 'auto'
+                                }}
+                            >
+                                <DataGrid
+                                    rows={rows}
+                                    columns={columns}
+                                    getRowId={row => row.id}
+                                    autoHeight
+                                    checkboxSelection={!showDeleted}
+                                    disableRowSelectionOnClick
+                                    rowSelectionModel={{
+                                        type: 'include',
+                                        ids: new Set(selectedIds)
+                                    }}
+                                    onRowSelectionModelChange={model => {
+                                        setSelectedIds(
+                                            Array.from(model.ids || []).map(String)
+                                        );
+                                    }}
+                                    pageSizeOptions={[5, 10, 25]}
+                                    initialState={{
+                                        pagination: {
+                                            paginationModel: {
+                                                pageSize: 10,
+                                                page: 0
+                                            }
+                                        }
+                                    }}
+                                    sx={{
+                                    border: 'none',
+                                    backgroundColor: '#160d22',
+                                    color: '#f5f0ff',
+
+                                    '& .MuiDataGrid-columnHeaders': {
+                                        backgroundColor: '#241333',
+                                        color: '#d8b4fe',
+                                        borderBottom: '1px solid #7134a8',
+                                    },
+
+                                    '& .MuiDataGrid-columnHeader': {
+                                        backgroundColor: '#241333',
+                                    },
+
+                                    '& .MuiDataGrid-columnHeaderTitle': {
+                                        color: '#d8b4fe',
+                                        fontWeight: 700,
+                                    },
+
+                                    '& .MuiDataGrid-virtualScroller': {
+                                        backgroundColor: '#160d22',
+                                    },
+
+                                    '& .MuiDataGrid-row': {
+                                        backgroundColor: '#160d22',
+                                        color: '#f5f0ff',
+                                    },
+
+                                    '& .MuiDataGrid-row:hover': {
+                                        backgroundColor: '#2a193b',
+                                    },
+
+                                    '& .MuiDataGrid-cell': {
+                                        color: '#f5f0ff',
+                                        borderColor: '#45245e',
+                                    },
+
+                                    '& .MuiDataGrid-footerContainer': {
+                                        backgroundColor: '#241333',
+                                        color: '#d8b4fe',
+                                        borderTop: '1px solid #7134a8',
+                                    },
+
+                                    '& .MuiTablePagination-root': {
+                                        color: '#d8b4fe',
+                                    },
+
+                                    '& .MuiSvgIcon-root': {
+                                        color: '#d8b4fe',
+                                    },
+
+                                    '& .MuiDataGrid-overlay': {
+                                        backgroundColor: '#160d22',
+                                        color: '#f5f0ff',
+                                    },
+                                }}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </>
