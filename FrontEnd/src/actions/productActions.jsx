@@ -32,11 +32,12 @@ export const getProducts =
         price = [1, 10000],
         category = '',
         ratings = 0,
-        reviews = 0
+        reviews = 0,
+        append = false
     ) =>
     async (dispatch) => {
         try {
-            dispatch({ type: ALL_PRODUCTS_REQUEST });
+            dispatch({ type: ALL_PRODUCTS_REQUEST, append });
 
             let link = `${import.meta.env.VITE_API}/products?page=${currentPage}&keyword=${encodeURIComponent(keyword)}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
 
@@ -60,7 +61,8 @@ export const getProducts =
                 type: ALL_PRODUCTS_SUCCESS,
                 payload: {
                     ...data,
-                    products: Array.isArray(data.products) ? data.products : []
+                    products: Array.isArray(data.products) ? data.products : [],
+                    append
                 }
             });
         } catch (error) {

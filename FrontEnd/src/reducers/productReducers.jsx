@@ -34,6 +34,12 @@ import {
 export const productsReducer = (state = { products: [] }, action) => {
     switch (action.type) {
         case ALL_PRODUCTS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+                products: action.append ? (state.products || []) : []
+            }
         case ADMIN_PRODUCTS_REQUEST:
             return {
                 ...state,
@@ -46,7 +52,11 @@ export const productsReducer = (state = { products: [] }, action) => {
             return {
                 ...state,
                 loading: false,
-                products: action.payload.products,
+                products: action.payload.append
+                    ? [...(state.products || []), ...action.payload.products.filter(
+                        product => !(state.products || []).some(existing => existing._id === product._id)
+                    )]
+                    : action.payload.products,
                 productsCount: action.payload.productsCount,
                 resPerPage: action.payload.resPerPage,
                 filteredProductsCount: action.payload.filteredProductsCount
