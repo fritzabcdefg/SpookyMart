@@ -37,7 +37,7 @@ const Register = () => {
         }
 
         if (error) {
-            console.log(error)
+            //console.log(error)
             dispatch(clearErrors());
 
         }
@@ -76,7 +76,7 @@ const Register = () => {
     }
 
     // const register = async (userData) => {
-    //     console.log(userData)
+    //     //console.log(userData)
     //     try {
     //         const config = {
     //             headers: {
@@ -85,7 +85,7 @@ const Register = () => {
     //         }
 
     //         const { data } = await axios.post(`http://localhost:4001/api/v1/register`, userData, config)
-    //         console.log(data.user)
+    //         //console.log(data.user)
 
     //         setLoading(false)
     //         setUser(data.user)
@@ -95,7 +95,7 @@ const Register = () => {
     //         setLoading(false)
     //         setUser(null)
     //         setError(error.response.data.message)
-    //         console.log(error.response.data.message)
+    //         //console.log(error.response.data.message)
     //     }
     // }
 

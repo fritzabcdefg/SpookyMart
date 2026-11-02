@@ -200,15 +200,15 @@ exports.forgotPassword = async (req, res, next) => {
 }
 
 exports.resetPassword = async (req, res, next) => {
-    console.log(req.params.token)
+    //console.log(req.params.token)
     // Hash URL token
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
-    console.log(resetPasswordToken)
+    //console.log(resetPasswordToken)
     const user = await User.findOne({
         resetPasswordToken,
         resetPasswordExpire: { $gt: Date.now() }
     })
-    console.log(user)
+    //console.log(user)
 
     if (!user) {
         return res.status(400).json({ message: 'Password reset token is invalid or has been expired' })
@@ -236,7 +236,7 @@ exports.resetPassword = async (req, res, next) => {
 
 exports.getUserProfile = async (req, res, next) => {
     const user = await User.findById(req.user.id);
-    console.log(user)
+    //console.log(user)
 
     return res.status(200).json({
         success: true,
@@ -254,10 +254,10 @@ exports.updateProfile = async (req, res, next) => {
     // Update avatar
     if (req.body.avatar !== '') {
         let user = await User.findById(req.user.id)
-        // console.log(user)
+        // //console.log(user)
         const image_id = user.avatar.public_id;
         const res = await cloudinary.v2.uploader.destroy(image_id);
-        // console.log("Res", res)
+        // //console.log("Res", res)
         const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'avatars',
             width: 150,
@@ -284,7 +284,7 @@ exports.updateProfile = async (req, res, next) => {
 }
 
 exports.updatePassword = async (req, res, next) => {
-    console.log(req.body.password)
+    //console.log(req.body.password)
     const user = await User.findById(req.user.id).select('+password');
     // Check previous user password
     const isMatched = await user.comparePassword(req.body.oldPassword)

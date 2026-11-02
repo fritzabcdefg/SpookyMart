@@ -785,7 +785,7 @@ exports.productSales = async (req, res, next) => {
 
         },
     ])
-    console.log(totalSales)
+    //console.log(totalSales)
     const sales = await Order.aggregate([
         { $project: { _id: 0, orderItems: 1 } },
         { $unwind: "$orderItems" },
@@ -797,7 +797,7 @@ exports.productSales = async (req, res, next) => {
             },
         },
     ])
-    console.log(sales)
+    //console.log(sales)
 
     if (!totalSales) {
         return res.status(404).json({
@@ -815,7 +815,7 @@ exports.productSales = async (req, res, next) => {
     let totalPercentage = {}
     totalPercentage = sales.map(item => {
 
-        // console.log( ((item.total/totalSales[0].total) * 100).toFixed(2))
+        // //console.log( ((item.total/totalSales[0].total) * 100).toFixed(2))
         percent = Number(((item.total / totalSales[0].total) * 100).toFixed(2))
         total = {
             name: item._id.product,
@@ -823,7 +823,7 @@ exports.productSales = async (req, res, next) => {
         }
         return total
     })
-    console.log(totalPercentage)
+    //console.log(totalPercentage)
     res.status(200).json({
         success: true,
         totalPercentage,

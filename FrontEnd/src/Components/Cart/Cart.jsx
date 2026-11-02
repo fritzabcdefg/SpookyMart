@@ -100,9 +100,9 @@ const Cart = () => {
             selectedIds.some(id => String(id) === String(item.product))
         );
 
-        console.log('Selected IDs:', selectedIds);
-        console.log('Items being checked out:', itemsForCheckout);
-        console.log('Total selected:', itemsForCheckout.length);
+        //console.log('Selected IDs:', selectedIds);
+        //console.log('Items being checked out:', itemsForCheckout);
+        //console.log('Total selected:', itemsForCheckout.length);
 
         if (itemsForCheckout.length === 0) return;
 

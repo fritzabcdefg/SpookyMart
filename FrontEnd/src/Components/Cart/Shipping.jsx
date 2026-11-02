@@ -80,7 +80,7 @@ const Shipping = () => {
                 }
             } catch (err) {
                 // Guests can still enter shipping details manually.
-                console.log('No saved customer addresses available.');
+                //console.log('No saved customer addresses available.');
             } finally {
                 if (active) setLoadingAddresses(false);
             }

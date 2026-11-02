@@ -55,7 +55,7 @@ export const getProducts =
 
             const { data } = await axios.get(link);
 
-            console.log('Products API response:', data);
+            //console.log('Products API response:', data);
 
             dispatch({
                 type: ALL_PRODUCTS_SUCCESS,

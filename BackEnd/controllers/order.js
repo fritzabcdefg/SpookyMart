@@ -216,10 +216,10 @@ exports.newOrder = async (req, res, next) => {
                     }]
                 });
 
-                console.log('Checkout confirmation email sent to:', customerEmail);
+                //console.log('Checkout confirmation email sent to:', customerEmail);
 
             } else {
-                console.log('Checkout email skipped: customer email not found.');
+                //console.log('Checkout email skipped: customer email not found.');
             }
 
         } catch (emailError) {
@@ -670,7 +670,7 @@ exports.updateOrder = async (req, res, next) => {
                     ]
                 });
 
-                console.log(`Order update email sent to ${order.user.email}`);
+                //console.log(`Order update email sent to ${order.user.email}`);
 
             } catch (emailError) {
                 // Do not undo a successfully saved order update if email fails.

@@ -92,7 +92,7 @@ export const login = (email, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post(`${import.meta.env.VITE_API}/login`, { email, password }, config)
-        console.log(data.user)
+        //console.log(data.user)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: data.user
@@ -209,7 +209,7 @@ export const updateProfile = (userData) => async (dispatch) => {
             payload: data.success
         })
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         dispatch({
             type: UPDATE_PROFILE_FAIL,
             payload: error.response.data.message

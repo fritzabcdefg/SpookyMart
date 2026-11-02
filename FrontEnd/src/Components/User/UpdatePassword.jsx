@@ -24,7 +24,7 @@ const UpdatePassword = () => {
     let navigate = useNavigate();
 
     // const updatePassword = async (formData) => {
-    //     console.log(formData)
+    //     //console.log(formData)
     //     try {
     //         const config = {
     //             headers: {
@@ -62,7 +62,7 @@ const UpdatePassword = () => {
 
     useEffect(() => {
         if (error) {
-            console.log(error)
+            //console.log(error)
             dispatch(clearErrors());
         }
         if (isUpdated) {

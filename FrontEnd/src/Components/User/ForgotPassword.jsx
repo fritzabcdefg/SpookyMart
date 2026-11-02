@@ -29,7 +29,7 @@ const ForgotPassword = () => {
     //     }
     //     try {
     //         const { data } = await axios.post(`http://localhost:4001/api/v1/password/forgot`, formData, config)
-    //         console.log(data.message)
+    //         //console.log(data.message)
 
     //         setLoading(false)
     //         toast.success(data.message, {

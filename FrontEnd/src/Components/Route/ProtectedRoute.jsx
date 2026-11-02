@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children, isAdmin = false }) => {
 
     // const [user, setUser] = useState(getUser())
 
-    console.log(children.type.name, loading)
+    //console.log(children.type.name, loading)
 
     if (loading === false) {
         if (isAuthenticated === false) {
