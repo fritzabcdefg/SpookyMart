@@ -66,6 +66,11 @@ const orderSchema = new mongoose.Schema({
                 type: Number,
                 required: true
             },
+            costPrice: {
+                type: Number,
+                min: 0,
+                default: 0
+            },
             product: {
                 type: mongoose.Schema.Types.ObjectId,
                 required: true,
