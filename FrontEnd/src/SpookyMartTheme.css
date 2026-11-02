@@ -166,6 +166,72 @@ label, .product-filter label { color: var(--sm-purple) !important; font-weight: 
 #view_order_details { background: var(--sm-purple) !important; border-color: var(--sm-purple) !important; color: #fff !important; }
 
 /* Authentication and account pages */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 100%;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+.login-card-column {
+  width: 100%;
+  max-width: 480px;
+  min-width: 0;
+  flex: 0 1 480px;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: clamp(1.5rem, 4vw, 2.5rem) !important;
+}
+.login-form .form-group,
+.login-form .form-control {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.login-form .form-control {
+  display: block;
+  min-height: 46px;
+}
+.login-form .login-submit-button,
+.login-form .login-social-button {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  min-height: 52px;
+  white-space: normal;
+  text-align: center;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: .85rem 1rem !important;
+}
+.login-form .login-submit-button {
+  background: var(--sm-orange) !important;
+  border-color: var(--sm-orange) !important;
+  color: var(--sm-purple) !important;
+}
+.login-form .login-google-button {
+  background: #fff !important;
+  border: 1px solid #d9d0e0 !important;
+  color: var(--sm-ink) !important;
+}
+.login-form .login-facebook-button {
+  background: #1877f2 !important;
+  border-color: #1877f2 !important;
+  color: #fff !important;
+}
+.login-form .login-social-button:hover { filter: brightness(.97); }
+.login-form .float-right { float: none !important; align-self: flex-end; }
+
 .wrapper { margin: 3rem auto; padding: 0 1rem; font-weight: 500 !important; }
 .wrapper form { width: min(100%, 520px); padding: clamp(1.5rem, 4vw, 2.5rem) !important; }
 .wrapper form h1, .wrapper form h2, .wrapper form h3 { color: var(--sm-purple) !important; }
@@ -208,6 +274,9 @@ table, .table { color: var(--sm-ink) !important; background: #fff !important; }
 footer { margin-top: auto !important; padding: 1.5rem 1rem !important; background: var(--sm-purple) !important; border: 0 !important; color: #f7f1fb !important; }
 footer p { margin: 0 !important; color: #f7f1fb !important; font-size: .9rem; }
 .Toastify__toast { border-radius: 10px !important; font-family: Inter, "Segoe UI", sans-serif !important; }
+.Toastify__toast-container { width: min(360px, calc(100vw - 2rem)) !important; }
+.Toastify__toast { min-height: 64px; }
+.Toastify__toast-body { line-height: 1.45; }
 .Toastify__toast--success { border-left: 4px solid var(--sm-success); }
 .Toastify__toast--error { border-left: 4px solid var(--sm-danger); }
 .loader:after { border-color: var(--sm-orange) transparent var(--sm-purple) transparent !important; box-shadow: none !important; }
@@ -224,6 +293,9 @@ footer p { margin: 0 !important; color: #f7f1fb !important; font-size: .9rem; }
   .product-information, .product-reviews-section { padding: 1.25rem !important; }
   .wrapper { margin-top: 1.5rem; }
   .wrapper form { padding: 1.35rem !important; }
+  .login-page { margin: 1.5rem auto; padding: 0 1rem; }
+  .login-card-column { max-width: 100%; }
+  .login-form { padding: 1.35rem !important; }
   .products-filter-panel { margin-bottom: 1.25rem; }
   .cart-item { margin: 1rem 0; }
 }
