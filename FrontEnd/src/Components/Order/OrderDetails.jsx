@@ -223,9 +223,9 @@ const OrderDetails = () => {
     };
     const [downloadingReceipt, setDownloadingReceipt] = useState(false);
     const [cancellingOrder, setCancellingOrder] = useState(false);
+    const [showCancelModal, setShowCancelModal] = useState(false);
 
     const cancelOrder = async () => {
-        if (!window.confirm('Are you sure you want to cancel this order? This cannot be undone.')) return;
         try {
             setCancellingOrder(true);
             const { data } = await axios.post(
@@ -233,6 +233,7 @@ const OrderDetails = () => {
                 {},
                 { withCredentials: true }
             );
+            setShowCancelModal(false);
             toast.success(data.message || 'Order cancelled successfully.');
             dispatch(getOrderDetails(id));
         } catch (err) {
@@ -291,7 +292,7 @@ const OrderDetails = () => {
                             Order # {order._id}
                         </h1>
                         {orderStatus === 'Processing' && (
-                            <button type="button" className="btn btn-danger mb-4 mr-2" onClick={cancelOrder} disabled={cancellingOrder}>
+                            <button type="button" className="btn btn-danger mb-4 mr-2" onClick={() => setShowCancelModal(true)} disabled={cancellingOrder}>
                                 {cancellingOrder ? 'Cancelling...' : 'Cancel Order'}
                             </button>
                         )}
@@ -524,6 +525,19 @@ const OrderDetails = () => {
                                 </div>
                             );
                         })}
+                    </div>
+                </div>
+            )}
+            {showCancelModal && (
+                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000, padding: '20px' }}
+                    onClick={event => { if (event.target === event.currentTarget && !cancellingOrder) setShowCancelModal(false); }}>
+                    <div role="dialog" aria-modal="true" aria-labelledby="cancel-order-title" style={{ background: '#fff', color: '#292333', borderRadius: '14px', padding: '28px', width: '100%', maxWidth: '420px', textAlign: 'center', boxShadow: '0 10px 35px rgba(0,0,0,0.3)' }}>
+                        <h3 id="cancel-order-title">Cancel this order?</h3>
+                        <p style={{ margin: '16px 0 24px' }}>Are you sure you want to cancel this order? This action cannot be undone.</p>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                            <button type="button" className="btn btn-outline-secondary" disabled={cancellingOrder} onClick={() => setShowCancelModal(false)}>No, Keep Order</button>
+                            <button type="button" className="btn btn-danger" disabled={cancellingOrder} onClick={cancelOrder}>{cancellingOrder ? 'Cancelling...' : 'Yes, Cancel Order'}</button>
+                        </div>
                     </div>
                 </div>
             )}
