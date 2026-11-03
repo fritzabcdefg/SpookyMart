@@ -1,0 +1,116 @@
+[
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "163 Holy Family Village, Bagumbayan",
+      "city": "Taguig City",
+      "phoneNo": "+639171234567",
+      "postalCode": "1100",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Candle",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687379/candle1.png",
+        "price": 149
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-CARD-0001",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 298,
+    "taxPrice": 23.84,
+    "shippingPrice": 60,
+    "totalPrice": 381.84,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-10-25T10:15:00.000Z",
+    "deliveredAt": "2026-10-28T08:30:00.000Z",
+    "createdAt": "2026-10-25T10:15:00.000Z"
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Work",
+      "address": "456 Demo Avenue, Barangay Lower Bicutan",
+      "city": "Taguig City",
+      "phoneNo": "+639171234567",
+      "postalCode": "1105",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Witch Hat",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png",
+        "price": 189
+      },
+      {
+        "productName": "Fake Fangs",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
+        "price": 79
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 268,
+    "taxPrice": 21.44,
+    "shippingPrice": 60,
+    "totalPrice": 349.44,
+    "orderStatus": "Shipped",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-10-30T06:45:00.000Z"
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "163 Holy Family Village, Bagumbayan",
+      "city": "Taguig City",
+      "phoneNo": "+639171234567",
+      "postalCode": "1100",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Fake Cobwebs",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687404/fake_cobwebs1.png",
+        "price": 99
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 198,
+    "taxPrice": 15.84,
+    "shippingPrice": 60,
+    "totalPrice": 273.84,
+    "orderStatus": "Processing",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-11-01T13:20:00.000Z"
+  }
+]
