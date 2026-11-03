@@ -10,7 +10,7 @@ const EXPECTED_DB = 'SpookyMart';
 const uri = process.env.MONGO_URI;
 
 function databaseNameFromUri(value) {
-    const match = String(value || '').match(/^mongodb(?:\\+srv)?:\\/\\/[^/]+\\/([^/?]+)(?:\\?|$)/i);
+    const match = String(value || '').match(/^mongodb(?:\+srv)?:\/\/[^/]+\/([^/?]+)(?:\?|$)/i);
     return match ? decodeURIComponent(match[1]) : null;
 }
 
@@ -90,7 +90,7 @@ async function main() {
                 continue;
             }
             for (const image of product.images) {
-                if (!image.public_id || !/^https:\\/\\//i.test(String(image.url || '').trim())) {
+                if (!image.public_id || !/^https:\/\//i.test(String(image.url || '').trim())) {
                     imageIssues.push({ product: product.name, issue: 'Missing public_id or HTTPS URL' });
                 }
             }
