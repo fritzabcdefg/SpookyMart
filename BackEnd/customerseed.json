@@ -1,0 +1,40 @@
+[
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "phoneNo": "+639171234567",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "SpookyMart User1",
+        "phoneNo": "+639171234567",
+        "address": "123 Sample Street, Barangay San Isidro",
+        "city": "Quezon City",
+        "postalCode": "1100",
+        "country": "Philippines",
+        "isDefault": true
+      },
+      {
+        "label": "Work",
+        "recipientName": "SpookyMart User1",
+        "phoneNo": "+639171234567",
+        "address": "456 Demo Avenue, Barangay Bagong Pag-asa",
+        "city": "Quezon City",
+        "postalCode": "1105",
+        "country": "Philippines",
+        "isDefault": false
+      }
+    ],
+    "paymentMethods": [
+      {
+        "label": "Demo Visa",
+        "type": "card",
+        "cardholderName": "SpookyMart User1",
+        "brand": "Visa",
+        "last4": "4242",
+        "expiryMonth": 12,
+        "expiryYear": 2028,
+        "isDefault": true
+      }
+    ]
+  }
+]
