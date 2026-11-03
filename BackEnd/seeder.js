@@ -80,11 +80,18 @@ const seedDatabase = async () => {
                 email: userData.email.toLowerCase()
             });
 
+            const isNewUser = !user;
             if (!user) user = new User();
 
             user.name = userData.name;
             user.email = userData.email.toLowerCase();
-            user.password = userData.password;
+
+            // Only set a password for new users, or when an explicit reset is requested.
+            // This avoids hashing an existing password hash again on repeated seed runs.
+            if (isNewUser || userData.resetPassword === true) {
+                user.password = userData.password;
+            }
+
             user.avatar = userData.avatar;
             user.role = userData.role || 'user';
             user.isActive = userData.isActive !== false;
