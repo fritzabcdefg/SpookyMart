@@ -113,7 +113,9 @@ const seedDatabase = async () => {
 
         console.log('🗂️ Categories ready: ' + categoriesData.length);
 
-        // 3. Products: upsert by name. Trim image URLs to avoid accidental whitespace.
+        // 3. Products: upsert by name while preserving customer reviews and their aggregates.
+        // productseed.json intentionally contains empty reviews arrays; never let those
+        // clear reviews already stored in MongoDB on a repeat seed run.
         const productsByName = new Map();
 
         for (const productData of productsData) {
@@ -129,11 +131,24 @@ const seedDatabase = async () => {
                 }))
             };
 
-            const savedProduct = await Product.findOneAndUpdate(
-                { name: product.name },
-                { $set: product },
-                { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true }
-            );
+            const existingProduct = await Product.findOne({ name: product.name });
+            let savedProduct;
+
+            if (existingProduct) {
+                // Update catalog fields only. Keep reviews, ratings, and numOfReviews
+                // exactly as they are until review seeds are processed below.
+                const {
+                    reviews: ignoredReviews,
+                    ratings: ignoredRatings,
+                    numOfReviews: ignoredNumOfReviews,
+                    ...catalogFields
+                } = product;
+
+                Object.assign(existingProduct, catalogFields);
+                savedProduct = await existingProduct.save();
+            } else {
+                savedProduct = await Product.create(product);
+            }
 
             productsByName.set(savedProduct.name, savedProduct);
         }
