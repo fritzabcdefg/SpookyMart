@@ -49,24 +49,34 @@ const seedDatabase = async () => {
     let connected = false;
 
     try {
-        // Prefer an explicitly configured local/test URI. If none is configured,
-        // fall back ONLY to a local MongoDB instance, never to a hosted database.
-        const mongoUri =
-            process.env.DB_LOCAL_URI ||
-            process.env.DB_URI ||
-            'mongodb://127.0.0.1:27017/spookymart_demo';
+        // Seeding must use its own Atlas URI and a separate database.
+        // Never fall back to DB_URI: that variable belongs to the running application.
+        const mongoUri = process.env.DB_SEED_URI;
 
-        if (!mongoUri.startsWith('mongodb://127.0.0.1') &&
-            !mongoUri.startsWith('mongodb://localhost')) {
+        if (!mongoUri) {
             throw new Error(
-                'Safety stop: seeder only allows a local MongoDB URI. ' +
-                'Set DB_LOCAL_URI in BackEnd/config/.env to a local/test database.'
+                'DB_SEED_URI is missing from BackEnd/config/.env. ' +
+                'Use a MongoDB Atlas connection string whose database path is exactly /SpookyMart_demo.'
             );
         }
 
-        console.log('🔒 Seeder target: local MongoDB only (spookymart_demo recommended).');
+        let seedDatabaseName;
+        try {
+            const parsedMongoUri = new URL(mongoUri);
+            seedDatabaseName = decodeURIComponent(parsedMongoUri.pathname.replace(/^\\//, '').split('/')[0]);
+        } catch (error) {
+            throw new Error('DB_SEED_URI is not a valid MongoDB connection URI.');
+        }
+
+        if (seedDatabaseName !== 'SpookyMart_demo') {
+            throw new Error(
+                'Safety stop: DB_SEED_URI must target the separate database named SpookyMart_demo. ' +
+                'The existing SpookyMart database will not be used or modified.'
+            );
+        }
+
+        console.log('🔒 Seeder target verified: MongoDB database SpookyMart_demo.');
         await mongoose.connect(mongoUri);
-        connected = true;
         console.log('📦 MongoDB connected for seeding.');
 
         // Read all available seed data before changing the database.
