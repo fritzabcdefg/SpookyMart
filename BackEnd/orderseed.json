@@ -5,8 +5,8 @@
     "shippingInfo": {
       "recipientName": "SpookyMart User1",
       "label": "Home",
-      "address": "123 Sample Street, Barangay San Isidro",
-      "city": "Quezon City",
+      "address": "163 Holy Family Village, Bagumbayan",
+      "city": "Taguig City",
       "phoneNo": "+639171234567",
       "postalCode": "1100",
       "country": "Philippines"
@@ -41,8 +41,8 @@
     "shippingInfo": {
       "recipientName": "SpookyMart User1",
       "label": "Work",
-      "address": "456 Demo Avenue, Barangay Bagong Pag-asa",
-      "city": "Quezon City",
+      "address": "456 Demo Avenue, Barangay Lower Bicutan",
+      "city": "Taguig City",
       "phoneNo": "+639171234567",
       "postalCode": "1105",
       "country": "Philippines"
@@ -83,8 +83,8 @@
     "shippingInfo": {
       "recipientName": "SpookyMart User1",
       "label": "Home",
-      "address": "123 Sample Street, Barangay San Isidro",
-      "city": "Quezon City",
+      "address": "163 Holy Family Village, Bagumbayan",
+      "city": "Taguig City",
       "phoneNo": "+639171234567",
       "postalCode": "1100",
       "country": "Philippines"
