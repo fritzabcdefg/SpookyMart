@@ -641,3 +641,229 @@ footer p { font-size:.88rem; letter-spacing:.01em; }
   .wrapper { padding:0 10px; }
   .wrapper form { padding:1.25rem !important; }
 }
+
+
+/* =========================================================
+   SPOOKYMART CREATIVE PASS — haunted boutique / editorial shop
+   CSS only: keeps existing routes, components and behavior.
+   ========================================================= */
+:root {
+  --sm-plum: #241332;
+  --sm-berry: #45205d;
+  --sm-lilac: #eee5f5;
+  --sm-cream: #fffaf4;
+  --sm-tangerine: #ff8b3d;
+  --sm-ink: #2b1b37;
+}
+
+/* Give the storefront a warmer, more atmospheric canvas. */
+html, body {
+  background:
+    radial-gradient(ellipse at 8% 12%, rgba(255,139,61,.10), transparent 28rem),
+    radial-gradient(ellipse at 92% 34%, rgba(142,91,177,.10), transparent 32rem),
+    #f8f4fa !important;
+}
+nav.navbar {
+  position: relative;
+  margin: 14px auto 0;
+  width: min( calc(100% - 36px), 1480px );
+  min-height: 84px;
+  padding: 14px clamp(18px, 3vw, 42px) !important;
+  border-radius: 20px !important;
+  background: linear-gradient(112deg, #241332 0%, #38204e 62%, #4a285f 100%) !important;
+  box-shadow: 0 14px 34px rgba(37,19,61,.18) !important;
+}
+nav.navbar::after {
+  content: "";
+  position: absolute;
+  right: 22px;
+  top: 0;
+  width: 112px;
+  height: 3px;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(90deg, transparent, #ff9a54);
+  opacity: .95;
+}
+.navbar .navbar-brand img { max-width: 190px; }
+.navbar .products-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 999px;
+  transition: background .2s ease, color .2s ease;
+}
+.navbar .products-nav a:hover { background: rgba(255,255,255,.10); }
+#cart { display:inline-flex; align-items:center; min-height:38px; padding:0 4px; }
+#cart_count { margin-left:5px !important; box-shadow:0 0 0 3px rgba(255,139,61,.16) !important; }
+
+/* Editorial heading treatment and product shelf. */
+#products_heading {
+  position:relative;
+  width:fit-content;
+  max-width:100%;
+  margin: clamp(2rem, 4vw, 3.4rem) 0 1rem !important;
+  padding: 0 0 13px;
+  font-size: clamp(2rem, 4.2vw, 3.15rem) !important;
+  line-height:1.08;
+  letter-spacing:-.055em !important;
+}
+#products_heading::after {
+  content:"";
+  display:block;
+  width:76px;
+  height:5px;
+  margin-top:13px;
+  border-radius:99px;
+  background:linear-gradient(90deg, #ff8b3d 0 68%, #b89acb 68% 100%);
+}
+#products {
+  position:relative;
+  margin-top: 1.8rem !important;
+  margin-bottom: 3.5rem;
+}
+#products .row { row-gap: 1.35rem; }
+#products .card, #products .product-card {
+  position:relative;
+  border:1px solid rgba(82,48,105,.10) !important;
+  border-radius:19px !important;
+  background:linear-gradient(180deg,#fff 0%,#fff 72%,#fdfaff 100%) !important;
+  box-shadow:0 8px 22px rgba(45,24,62,.055) !important;
+}
+#products .card:hover, #products .product-card:hover {
+  transform:translateY(-6px);
+  border-color:rgba(255,139,61,.55) !important;
+  box-shadow:0 18px 34px rgba(45,24,62,.12) !important;
+}
+#products .card-img-top, #products .product-card-image {
+  height:210px !important;
+  margin:10px auto 0;
+  width:calc(100% - 20px) !important;
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255,174,112,.20), transparent 34%),
+    linear-gradient(145deg,#f3edf8,#fff8f0) !important;
+  transition:transform .25s ease;
+}
+#products .card:hover .card-img-top,
+#products .product-card:hover .product-card-image { transform:scale(1.025); }
+#products .card-body { display:flex; flex-direction:column; gap:7px; padding:16px !important; }
+#products .card-title { min-height:2.7em; }
+#products .card-text, #products .product-card-price { color:#e8752d !important; }
+#products .add-cart-btn {
+  border-radius:999px !important;
+  background:var(--sm-plum) !important;
+  border-color:var(--sm-plum) !important;
+}
+#products .view-details-btn { border-radius:999px !important; }
+#products .pagination { gap:5px; }
+#products .page-link { border-radius:999px !important; min-width:40px; min-height:40px; }
+
+/* Search and filter areas feel like part of the same boutique system. */
+.products-search-form input, #search_field {
+  min-height:46px;
+  border-radius:999px !important;
+  padding-left:17px;
+}
+.products-search-form button, .products-search-form .btn {
+  border-radius:999px !important;
+  padding-inline:20px;
+}
+.products-filter-panel {
+  border-radius:18px !important;
+  background:rgba(255,255,255,.88) !important;
+  box-shadow:0 10px 28px rgba(45,24,62,.06) !important;
+}
+
+/* Product, cart and checkout details: softer panels and clear hierarchy. */
+.product-information, .product-gallery, .product-reviews-section,
+#order_summary, .cart-item, .checkout-form-wrapper .checkout-form {
+  border-radius:19px !important;
+  box-shadow:0 10px 30px rgba(45,24,62,.065) !important;
+}
+.product-main-image {
+  border-radius:16px !important;
+  background:linear-gradient(145deg,#f1eaf7,#fff7ef) !important;
+}
+#checkout_btn, #pay_btn, .login-submit-button {
+  border-radius:999px !important;
+  min-height:48px;
+}
+
+/* Admin area: a polished control room instead of a dark block dashboard. */
+body:has(.sidebar-wrapper) {
+  background:
+    radial-gradient(ellipse at 90% 0%,rgba(255,139,61,.09),transparent 28rem),
+    #f7f3f9 !important;
+}
+body:has(.sidebar-wrapper) #sidebar {
+  background:linear-gradient(180deg,#241332 0%,#38204e 100%) !important;
+}
+body:has(.sidebar-wrapper) #sidebar .sidebar-header {
+  background:rgba(255,255,255,.06) !important;
+}
+body:has(.sidebar-wrapper) main > h1 {
+  color:#2b1b37 !important;
+  font-size:clamp(1.8rem,3vw,2.35rem) !important;
+  letter-spacing:-.045em;
+}
+body:has(.sidebar-wrapper) main > div:first-of-type {
+  background:linear-gradient(118deg,#281638 0%,#55306d 70%,#74427d 100%) !important;
+  border:1px solid rgba(255,255,255,.18) !important;
+  border-radius:20px !important;
+  padding:26px 30px !important;
+  box-shadow:0 14px 30px rgba(44,22,60,.16) !important;
+}
+body:has(.sidebar-wrapper) main > div:first-of-type p {
+  color:#e4d5ed !important;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  font-size:.76rem !important;
+  font-weight:750;
+}
+body:has(.sidebar-wrapper) main > div:first-of-type h2 {
+  color:#fff !important;
+  font-size:clamp(1.8rem,3vw,2.5rem) !important;
+  letter-spacing:-.04em;
+}
+body:has(.sidebar-wrapper) main > .row > div > div {
+  border:1px solid rgba(71,43,91,.10) !important;
+  border-radius:18px !important;
+  background:#fff !important;
+  box-shadow:0 9px 24px rgba(45,24,62,.065) !important;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+body:has(.sidebar-wrapper) main > .row > div > div:hover {
+  transform:translateY(-4px);
+  box-shadow:0 15px 30px rgba(45,24,62,.11) !important;
+}
+body:has(.sidebar-wrapper) main > .row > div > div p {
+  color:#786b82 !important;
+  font-weight:650;
+}
+body:has(.sidebar-wrapper) main > .row > div > div h2 {
+  color:#2b1b37 !important;
+  font-size:2rem !important;
+}
+body:has(.sidebar-wrapper) main > .row > div > div a {
+  border-radius:0 0 17px 17px;
+  filter:saturate(.82);
+}
+.sales-charts-grid > * {
+  border-radius:18px !important;
+  box-shadow:0 9px 26px rgba(45,24,62,.06) !important;
+}
+
+/* A little more breathing room on compact screens without changing layout logic. */
+@media (max-width:767.98px) {
+  nav.navbar { width:calc(100% - 16px); margin:8px auto 0; border-radius:16px !important; }
+  #products_heading { margin-top:1.8rem !important; }
+  #products .card-img-top, #products .product-card-image { height:185px !important; }
+  body:has(.sidebar-wrapper) main > div:first-of-type { padding:20px !important; }
+}
+@media (prefers-reduced-motion:reduce) {
+  #products .card, #products .product-card, #products .card-img-top,
+  #products .product-card-image, body:has(.sidebar-wrapper) main > .row > div > div {
+    transition:none !important;
+  }
+}
