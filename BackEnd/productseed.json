@@ -1,172 +1,431 @@
 [
   {
-    "name": "Spooky Pumpkin Halloween Decoration",
-    "price": 48254.92,
-    "description": "A classic spooky pumpkin decoration perfect for Halloween parties, bedrooms, living rooms, and haunted house setups. Add a creepy Halloween atmosphere to any space with this festive decoration.",
-    "ratings": 4.8,
+    "name": "Candle",
+    "price": 149,
+    "description": "A spooky Halloween candle that adds a warm, eerie atmosphere to desks, tables, shelves, and Halloween party displays.",
+    "ratings": 0,
     "images": [
       {
-        "public_id": "products/spooky_pumpkin",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893966/20251129155804_1.jpg"
+        "public_id": "products/candle_1",
+        "url": "PASTE_CANDLE_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/candle_2",
+        "url": "PASTE_CANDLE_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/candle_3",
+        "url": "PASTE_CANDLE_3_IMAGE_URL_HERE"
       }
     ],
     "category": "Decorations",
     "seller": "SpookyMart",
     "stock": 45,
-    "numOfReviews": 18,
+    "numOfReviews": 0,
     "reviews": []
   },
   {
-    "name": "Creepy Halloween Mask",
-    "price": 1205.87,
-    "description": "A creepy Halloween mask designed for costumes, Halloween parties, trick-or-treating, and spooky events. Create an unforgettable horror-inspired look with this terrifying mask.",
-    "ratings": 4.6,
+    "name": "Creepy Mask",
+    "price": 249,
+    "description": "A creepy Halloween mask for costume parties, themed events, and trick-or-treat celebrations.",
+    "ratings": 0,
     "images": [
       {
-        "public_id": "products/creepy_halloween_mask",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893966/20251129155804_1.jpg"
+        "public_id": "products/creepy_mask_1",
+        "url": "PASTE_CREEPY_MASK_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/creepy_mask_2",
+        "url": "PASTE_CREEPY_MASK_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/creepy_mask_3",
+        "url": "PASTE_CREEPY_MASK_3_IMAGE_URL_HERE"
       }
     ],
     "category": "Costumes",
     "seller": "SpookyMart",
     "stock": 32,
-    "numOfReviews": 14,
+    "numOfReviews": 0,
     "reviews": []
   },
   {
-    "name": "Haunted House Halloween Prop",
-    "price": 1586.87,
-    "description": "Turn your home into a haunted house with this spooky Halloween prop. Perfect for Halloween parties, haunted attractions, photo booths, and scary room decorations.",
-    "ratings": 4.7,
+    "name": "Devil Horn Hairband",
+    "price": 129,
+    "description": "A devil horn hairband that completes a playful Halloween costume for parties and themed celebrations.",
+    "ratings": 0,
     "images": [
       {
-        "public_id": "products/haunted_house_prop",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893966/20251129155751_1.jpg"
-      }
-    ],
-    "category": "Decorations",
-    "seller": "SpookyMart",
-    "stock": 27,
-    "numOfReviews": 21,
-    "reviews": []
-  },
-  {
-    "name": "Classic Jack-O-Lantern Decoration",
-    "price": 1015.37,
-    "description": "Give your Halloween display a traditional spooky look with a Jack-O-Lantern decoration. Great for tables, shelves, porches, parties, and Halloween photo areas.",
-    "ratings": 4.9,
-    "images": [
+        "public_id": "products/devil_horn_hairband_1",
+        "url": "PASTE_DEVIL_HORN_HAIRBAND_1_IMAGE_URL_HERE"
+      },
       {
-        "public_id": "products/jack_o_lantern",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893966/20251129155751_1.jpg"
-      }
-    ],
-    "category": "Decorations",
-    "seller": "SpookyMart",
-    "stock": 60,
-    "numOfReviews": 35,
-    "reviews": []
-  },
-  {
-    "name": "Terrifying Horror Face Mask",
-    "price": 1396.37,
-    "description": "Complete your Halloween costume with a terrifying horror face mask. Designed for spooky parties, costume events, haunted houses, and Halloween gatherings.",
-    "ratings": 4.5,
-    "images": [
+        "public_id": "products/devil_horn_hairband_2",
+        "url": "PASTE_DEVIL_HORN_HAIRBAND_2_IMAGE_URL_HERE"
+      },
       {
-        "public_id": "products/horror_face_mask",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20251129155742_1.jpg"
+        "public_id": "products/devil_horn_hairband_3",
+        "url": "PASTE_DEVIL_HORN_HAIRBAND_3_IMAGE_URL_HERE"
       }
     ],
     "category": "Costumes",
     "seller": "SpookyMart",
-    "stock": 19,
-    "numOfReviews": 11,
+    "stock": 40,
+    "numOfReviews": 0,
     "reviews": []
   },
   {
-    "name": "Spooky Halloween Table Display",
-    "price": 634.37,
-    "description": "A spooky decorative piece for Halloween tables, desks, shelves, and party areas. Combine it with pumpkins, masks, and other decorations for the perfect Halloween setup.",
-    "ratings": 4.4,
+    "name": "Fake Cobwebs",
+    "price": 99,
+    "description": "Stretchable fake cobweb decorations for doors, corners, windows, shelves, and haunted-house displays.",
+    "ratings": 0,
     "images": [
       {
-        "public_id": "products/halloween_table_display",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20250228192535_1.jpg"
+        "public_id": "products/fake_cobwebs_1",
+        "url": "PASTE_FAKE_COBWEBS_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/fake_cobwebs_2",
+        "url": "PASTE_FAKE_COBWEBS_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/fake_cobwebs_3",
+        "url": "PASTE_FAKE_COBWEBS_3_IMAGE_URL_HERE"
       }
     ],
     "category": "Decorations",
     "seller": "SpookyMart",
-    "stock": 75,
-    "numOfReviews": 9,
+    "stock": 80,
+    "numOfReviews": 0,
     "reviews": []
   },
   {
-    "name": "Scary Halloween Costume Set",
-    "price": 2221.87,
-    "description": "A spooky costume set made for Halloween parties, trick-or-treating, cosplay events, and costume competitions. Build your own frightening Halloween character with this set.",
-    "ratings": 4.8,
+    "name": "Fake Fangs",
+    "price": 79,
+    "description": "A pair of novelty vampire-style fake fangs for Halloween costumes, parties, and spooky photo moments.",
+    "ratings": 0,
     "images": [
       {
-        "public_id": "products/scary_costume_set",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20250228192535_1.jpg"
+        "public_id": "products/fake_fangs_1",
+        "url": "PASTE_FAKE_FANGS_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/fake_fangs_2",
+        "url": "PASTE_FAKE_FANGS_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/fake_fangs_3",
+        "url": "PASTE_FAKE_FANGS_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Costumes",
+    "seller": "SpookyMart",
+    "stock": 55,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Ghost Costume",
+    "price": 399,
+    "description": "A ghost costume for Halloween parties, school events, costume contests, and trick-or-treat festivities.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/ghost_costume_1",
+        "url": "PASTE_GHOST_COSTUME_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/ghost_costume_2",
+        "url": "PASTE_GHOST_COSTUME_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/ghost_costume_3",
+        "url": "PASTE_GHOST_COSTUME_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Costumes",
+    "seller": "SpookyMart",
+    "stock": 20,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Halloween Banner",
+    "price": 179,
+    "description": "A festive Halloween banner for decorating walls, party tables, photo areas, and celebration spaces.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/halloween_banner_1",
+        "url": "PASTE_HALLOWEEN_BANNER_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/halloween_banner_2",
+        "url": "PASTE_HALLOWEEN_BANNER_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/halloween_banner_3",
+        "url": "PASTE_HALLOWEEN_BANNER_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Decorations",
+    "seller": "SpookyMart",
+    "stock": 35,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Halloween Gift Wrap",
+    "price": 119,
+    "description": "Halloween-themed gift wrap for treats, party favors, and seasonal presents.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/halloween_gift_wrap_1",
+        "url": "PASTE_HALLOWEEN_GIFT_WRAP_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/halloween_gift_wrap_2",
+        "url": "PASTE_HALLOWEEN_GIFT_WRAP_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/halloween_gift_wrap_3",
+        "url": "PASTE_HALLOWEEN_GIFT_WRAP_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Party Supplies",
+    "seller": "SpookyMart",
+    "stock": 50,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Halloween Treat Bag",
+    "price": 89,
+    "description": "A Halloween treat bag for collecting candy, handing out party favors, and seasonal gift-giving.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/halloween_treat_bag_1",
+        "url": "PASTE_HALLOWEEN_TREAT_BAG_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/halloween_treat_bag_2",
+        "url": "PASTE_HALLOWEEN_TREAT_BAG_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/halloween_treat_bag_3",
+        "url": "PASTE_HALLOWEEN_TREAT_BAG_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Party Supplies",
+    "seller": "SpookyMart",
+    "stock": 60,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Halloween Window Sticker",
+    "price": 99,
+    "description": "Halloween window stickers that add a spooky seasonal touch to glass doors, windows, and display areas.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/halloween_window_sticker_1",
+        "url": "PASTE_HALLOWEEN_WINDOW_STICKER_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/halloween_window_sticker_2",
+        "url": "PASTE_HALLOWEEN_WINDOW_STICKER_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/halloween_window_sticker_3",
+        "url": "PASTE_HALLOWEEN_WINDOW_STICKER_3_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/halloween_window_sticker_4",
+        "url": "PASTE_HALLOWEEN_WINDOW_STICKER_4_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Decorations",
+    "seller": "SpookyMart",
+    "stock": 65,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Hanging Ghost",
+    "price": 159,
+    "description": "A hanging ghost decoration for porches, doorways, rooms, and Halloween party spaces.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/hanging_ghost_1",
+        "url": "PASTE_HANGING_GHOST_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/hanging_ghost_2",
+        "url": "PASTE_HANGING_GHOST_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/hanging_ghost_3",
+        "url": "PASTE_HANGING_GHOST_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Decorations",
+    "seller": "SpookyMart",
+    "stock": 30,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Pumpkin Lantern",
+    "price": 229,
+    "description": "A pumpkin lantern decoration for creating a classic Halloween look on tables, shelves, and party displays.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/pumpkin_lantern_1",
+        "url": "PASTE_PUMPKIN_LANTERN_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/pumpkin_lantern_2",
+        "url": "PASTE_PUMPKIN_LANTERN_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/pumpkin_lantern_3",
+        "url": "PASTE_PUMPKIN_LANTERN_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Decorations",
+    "seller": "SpookyMart",
+    "stock": 28,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Skeleton Decoration",
+    "price": 199,
+    "description": "A skeleton decoration for Halloween displays, themed parties, and haunted-house setups.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/skeleton_decoration_1",
+        "url": "PASTE_SKELETON_DECORATION_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/skeleton_decoration_2",
+        "url": "PASTE_SKELETON_DECORATION_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/skeleton_decoration_3",
+        "url": "PASTE_SKELETON_DECORATION_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Decorations",
+    "seller": "SpookyMart",
+    "stock": 30,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Skeleton Skull Decoration",
+    "price": 179,
+    "description": "A skeleton skull decoration that adds a spooky accent to Halloween tables, shelves, and themed displays.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/skeleton_skull_decoration_1",
+        "url": "PASTE_SKELETON_SKULL_DECORATION_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/skeleton_skull_decoration_2",
+        "url": "PASTE_SKELETON_SKULL_DECORATION_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/skeleton_skull_decoration_3",
+        "url": "PASTE_SKELETON_SKULL_DECORATION_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Decorations",
+    "seller": "SpookyMart",
+    "stock": 25,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Tombstone",
+    "price": 249,
+    "description": "A tombstone prop for Halloween yard displays, haunted-house scenes, and spooky party decorations.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/tombstone_1",
+        "url": "PASTE_TOMBSTONE_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/tombstone_2",
+        "url": "PASTE_TOMBSTONE_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/tombstone_3",
+        "url": "PASTE_TOMBSTONE_3_IMAGE_URL_HERE"
+      }
+    ],
+    "category": "Decorations",
+    "seller": "SpookyMart",
+    "stock": 22,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Vampire Cape",
+    "price": 299,
+    "description": "A vampire cape for Halloween costumes, themed parties, school celebrations, and dress-up events.",
+    "ratings": 0,
+    "images": [
+      {
+        "public_id": "products/vampire_cape_1",
+        "url": "PASTE_VAMPIRE_CAPE_1_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/vampire_cape_2",
+        "url": "PASTE_VAMPIRE_CAPE_2_IMAGE_URL_HERE"
+      },
+      {
+        "public_id": "products/vampire_cape_3",
+        "url": "PASTE_VAMPIRE_CAPE_3_IMAGE_URL_HERE"
       }
     ],
     "category": "Costumes",
     "seller": "SpookyMart",
     "stock": 24,
-    "numOfReviews": 17,
+    "numOfReviews": 0,
     "reviews": []
   },
   {
-    "name": "Halloween Haunted Decoration Kit",
-    "price": 1904.37,
-    "description": "Create a frightening Halloween environment with this haunted decoration kit. Perfect for decorating bedrooms, living rooms, entrances, party venues, and haunted house attractions.",
-    "ratings": 4.7,
+    "name": "Witch Hat",
+    "price": 189,
+    "description": "A classic witch hat accessory for Halloween costumes, themed parties, and seasonal celebrations.",
+    "ratings": 0,
     "images": [
       {
-        "public_id": "products/haunted_decoration_kit",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20250228192535_1.jpg"
-      }
-    ],
-    "category": "Decorations",
-    "seller": "SpookyMart",
-    "stock": 38,
-    "numOfReviews": 26,
-    "reviews": []
-  },
-  {
-    "name": "Mini Spooky Pumpkin",
-    "price": 507.37,
-    "description": "A small spooky pumpkin decoration that is perfect for desks, shelves, tables, bedrooms, and small Halloween displays. A simple and affordable way to add Halloween spirit to your space.",
-    "ratings": 4.6,
-    "images": [
+        "public_id": "products/witch_hat_1",
+        "url": "PASTE_WITCH_HAT_1_IMAGE_URL_HERE"
+      },
       {
-        "public_id": "products/mini_spooky_pumpkin",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893965/20250228192535_1.jpg"
-      }
-    ],
-    "category": "Decorations",
-    "seller": "SpookyMart",
-    "stock": 100,
-    "numOfReviews": 42,
-    "reviews": []
-  },
-  {
-    "name": "Ultimate Horror Halloween Mask",
-    "price": 1777.37,
-    "description": "Make your Halloween costume even scarier with this horror-inspired mask. Ideal for Halloween parties, haunted houses, cosplay, trick-or-treating, and scary photo sessions.",
-    "ratings": 4.9,
-    "images": [
+        "public_id": "products/witch_hat_2",
+        "url": "PASTE_WITCH_HAT_2_IMAGE_URL_HERE"
+      },
       {
-        "public_id": "products/ultimate_horror_mask",
-        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1792893964/20251129155650_1.jpg"
+        "public_id": "products/witch_hat_3",
+        "url": "PASTE_WITCH_HAT_3_IMAGE_URL_HERE"
       }
     ],
     "category": "Costumes",
     "seller": "SpookyMart",
-    "stock": 15,
-    "numOfReviews": 31,
+    "stock": 35,
+    "numOfReviews": 0,
     "reviews": []
   }
 ]
