@@ -7,15 +7,15 @@
     "images": [
       {
         "public_id": "products/candle_1",
-        "url": "PASTE_CANDLE_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687379/candle1.png"
       },
       {
         "public_id": "products/candle_2",
-        "url": "PASTE_CANDLE_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687384/candle2.png"
       },
       {
         "public_id": "products/candle_3",
-        "url": "PASTE_CANDLE_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687378/candle3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -32,15 +32,15 @@
     "images": [
       {
         "public_id": "products/creepy_mask_1",
-        "url": "PASTE_CREEPY_MASK_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png"
       },
       {
         "public_id": "products/creepy_mask_2",
-        "url": "PASTE_CREEPY_MASK_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687390/creepy_mask_2.png"
       },
       {
         "public_id": "products/creepy_mask_3",
-        "url": "PASTE_CREEPY_MASK_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687386/creepy_mask_3.png"
       }
     ],
     "category": "Halloween Costumes",
@@ -57,15 +57,11 @@
     "images": [
       {
         "public_id": "products/devil_horn_hairband_1",
-        "url": "PASTE_DEVIL_HORN_HAIRBAND_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687389/devil_horn_hairban_1.png"
       },
       {
         "public_id": "products/devil_horn_hairband_2",
-        "url": "PASTE_DEVIL_HORN_HAIRBAND_2_IMAGE_URL_HERE"
-      },
-      {
-        "public_id": "products/devil_horn_hairband_3",
-        "url": "PASTE_DEVIL_HORN_HAIRBAND_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/devil_horn_hairban_2.png"
       }
     ],
     "category": "Halloween Costumes",
@@ -82,15 +78,15 @@
     "images": [
       {
         "public_id": "products/fake_cobwebs_1",
-        "url": "PASTE_FAKE_COBWEBS_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687404/fake_cobwebs1.png"
       },
       {
         "public_id": "products/fake_cobwebs_2",
-        "url": "PASTE_FAKE_COBWEBS_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687387/fake_cobwebs_2.png"
       },
       {
         "public_id": "products/fake_cobwebs_3",
-        "url": "PASTE_FAKE_COBWEBS_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687392/fake_cobwebs_3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -107,15 +103,15 @@
     "images": [
       {
         "public_id": "products/fake_fangs_1",
-        "url": "PASTE_FAKE_FANGS_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png"
       },
       {
         "public_id": "products/fake_fangs_2",
-        "url": "PASTE_FAKE_FANGS_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687406/fake_fangs_2.png"
       },
       {
         "public_id": "products/fake_fangs_3",
-        "url": "PASTE_FAKE_FANGS_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687392/fake_fangs_3.png"
       }
     ],
     "category": "Halloween Costumes",
@@ -132,15 +128,15 @@
     "images": [
       {
         "public_id": "products/ghost_costume_1",
-        "url": "PASTE_GHOST_COSTUME_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/ghost_costume_1.png"
       },
       {
         "public_id": "products/ghost_costume_2",
-        "url": "PASTE_GHOST_COSTUME_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687395/ghost_costume_2.png"
       },
       {
         "public_id": "products/ghost_costume_3",
-        "url": "PASTE_GHOST_COSTUME_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687393/ghost_costume_3.png"
       }
     ],
     "category": "Halloween Costumes",
@@ -157,15 +153,15 @@
     "images": [
       {
         "public_id": "products/halloween_banner_1",
-        "url": "PASTE_HALLOWEEN_BANNER_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/halloween_banner1.png"
       },
       {
         "public_id": "products/halloween_banner_2",
-        "url": "PASTE_HALLOWEEN_BANNER_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687405/halloween_banner2.png"
       },
       {
         "public_id": "products/halloween_banner_3",
-        "url": "PASTE_HALLOWEEN_BANNER_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687405/halloween_banner3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -182,15 +178,15 @@
     "images": [
       {
         "public_id": "products/halloween_gift_wrap_1",
-        "url": "PASTE_HALLOWEEN_GIFT_WRAP_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_gift_wrap_1.png"
       },
       {
         "public_id": "products/halloween_gift_wrap_2",
-        "url": "PASTE_HALLOWEEN_GIFT_WRAP_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687406/halloween_gift_wrap_2.png"
       },
       {
         "public_id": "products/halloween_gift_wrap_3",
-        "url": "PASTE_HALLOWEEN_GIFT_WRAP_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687412/halloween_gift_wrap_3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -207,15 +203,15 @@
     "images": [
       {
         "public_id": "products/halloween_treat_bag_1",
-        "url": "PASTE_HALLOWEEN_TREAT_BAG_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png"
       },
       {
         "public_id": "products/halloween_treat_bag_2",
-        "url": "PASTE_HALLOWEEN_TREAT_BAG_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_treat_bag_2.png"
       },
       {
         "public_id": "products/halloween_treat_bag_3",
-        "url": "PASTE_HALLOWEEN_TREAT_BAG_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_treat_bag_3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -232,19 +228,19 @@
     "images": [
       {
         "public_id": "products/halloween_window_sticker_1",
-        "url": "PASTE_HALLOWEEN_WINDOW_STICKER_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687410/halloween_window_sticker_1.png"
       },
       {
         "public_id": "products/halloween_window_sticker_2",
-        "url": "PASTE_HALLOWEEN_WINDOW_STICKER_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/halloween_window_sticker_2.png"
       },
       {
         "public_id": "products/halloween_window_sticker_3",
-        "url": "PASTE_HALLOWEEN_WINDOW_STICKER_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_window_sticker_3.png"
       },
       {
         "public_id": "products/halloween_window_sticker_4",
-        "url": "PASTE_HALLOWEEN_WINDOW_STICKER_4_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687422/halloween_window_sticker_4.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -261,15 +257,15 @@
     "images": [
       {
         "public_id": "products/hanging_ghost_1",
-        "url": "PASTE_HANGING_GHOST_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png"
       },
       {
         "public_id": "products/hanging_ghost_2",
-        "url": "PASTE_HANGING_GHOST_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/hanging_ghost2.png"
       },
       {
         "public_id": "products/hanging_ghost_3",
-        "url": "PASTE_HANGING_GHOST_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687419/hanging_ghost3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -286,15 +282,15 @@
     "images": [
       {
         "public_id": "products/pumpkin_lantern_1",
-        "url": "PASTE_PUMPKIN_LANTERN_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png"
       },
       {
         "public_id": "products/pumpkin_lantern_2",
-        "url": "PASTE_PUMPKIN_LANTERN_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687422/pumpkin_lantern_2.png"
       },
       {
         "public_id": "products/pumpkin_lantern_3",
-        "url": "PASTE_PUMPKIN_LANTERN_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687422/pumpkin_lantern_3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -311,15 +307,15 @@
     "images": [
       {
         "public_id": "products/skeleton_decoration_1",
-        "url": "PASTE_SKELETON_DECORATION_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration1.png"
       },
       {
         "public_id": "products/skeleton_decoration_2",
-        "url": "PASTE_SKELETON_DECORATION_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration2.png"
       },
       {
         "public_id": "products/skeleton_decoration_3",
-        "url": "PASTE_SKELETON_DECORATION_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687422/skeleton_decoration3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -336,15 +332,15 @@
     "images": [
       {
         "public_id": "products/skeleton_skull_decoration_1",
-        "url": "PASTE_SKELETON_SKULL_DECORATION_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687425/skeleton_skull_deco_1.png"
       },
       {
         "public_id": "products/skeleton_skull_decoration_2",
-        "url": "PASTE_SKELETON_SKULL_DECORATION_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/skeleton_skull_deco_2.png"
       },
       {
         "public_id": "products/skeleton_skull_decoration_3",
-        "url": "PASTE_SKELETON_SKULL_DECORATION_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687424/skeleton_skull_deco_3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -361,15 +357,15 @@
     "images": [
       {
         "public_id": "products/tombstone_1",
-        "url": "PASTE_TOMBSTONE_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/tombstone1.png"
       },
       {
         "public_id": "products/tombstone_2",
-        "url": "PASTE_TOMBSTONE_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687427/tombstone2.png"
       },
       {
         "public_id": "products/tombstone_3",
-        "url": "PASTE_TOMBSTONE_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687426/tombstone3.png"
       }
     ],
     "category": "Halloween Decorations",
@@ -386,15 +382,15 @@
     "images": [
       {
         "public_id": "products/vampire_cape_1",
-        "url": "PASTE_VAMPIRE_CAPE_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687427/vampire_cape_1.png"
       },
       {
         "public_id": "products/vampire_cape_2",
-        "url": "PASTE_VAMPIRE_CAPE_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/vampire_cape_2.png"
       },
       {
         "public_id": "products/vampire_cape_3",
-        "url": "PASTE_VAMPIRE_CAPE_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/vampire_cape_3.png"
       }
     ],
     "category": "Halloween Costumes",
@@ -411,15 +407,15 @@
     "images": [
       {
         "public_id": "products/witch_hat_1",
-        "url": "PASTE_WITCH_HAT_1_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png"
       },
       {
         "public_id": "products/witch_hat_2",
-        "url": "PASTE_WITCH_HAT_2_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/witch_hat_2.png "
       },
       {
         "public_id": "products/witch_hat_3",
-        "url": "PASTE_WITCH_HAT_3_IMAGE_URL_HERE"
+        "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/witch_hat_3.png"
       }
     ],
     "category": "Halloween Costumes",
