@@ -770,6 +770,7 @@ async function reserveStock(orderItems) {
             const product = await Product.findOneAndUpdate(
                 {
                     _id: productId,
+                    isDeleted: { $ne: true },
                     stock: { $gte: quantity }
                 },
                 {
