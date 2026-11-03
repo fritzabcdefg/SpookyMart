@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Halloween Decorations",
+    "slug": "halloween-decorations",
+    "description": "Halloween decorations, props, and seasonal items for creating a spooky atmosphere.",
+    "isActive": true
+  },
+  {
+    "name": "Halloween Costumes",
+    "slug": "halloween-costumes",
+    "description": "Halloween costumes and costume accessories for parties, events, and seasonal celebrations.",
+    "isActive": true
+  }
+]
