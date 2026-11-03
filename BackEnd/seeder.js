@@ -49,12 +49,22 @@ const seedDatabase = async () => {
     let connected = false;
 
     try {
-        const mongoUri = process.env.DB_LOCAL_URI || process.env.DB_URI;
+        // Prefer an explicitly configured local/test URI. If none is configured,
+        // fall back ONLY to a local MongoDB instance, never to a hosted database.
+        const mongoUri =
+            process.env.DB_LOCAL_URI ||
+            process.env.DB_URI ||
+            'mongodb://127.0.0.1:27017/spookymart_demo';
 
-        if (!mongoUri) {
-            throw new Error('DB_LOCAL_URI or DB_URI is missing from BackEnd/config/.env');
+        if (!mongoUri.startsWith('mongodb://127.0.0.1') &&
+            !mongoUri.startsWith('mongodb://localhost')) {
+            throw new Error(
+                'Safety stop: seeder only allows a local MongoDB URI. ' +
+                'Set DB_LOCAL_URI in BackEnd/config/.env to a local/test database.'
+            );
         }
 
+        console.log('🔒 Seeder target: local MongoDB only (spookymart_demo recommended).');
         await mongoose.connect(mongoUri);
         connected = true;
         console.log('📦 MongoDB connected for seeding.');
