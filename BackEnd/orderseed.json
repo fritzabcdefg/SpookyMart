@@ -33,7 +33,9 @@
     "orderStatus": "Delivered",
     "paidAt": "2026-10-25T10:15:00.000Z",
     "deliveredAt": "2026-10-28T08:30:00.000Z",
-    "createdAt": "2026-10-25T10:15:00.000Z"
+    "createdAt": "2026-10-25T10:15:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-10-28T08:30:00.000Z"
   },
   {
     "userEmail": "User1_spookymart@gmail.com",
