@@ -63,7 +63,7 @@ const seedDatabase = async () => {
         // Parse the database path without URL(): standard mongodb:// replica-set
         // URIs can contain multiple comma-separated hosts, which URL() rejects.
         const databasePathMatch = mongoUri.match(
-            /^mongodb(?:\\+srv)?:\\/\\/[^/]+\\/([^/?]+)(?:\\?|$)/i
+            /^mongodb(?:\+srv)?:\/\/[^/]+\/([^/?]+)(?:\?|$)/i
         );
 
         if (!databasePathMatch) {
