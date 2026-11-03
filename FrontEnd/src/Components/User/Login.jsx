@@ -207,17 +207,6 @@ const Login = () => {
                                 >
                                     <strong>G</strong> &nbsp; Continue with Google
                                 </button>
-
-                                <button
-                                    type="button"
-                                    className="btn btn-block py-3 mb-3 login-social-button login-facebook-button"
-                                    style={{ backgroundColor: '#1877F2', color: '#ffffff' }}
-                                    disabled={socialLoading || loading}
-                                    onClick={() => socialLogin('facebook')}
-                                >
-                                    Continue with Facebook
-                                </button>
-
                                 <Link
                                     to="/register"
                                     className="float-right mt-3"
