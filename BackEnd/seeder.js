@@ -60,13 +60,17 @@ const seedDatabase = async () => {
             );
         }
 
-        let seedDatabaseName;
-        try {
-            const parsedMongoUri = new URL(mongoUri);
-            seedDatabaseName = decodeURIComponent(parsedMongoUri.pathname.replace(/^\\//, '').split('/')[0]);
-        } catch (error) {
-            throw new Error('DB_SEED_URI is not a valid MongoDB connection URI.');
+        // Parse the database path without URL(): standard mongodb:// replica-set
+        // URIs can contain multiple comma-separated hosts, which URL() rejects.
+        const databasePathMatch = mongoUri.match(
+            /^mongodb(?:\\+srv)?:\\/\\/[^/]+\\/([^/?]+)(?:\\?|$)/i
+        );
+
+        if (!databasePathMatch) {
+            throw new Error('DB_SEED_URI is not a valid MongoDB connection URI with a database name.');
         }
+
+        const seedDatabaseName = decodeURIComponent(databasePathMatch[1]);
 
         if (seedDatabaseName !== 'SpookyMart_demo') {
             throw new Error(
@@ -77,6 +81,7 @@ const seedDatabase = async () => {
 
         console.log('🔒 Seeder target verified: MongoDB database SpookyMart_demo.');
         await mongoose.connect(mongoUri);
+        connected = true;
         console.log('📦 MongoDB connected for seeding.');
 
         // Read all available seed data before changing the database.
