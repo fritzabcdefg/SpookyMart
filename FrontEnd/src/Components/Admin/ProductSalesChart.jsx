@@ -51,7 +51,7 @@ export default function ProductSalesChart() {
 
             const normalizedSales = productData.map(item => ({
                 name: item.name,
-                percent: totalPercent > 0
+                value: totalPercent > 0
                     ? (Number(item.percent || 0) / totalPercent) * 100
                     : 0
             }));
@@ -140,7 +140,7 @@ export default function ProductSalesChart() {
                 <PieChart>
                     <Pie
                         data={sales}
-                        dataKey="percent"
+                        dataKey="value"
                         nameKey="name"
                         cx="50%"
                         cy="50%"
