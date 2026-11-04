@@ -332,7 +332,7 @@ const ProductDetails = () => {
 
                             {/* Price */}
                             <p id="product_price">
-                                ₱{Number(product.price || 0).toLocaleString(
+                                ₱{Number(product.sellPrice || 0).toLocaleString(
                                     'en-PH',
                                     {
                                         minimumFractionDigits: 2,
