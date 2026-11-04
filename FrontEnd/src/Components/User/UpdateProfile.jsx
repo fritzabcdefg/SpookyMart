@@ -167,8 +167,6 @@ const UpdateProfile = () => {
                                 </small>
                             )}
                         </div>
-                        {(user?.authProvider === 'google' || user?.authProvider === 'facebook') && <small className="text-muted d-block mb-3">This email is managed by your {user.authProvider === 'google' ? 'Google' : 'Facebook'} account and cannot be changed here.</small>}
-
                         <div className="form-group">
                             <label htmlFor="email_field">Email</label>
 
@@ -183,6 +181,8 @@ const UpdateProfile = () => {
                                 readOnly={user?.authProvider === "google" || user?.authProvider === "facebook"}
                                 title={user?.authProvider === "google" || user?.authProvider === "facebook" ? "Change your email through your social sign-in provider." : ""}
                             />
+
+                        {(user?.authProvider === 'google' || user?.authProvider === 'facebook') && <small className="text-muted d-block mb-3">This email is managed by your {user.authProvider === 'google' ? 'Google' : 'Facebook'} account and cannot be changed here.</small>}
 
                             {showError('email') && (
                                 <small className="text-danger">
