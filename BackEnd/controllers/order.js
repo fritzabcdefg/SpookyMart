@@ -1087,91 +1087,101 @@ exports.customerSales = async (req, res, next) => {
 // SALES PER MONTH
 // ============================================
 exports.salesPerMonth = async (req, res, next) => {
-    const salesPerMonth = await Order.aggregate([
-        { $match: { orderStatus: { $ne: 'Cancelled' }, paidAt: { $ne: null } } },
-        {
-            $group: {
-                _id: {
-                    year: { $year: '$paidAt' },
-                    month: { $month: '$paidAt' }
-                },
-                total: {
-                    $sum: {
-                        $reduce: {
-                            input: { $ifNull: ['$orderItems', []] },
-                            initialValue: 0,
-                            in: {
-                                $add: [
-                                    '$value',
-                                    {
-                                        $cond: [
-                                            { $ne: ['$this.costPrice', null] },
-                                            {
-                                                $multiply: [
-                                                    { $subtract: [{ $ifNull: ['$this.sellPrice', '$this.price'] }, '$this.costPrice'] },
-                                                    { $ifNull: ['$this.quantity', 0] }
-                                                ]
-                                            },
-                                            0
-                                        ]
-                                    }
-                                ]
+    try {
+        const salesPerMonth = await Order.aggregate([
+            {
+                $match: {
+                    orderStatus: { $ne: 'Cancelled' },
+                    createdAt: { $ne: null }
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        year: {
+                            $year: {
+                                date: '$createdAt',
+                                timezone: 'Asia/Manila'
+                            }
+                        },
+                        month: {
+                            $month: {
+                                date: '$createdAt',
+                                timezone: 'Asia/Manila'
+                            }
+                        }
+                    },
+                    month: {
+                        $first: {
+                            $dateToString: {
+                                format: '%b %Y',
+                                date: '$createdAt',
+                                timezone: 'Asia/Manila'
+                            }
+                        }
+                    },
+                    total: {
+                        $sum: {
+                            $reduce: {
+                                input: { $ifNull: ['$orderItems', []] },
+                                initialValue: 0,
+                                in: {
+                                    $add: [
+                                        '$$value',
+                                        {
+                                            $cond: [
+                                                {
+                                                    $and: [
+                                                        { $ne: ['$$this.costPrice', null] },
+                                                        { $ne: ['$$this.costPrice', undefined] }
+                                                    ]
+                                                },
+                                                {
+                                                    $multiply: [
+                                                        {
+                                                            $subtract: [
+                                                                { $ifNull: ['$$this.sellPrice', '$$this.price'] },
+                                                                '$$this.costPrice'
+                                                            ]
+                                                        },
+                                                        { $ifNull: ['$$this.quantity', 0] }
+                                                    ]
+                                                },
+                                                0
+                                            ]
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }
                 }
-            }
-        },
-        {
-            $addFields: {
-                month: {
-                    $let: {
-                        vars: {
-                            monthsInString: [
-                                '',
-                                'Jan',
-                                'Feb',
-                                'Mar',
-                                'Apr',
-                                'May',
-                                'Jun',
-                                'Jul',
-                                'Aug',
-                                'Sep',
-                                'Oct',
-                                'Nov',
-                                'Dec'
-                            ]
-                        },
-                        in: {
-                            $arrayElemAt: [
-                                '$$monthsInString',
-                                '$_id.month'
-                            ]
-                        }
-                    }
+            },
+            {
+                $sort: {
+                    '_id.year': 1,
+                    '_id.month': 1
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    month: 1,
+                    total: 1
                 }
             }
-        },
-        {
-            $sort: {
-                '_id.year': 1,
-                '_id.month': 1
-            }
-        },
-        {
-            $project: {
-                _id: 0,
-                month: true,
-                total: true
-            }
-        }
-    ]);
+        ]);
 
-    res.status(200).json({
-        success: true,
-        salesPerMonth
-    });
+        return res.status(200).json({
+            success: true,
+            salesPerMonth
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Unable to retrieve monthly sales.'
+        });
+    }
 };
 
 // Get daily sales within a selected date range (Admin)
