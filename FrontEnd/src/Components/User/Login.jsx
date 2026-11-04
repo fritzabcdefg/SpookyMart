@@ -38,6 +38,7 @@ const Login = () => {
     } = useSelector(state => state.auth);
 
     const [socialLoading, setSocialLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -60,6 +61,9 @@ const Login = () => {
     });
 
     useEffect(() => {
+        if (new URLSearchParams(location.search).get('verified') === '1') {
+            toast.success('Email verified! You can now log in.');
+        }
         if (isAuthenticated && redirect === 'shipping') {
             navigate(`/${redirect}`);
         } else if (isAuthenticated) {
@@ -161,7 +165,7 @@ const Login = () => {
                                     </label>
 
                                     <input
-                                        type="password"
+                                        type={showPassword ? "text" : "password"}
                                         id="password_field"
                                         name="password"
                                         className="form-control"
@@ -169,6 +173,9 @@ const Login = () => {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                     />
+                                    <button type="button" className="btn btn-link p-0 mt-2" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? 'Hide password' : 'Show password'}>
+                                        {showPassword ? 'Hide password' : 'Show password'}
+                                    </button>
 
                                     {showError('password') && (
                                         <small className="text-danger">
