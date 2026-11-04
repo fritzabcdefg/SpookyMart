@@ -1,20 +1,41 @@
 [
   {
     "userEmail": "User1_spookymart@gmail.com",
-    "phoneNo": "+639171000137",
+    "phoneNo": "+639171234567",
     "addresses": [
       {
         "label": "Home",
         "recipientName": "SpookyMart User1",
-        "phoneNo": "+639171000137",
-        "address": "28 Acacia Avenue, Barangay Ususan",
+        "phoneNo": "+639171234567",
+        "address": "163 Holy Family Village, Bagumbayan",
         "city": "Taguig City",
-        "postalCode": "1635",
+        "postalCode": "1100",
         "country": "Philippines",
         "isDefault": true
+      },
+      {
+        "label": "Work",
+        "recipientName": "SpookyMart User1",
+        "phoneNo": "+639171234567",
+        "address": "456 Demo Avenue, Barangay Lower Bicutan",
+        "city": "Taguig City",
+        "postalCode": "1105",
+        "country": "Philippines",
+        "isDefault": false
       }
     ],
-    "paymentMethods": []
+    "paymentMethods": [
+      {
+        "label": "Demo Visa",
+        "type": "card",
+        "cardholderName": "SpookyMart User1",
+        "brand": "Visa",
+        "last4": "4242",
+        "expiryMonth": 12,
+        "expiryYear": 2028,
+        "isDefault": true
+      }
+    ]
   },
   {
     "userEmail": "mika.santos.demo@gmail.com",
