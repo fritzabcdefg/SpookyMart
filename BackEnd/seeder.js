@@ -178,6 +178,21 @@ const seedDatabase = async () => {
             productsByName.set(savedProduct.name, savedProduct);
         }
 
+        // Remove the retired product.price field from any older demo records.
+        // Keep their existing selling price before unsetting the legacy key.
+        await Product.collection.updateMany(
+            { price: { $exists: true } },
+            [
+                {
+                    $set: {
+                        sellPrice: { $ifNull: ['$sellPrice', '$price'] },
+                        costPrice: { $ifNull: ['$costPrice', null] }
+                    }
+                },
+                { $unset: 'price' }
+            ]
+        );
+
         console.log('🎃 Products ready: ' + productsByName.size);
 
         // 4. Customer profiles: resolve userEmail to the required User ObjectId.
