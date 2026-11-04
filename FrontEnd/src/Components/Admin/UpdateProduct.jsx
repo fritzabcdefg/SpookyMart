@@ -14,6 +14,7 @@ import {
 
 import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants';
 import { getCategories } from '../../actions/categoryActions';
+import './ProductForm.css';
 
 const UpdateProduct = () => {
     const dispatch = useDispatch();
@@ -168,19 +169,29 @@ const UpdateProduct = () => {
                 </div>
 
                 <div className="col-12 col-md-10">
-                    <div className="wrapper my-5">
+                    <div className="product-admin-page">
                         {!productLoaded ? (
                             <h3 className="text-center">
                                 Loading product...
                             </h3>
                         ) : (
                             <form
-                                className="shadow-lg"
+                                className="product-admin-form"
                                 onSubmit={submitHandler}
                             >
-                                <h1 className="mb-4">Update Product</h1>
+                                <div className="product-form-heading">
+                                    <div className="product-form-heading-icon"><i className="fa fa-pencil" /></div>
+                                    <div>
+                                        <span className="product-form-eyebrow">INVENTORY MANAGEMENT</span>
+                                        <h1>Update Product</h1>
+                                        <p>Keep your product details and inventory up to date.</p>
+                                    </div>
+                                </div>
+                                <div className="product-form-section-title">
+                                    <i className="fa fa-info-circle" /> Product information
+                                </div>
 
-                                <div className="form-group">
+                                <div className="form-group product-form-field">
                                     <label htmlFor="name_field">Name</label>
                                     <input
                                         id="name_field"
@@ -329,7 +340,7 @@ const UpdateProduct = () => {
 
                                 <button
                                     type="submit"
-                                    className="btn btn-block py-3"
+                                    className="product-form-submit"
                                     disabled={loading}
                                 >
                                     {loading ? 'UPDATING...' : 'UPDATE PRODUCT'}
