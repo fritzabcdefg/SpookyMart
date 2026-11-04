@@ -62,9 +62,18 @@ const orderSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
+            // Selling and cost prices are snapshots taken at checkout.
             price: {
                 type: Number,
                 required: true
+            },
+            sellPrice: {
+                type: Number,
+                required: true
+            },
+            costPrice: {
+                type: Number,
+                default: null
             },
             product: {
                 type: mongoose.Schema.Types.ObjectId,
