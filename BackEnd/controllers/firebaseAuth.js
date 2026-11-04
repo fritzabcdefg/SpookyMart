@@ -103,10 +103,16 @@ exports.firebaseLogin = async (req, res) => {
 
         }
 
+        let userChanged = false;
         if (decoded.email_verified && !user.emailVerified) {
             user.emailVerified = true;
-            await user.save();
+            userChanged = true;
         }
+        if (user.authProvider !== (providerId === 'google.com' ? 'google' : 'facebook')) {
+            user.authProvider = providerId === 'google.com' ? 'google' : 'facebook';
+            userChanged = true;
+        }
+        if (userChanged) await user.save();
 
         await Customer.updateOne(
             { user: user._id },
