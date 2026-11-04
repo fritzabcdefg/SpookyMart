@@ -442,13 +442,18 @@ exports.updateUser = async (req, res, next) => {
 }
 
 exports.logout = async (req, res, next) => {
-    res.cookie('token', null, {
-        expires: new Date(Date.now()),
-        httpOnly: true
-    })
+    // Cookie deletion MUST use the same scope/security attributes as jwtToken.js.
+    // Otherwise the browser keeps the original httpOnly JWT and /me restores the session on refresh.
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : 'lax',
+        path: '/'
+    });
 
     return res.status(200).json({
         success: true,
         message: 'Logged out'
-    })
+    });
 }
