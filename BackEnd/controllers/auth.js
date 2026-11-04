@@ -285,9 +285,14 @@ exports.getUserProfile = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
 
+    const currentUser = await User.findById(req.user.id);
+    if (!currentUser) return res.status(404).json({ message: 'User not found.' });
+    if (['google', 'facebook'].includes(currentUser.authProvider) && req.body.email?.trim().toLowerCase() !== currentUser.email) {
+        return res.status(400).json({ message: 'This email is managed by your social sign-in provider and cannot be changed here.' });
+    }
     const newUserData = {
         name: req.body.name,
-        email: req.body.email
+        email: currentUser.authProvider === 'password' ? req.body.email : currentUser.email
     }
 
     // Update avatar
