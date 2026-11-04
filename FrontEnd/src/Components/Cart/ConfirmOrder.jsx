@@ -6,42 +6,28 @@ import { useSelector } from 'react-redux';
 
 const ConfirmOrder = () => {
     const navigate = useNavigate();
-
     const { shippingInfo } = useSelector(state => state.cart);
     const { user } = useSelector(state => state.auth);
 
     let selectedItems = [];
-
     try {
-        selectedItems = JSON.parse(
-            sessionStorage.getItem('checkoutItems') || '[]'
-        );
+        selectedItems = JSON.parse(sessionStorage.getItem('checkoutItems') || '[]');
     } catch {
         selectedItems = [];
     }
 
     useEffect(() => {
-        if (selectedItems.length === 0) {
-            navigate('/cart', { replace: true });
-        }
+        if (selectedItems.length === 0) navigate('/cart', { replace: true });
     }, [navigate, selectedItems.length]);
 
     const formatPrice = price =>
-        new Intl.NumberFormat('en-PH', {
-            style: 'currency',
-            currency: 'PHP'
-        }).format(Number(price) || 0);
+        new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(Number(price) || 0);
 
     const itemsPrice = selectedItems.reduce(
-        (total, item) =>
-            total + Number(item.sellPrice ?? item.price) * Number(item.quantity),
-        0
+        (total, item) => total + Number(item.sellPrice ?? item.price) * Number(item.quantity), 0
     );
-
     const shippingPrice = Number((itemsPrice * 0.05).toFixed(2));
     const taxPrice = 0;
-
-    // Shipping is 5% of the product subtotal; no separate tax is charged.
     const totalPrice = Number((itemsPrice + shippingPrice).toFixed(2));
 
     const processToPayment = () => {
@@ -49,15 +35,9 @@ const ConfirmOrder = () => {
             navigate('/cart');
             return;
         }
-
-        const data = {
-            itemsPrice: Number(itemsPrice.toFixed(2)),
-            shippingPrice,
-            taxPrice,
-            totalPrice
-        };
-
-        sessionStorage.setItem('orderInfo', JSON.stringify(data));
+        sessionStorage.setItem('orderInfo', JSON.stringify({
+            itemsPrice: Number(itemsPrice.toFixed(2)), shippingPrice, taxPrice, totalPrice
+        }));
         navigate('/payment');
     };
 
@@ -67,111 +47,64 @@ const ConfirmOrder = () => {
         <>
             <MetaData title="Confirm Order - SpookyMart" />
             <CheckoutSteps shipping confirmOrder />
+            <main className="confirm-order-page">
+                <div className="confirm-order-heading">
+                    <h2>Review Your Order</h2>
+                    <p>Check your delivery details and selected items before payment.</p>
+                </div>
 
-            <div className="row d-flex justify-content-between">
-                <div className="col-12 col-lg-8 mt-5 order-confirm">
-                    <h4 className="mb-3">Shipping Info</h4>
-
-                    {user && (
-                        <p><b>Name:</b> {user.name}</p>
-                    )}
-
-                    <p><b>Phone:</b> {shippingInfo.phoneNo}</p>
-
-                    <p className="mb-4">
-                        <b>Address:</b>{' '}
-                        {`${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`}
-                    </p>
-
-                    <hr />
-
-                    <h4 className="mt-4">Selected Items:</h4>
-
-                    {selectedItems.map(item => (
-                        <div className="cart-item my-1" key={item.product}>
-                            <hr />
-
-                            <div className="row align-items-center">
-                                <div className="col-4 col-lg-2">
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        height="55"
-                                        width="70"
-                                    />
-                                </div>
-
-                                <div className="col-5 col-lg-6">
-                                    <Link to={`/product/${item.product}`}>
-                                        {item.name}
-                                    </Link>
-                                </div>
-
-                                <div className="col-12 col-lg-4">
-                                    <p>
-                                        {item.quantity} × {formatPrice(item.sellPrice ?? item.price)}
-                                        {' = '}
-                                        <b>
-                                            {formatPrice(
-                                                item.quantity * (item.sellPrice ?? item.price)
-                                            )}
-                                        </b>
-                                    </p>
-                                </div>
+                <div className="confirm-order-layout">
+                    <div className="confirm-order-main">
+                        <section className="confirm-order-card">
+                            <div className="confirm-card-heading">
+                                <span className="confirm-card-icon"><i className="fa fa-map-marker" /></span>
+                                <div><h4>Shipping Information</h4><p>Where should we deliver your order?</p></div>
                             </div>
-                        </div>
-                    ))}
+                            <div className="confirm-shipping-grid">
+                                {user && <div className="confirm-info-item"><small>Recipient</small><strong>{user.name}</strong></div>}
+                                <div className="confirm-info-item"><small>Phone Number</small><strong>{shippingInfo.phoneNo}</strong></div>
+                                <div className="confirm-info-item confirm-address"><small>Delivery Address</small><strong>{[shippingInfo.address, shippingInfo.city, shippingInfo.postalCode, shippingInfo.country].filter(Boolean).join(', ')}</strong></div>
+                            </div>
+                        </section>
 
-                    <hr />
-
-                    <p>
-                        <b>{selectedItems.length}</b> selected product(s) will be
-                        included in this order.
-                    </p>
-                </div>
-
-                <div className="col-12 col-lg-3 my-4">
-                    <div id="order_summary">
-                        <h4>Order Summary</h4>
-                        <hr />
-
-                        <p>
-                            Subtotal:
-                            <span className="order-summary-values">
-                                {formatPrice(itemsPrice)}
-                            </span>
-                        </p>
-
-                        <p>
-                            Shipping:
-                            <span className="order-summary-values">
-                                {formatPrice(shippingPrice)}
-                            </span>
-                        </p>
-
-                        <hr />
-
-                        <p>
-                            Total:
-                            <span className="order-summary-values">
-                                {formatPrice(totalPrice)}
-                            </span>
-                        </p>
-
-                        <hr />
-
-                        <button
-                            id="checkout_btn"
-                            className="btn btn-primary btn-block"
-                            onClick={processToPayment}
-                        >
-                            Proceed to Payment
-                        </button>
+                        <section className="confirm-order-card confirm-items-card">
+                            <div className="confirm-card-heading">
+                                <span className="confirm-card-icon"><i className="fa fa-shopping-bag" /></span>
+                                <div><h4>Selected Items</h4><p>{selectedItems.length} product(s) in this order</p></div>
+                            </div>
+                            <div className="confirm-items-list">
+                                {selectedItems.map(item => (
+                                    <article className="confirm-item" key={item.product}>
+                                        <img src={item.image} alt={item.name} />
+                                        <div className="confirm-item-details">
+                                            <Link to={`/product/${item.product}`}>{item.name}</Link>
+                                            <small>Quantity: {item.quantity} × {formatPrice(item.sellPrice ?? item.price)}</small>
+                                        </div>
+                                        <strong className="confirm-item-total">
+                                            {formatPrice(Number(item.quantity) * Number(item.sellPrice ?? item.price))}
+                                        </strong>
+                                    </article>
+                                ))}
+                            </div>
+                        </section>
                     </div>
+
+                    <aside className="confirm-order-sidebar">
+                        <section className="confirm-order-summary">
+                            <h4>Order Summary</h4>
+                            <p><span>Subtotal</span><strong>{formatPrice(itemsPrice)}</strong></p>
+                            <p><span>Shipping</span><strong>{formatPrice(shippingPrice)}</strong></p>
+                            <div className="confirm-summary-total"><span>Total</span><strong>{formatPrice(totalPrice)}</strong></div>
+                            <button id="checkout_btn" className="btn btn-primary btn-block" onClick={processToPayment}>
+                                Proceed to Payment <i className="fa fa-arrow-right ml-2" />
+                            </button>
+                            <small className="confirm-summary-note">Please review your shipping information before continuing.</small>
+                        </section>
+                    </aside>
                 </div>
-            </div>
+            </main>
         </>
     );
 };
 
-export default ConfirmOrder
+export default ConfirmOrder;
