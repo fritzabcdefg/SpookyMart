@@ -56,7 +56,7 @@ const seedDatabase = async () => {
         if (!mongoUri) {
             throw new Error(
                 'DB_URI is missing from BackEnd/config/.env. ' +
-                'Use a MongoDB Atlas connection string whose database path is exactly /SpookyMart_demo.'
+                'Use a MongoDB Atlas connection string whose database path is exactly /SpookyMart.'
             );
         }
 
@@ -72,14 +72,14 @@ const seedDatabase = async () => {
 
         const seedDatabaseName = decodeURIComponent(databasePathMatch[1]);
 
-        if (seedDatabaseName !== 'SpookyMart_demo') {
+        if (seedDatabaseName !== 'SpookyMart') {
             throw new Error(
-                'Safety stop: DB_URI must target the separate database named SpookyMart_demo. ' +
+                'Safety stop: DB_URI must target the separate database named SpookyMart. ' +
                 'The existing SpookyMart database will not be used or modified.'
             );
         }
 
-        console.log('🔒 Seeder target verified: MongoDB database SpookyMart_demo.');
+        console.log('🔒 Seeder target verified: MongoDB database SpookyMart.');
         await mongoose.connect(mongoUri);
         connected = true;
         console.log('📦 MongoDB connected for seeding.');
