@@ -203,12 +203,12 @@ const UpdateProduct = () => {
                                     />
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group product-form-field">
                                     <label htmlFor="cost_price_field">Cost Price (₱)</label>
                                     <input type="number" id="cost_price_field" className="form-control" value={costPrice} onChange={e => setCostPrice(e.target.value)} min="0" step="0.01" required />
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group product-form-field">
                                     <label htmlFor="price_field">Selling Price (₱)</label>
                                     <input
                                         type="number"
@@ -222,7 +222,7 @@ const UpdateProduct = () => {
                                     />
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group product-form-field product-form-field--wide">
                                     <label htmlFor="description_field">
                                         Description
                                     </label>
@@ -236,7 +236,7 @@ const UpdateProduct = () => {
                                     />
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group product-form-field">
                                     <label htmlFor="category_field">
                                         Category
                                     </label>
@@ -251,7 +251,7 @@ const UpdateProduct = () => {
                                     </select>
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group product-form-field">
                                     <label htmlFor="stock_field">Stock</label>
                                     <input
                                         type="number"
@@ -265,7 +265,7 @@ const UpdateProduct = () => {
                                     />
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group product-form-field">
                                     <label htmlFor="seller_field">
                                         Seller Name
                                     </label>
@@ -278,7 +278,7 @@ const UpdateProduct = () => {
                                     />
                                 </div>
 
-                                    <div className="form-group">
+                                    <div className="form-group product-form-field product-form-field--wide">
                                         <label>Product Images</label>
 
                                         <div style={{
