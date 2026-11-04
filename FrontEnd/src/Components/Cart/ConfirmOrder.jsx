@@ -38,11 +38,11 @@ const ConfirmOrder = () => {
         0
     );
 
-    const shippingPrice = itemsPrice > 200 ? 0 : 25;
-    const taxPrice = Number((0.05 * itemsPrice).toFixed(2));
+    const shippingPrice = Number((itemsPrice * 0.05).toFixed(2));
+    const taxPrice = 0;
 
-    // Calculated in the frontend only.
-    const totalPrice = itemsPrice + shippingPrice + taxPrice;
+    // Shipping is 5% of the product subtotal; no separate tax is charged.
+    const totalPrice = Number((itemsPrice + shippingPrice).toFixed(2));
 
     const processToPayment = () => {
         if (selectedItems.length === 0) {
@@ -145,13 +145,6 @@ const ConfirmOrder = () => {
                             Shipping:
                             <span className="order-summary-values">
                                 {formatPrice(shippingPrice)}
-                            </span>
-                        </p>
-
-                        <p>
-                            Tax:
-                            <span className="order-summary-values">
-                                {formatPrice(taxPrice)}
                             </span>
                         </p>
 
