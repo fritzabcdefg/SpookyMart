@@ -3426,3 +3426,9 @@ main.confirm-order-page .confirm-summary-total {
         width: 100% !important;
     }
 }
+
+/* Home page: make the Latest Products heading black for contrast */
+.home-page #products_heading {
+    color: #000000 !important;
+    text-shadow: none !important;
+}
