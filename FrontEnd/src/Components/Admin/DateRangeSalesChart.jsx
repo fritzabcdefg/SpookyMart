@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getToken } from '../Utils/helpers';
 
 import {
     BarChart,
@@ -47,6 +48,9 @@ const DateRangeSalesChart = () => {
                 setError('');
 
                 const config = {
+                    headers: {
+                        Authorization: `Bearer ${getToken()}`
+                    },
                     withCredentials: true,
                     params: {
                         startDate: appliedRange.startDate,
