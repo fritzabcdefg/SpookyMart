@@ -343,34 +343,35 @@ exports.allOrders = async (req, res, next) => {
 
         const activeOrders = orders.filter(order => order.orderStatus !== 'Cancelled');
 
-        // Sales are product revenue only; shipping is collected separately.
+        // Dashboard Total Sales is product margin only:
+        // (selling price - cost price) x quantity. Shipping and tax are excluded.
         const totalAmount = activeOrders.reduce(
-            (total, order) => total + Number(order.itemsPrice || 0),
+            (total, order) => total + (order.orderItems || []).reduce(
+                (orderTotal, item) => {
+                    const sellPrice = Number(item.sellPrice ?? item.price);
+                    const costPrice = Number(item.costPrice);
+                    const quantity = Number(item.quantity || 0);
+
+                    // Do not guess costs for legacy order items without a cost snapshot.
+                    if (
+                        item.costPrice === null ||
+                        item.costPrice === undefined ||
+                        !Number.isFinite(sellPrice) ||
+                        !Number.isFinite(costPrice) ||
+                        !Number.isFinite(quantity)
+                    ) return orderTotal;
+
+                    return orderTotal + (sellPrice - costPrice) * quantity;
+                },
+                0
+            ),
             0
         );
-
-        // Legacy orders without cost snapshots are excluded from profit, not guessed.
-        const profitOrders = activeOrders.filter(order =>
-            order.orderItems?.length &&
-            order.orderItems.every(item =>
-                Number.isFinite(Number(item.costPrice)) &&
-                item.costPrice !== null &&
-                item.costPrice !== undefined
-            )
-        );
-        const totalProfit = profitOrders.reduce((total, order) =>
-            total + order.orderItems.reduce((orderProfit, item) =>
-                orderProfit + (Number(item.sellPrice ?? item.price) - Number(item.costPrice)) * Number(item.quantity || 0),
-            0),
-        0);
 
         return res.status(200).json({
             success: true,
             orders,
-            totalAmount,
-            totalProfit,
-            profitOrdersCount: profitOrders.length,
-            profitUnavailableOrdersCount: activeOrders.length - profitOrders.length
+            totalAmount
         });
 
     } catch (error) {
