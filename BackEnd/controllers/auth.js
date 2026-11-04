@@ -207,44 +207,100 @@ exports.loginUser = async (req, res, next) => {
 
 
 exports.forgotPassword = async (req, res, next) => {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-        return res.status(404).json({ error: 'User not found with this email' })
-
-    }
-    // Get reset token
-    const resetToken = user.getResetPasswordToken();
-    await user.save({ validateBeforeSave: false });
-    // Use the deployed frontend URL in production; localhost is development-only.
-    const frontendUrl = (process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\/+$/, '');
-    if (!frontendUrl) {
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
-        await user.save({ validateBeforeSave: false });
-        return res.status(500).json({ error: 'FRONTEND_URL must be configured for production password reset emails.' });
-    }
-    const resetUrl = `${frontendUrl}/password/reset/${resetToken}`;
-    const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
     try {
-        await sendEmail({
-            email: user.email,
-            subject: 'ShopIT Password Recovery',
-            message
-        })
+        const email = String(req.body.email || '').trim().toLowerCase();
 
-        res.status(200).json({
-            success: true,
-            message: `Email sent to: ${user.email}`
-        })
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please enter your email address.'
+            });
+        }
 
-    } catch (error) {
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
+        const user = await User.findOne({ email });
+
+        // Always return the same response so the endpoint does not reveal
+        // whether an email address has a SpookyMart account.
+        const genericMessage = 'If an account exists for that email address, a password reset link has been sent. Please check your inbox.';
+
+        if (!user) {
+            return res.status(200).json({ success: true, message: genericMessage });
+        }
+
+        const resetToken = user.getResetPasswordToken();
         await user.save({ validateBeforeSave: false });
-        return res.status(500).json({ error: error.message })
 
+        // Never send production password-reset links to localhost.
+        const frontendUrl = (
+            process.env.FRONTEND_URL ||
+            (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')
+        ).replace(/\\/+$/, '');
+
+        if (!frontendUrl) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save({ validateBeforeSave: false });
+            return res.status(500).json({
+                success: false,
+                message: 'FRONTEND_URL must be configured for password reset emails.'
+            });
+        }
+
+        const resetUrl = `${frontendUrl}/password/reset/${resetToken}`;
+        const safeName = String(user.name || 'there').replace(/[&<>"]/g, character => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'
+        }[character]));
+
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: 'Reset your SpookyMart password',
+                html: `
+                <!doctype html>
+                <html lang="en">
+                <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+                <body style="margin:0;padding:32px 12px;background:#f4f0f7;font-family:Arial,Helvetica,sans-serif;color:#292235;">
+                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                    <tr><td align="center">
+                      <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden;border-collapse:separate;">
+                        <tr><td style="background:#24152f;padding:28px 36px;text-align:center;">
+                          <div style="font-size:28px;font-weight:800;letter-spacing:1px;color:#ff8a32;">SPOOKYMART</div>
+                          <div style="margin-top:6px;color:#f5eafc;font-size:12px;letter-spacing:2px;">A LITTLE SPOOKY. A LOT OF FUN.</div>
+                        </td></tr>
+                        <tr><td style="padding:38px 36px 20px;">
+                          <div style="font-size:13px;font-weight:bold;letter-spacing:1.5px;color:#f07827;">ACCOUNT SECURITY</div>
+                          <h1 style="margin:12px 0 16px;font-size:26px;line-height:1.25;color:#2b2034;">Reset your password</h1>
+                          <p style="font-size:15px;line-height:1.7;color:#5d5365;">Hi ${safeName},</p>
+                          <p style="font-size:15px;line-height:1.7;color:#5d5365;">We received a request to reset the password for your SpookyMart account. Click the button below to choose a new password.</p>
+                          <table role="presentation" cellspacing="0" cellpadding="0" style="margin:28px auto;border-collapse:separate;">
+                            <tr><td align="center" bgcolor="#f07827" style="border-radius:8px;">
+                              <a href="${resetUrl}" style="display:inline-block;padding:15px 30px;color:#ffffff;text-decoration:none;font-size:15px;font-weight:bold;">RESET MY PASSWORD</a>
+                            </td></tr>
+                          </table>
+                          <p style="font-size:13px;line-height:1.7;color:#766b7d;">For your security, this link expires in 30 minutes and can only be used once. If you did not request a password reset, you can safely ignore this email. Your password will remain unchanged.</p>
+                          <p style="font-size:12px;line-height:1.6;color:#8b8291;word-break:break-all;">Button not working? Copy and paste this link into your browser:<br/><a href="${resetUrl}" style="color:#8b4bb5;">${resetUrl}</a></p>
+                        </td></tr>
+                        <tr><td style="padding:20px 36px;background:#faf8fb;text-align:center;color:#8b8291;font-size:12px;">© ${new Date().getFullYear()} SpookyMart · Happy haunting!</td></tr>
+                      </table>
+                    </td></tr>
+                  </table>
+                </body></html>`
+            });
+        } catch (emailError) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save({ validateBeforeSave: false });
+            throw emailError;
+        }
+
+        return res.status(200).json({ success: true, message: genericMessage });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'We could not send the password reset email. Please try again later.'
+        });
     }
-}
+};
 
 exports.resetPassword = async (req, res, next) => {
     console.log(req.params.token)
