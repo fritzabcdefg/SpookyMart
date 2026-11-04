@@ -135,25 +135,23 @@ export const logout = () => async (dispatch) => {
 
 export const forgotPassword = (email) => async (dispatch) => {
     try {
-        dispatch({ type: FORGOT_PASSWORD_REQUEST })
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-        const { data } = await axios.post(`${import.meta.env.VITE_API}/password/forgot`, email, config)
+        dispatch({ type: FORGOT_PASSWORD_REQUEST });
+        const { data } = await axios.post(
+            `${import.meta.env.VITE_API}/password/forgot`,
+            { email },
+            { headers: { 'Content-Type': 'application/json' } }
+        );
         dispatch({
             type: FORGOT_PASSWORD_SUCCESS,
             payload: data.message
-        })
+        });
     } catch (error) {
         dispatch({
             type: FORGOT_PASSWORD_FAIL,
-            payload: error.response.data.message
-        })
+            payload: error.response?.data?.message || 'Unable to send the reset email. Please try again.'
+        });
     }
-
-}
+};
 
 export const updatePassword = (passwords) => async (dispatch) => {
     try {
