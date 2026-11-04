@@ -123,7 +123,6 @@ export const allOrdersReducer = (state = { orders: [] }, action) => {
                 ...state,
                 loading: false,
                 orders: action.payload.orders,
-                totalAmount: action.payload.totalAmount,
                 totalAmount: action.payload.totalAmount
 
             }
