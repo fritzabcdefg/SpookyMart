@@ -53,7 +53,7 @@ const UpdateProduct = () => {
     useEffect(() => {
         if (product && product._id === id) {
             setName(product.name || '');
-            setSellPrice(product.sellPrice ?? product.price ?? '');
+            setSellPrice(product.sellPrice ?? '');
             setCostPrice(product.costPrice ?? '');
             setDescription(product.description || '');
             setCategory(product.category || 'Decorations');
@@ -122,7 +122,6 @@ const UpdateProduct = () => {
         const formData = new FormData();
 
         formData.set('name', name);
-        formData.set('price', sellPrice);
         formData.set('sellPrice', sellPrice);
         formData.set('costPrice', costPrice);
         formData.set('description', description);
