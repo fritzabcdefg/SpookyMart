@@ -789,61 +789,42 @@ exports.deleteReview = async (req, res, next) => {
 }
 
 exports.productSales = async (req, res, next) => {
-    const totalSales = await Order.aggregate([
-        {
-            $group: {
-                _id: null,
-                total: { $sum: "$itemsPrice" }
-
-            },
-
-        },
-    ])
-    console.log(totalSales)
     const sales = await Order.aggregate([
-        { $project: { _id: 0, orderItems: 1 } },
+        { $match: { orderStatus: { $ne: 'Cancelled' } } },
         { $unwind: "$orderItems" },
-
         {
             $group: {
                 _id: { product: "$orderItems.name" },
-                total: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } }
-            },
-        },
-    ])
-    console.log(sales)
-
-    if (!totalSales) {
-        return res.status(404).json({
-            message: 'error sales'
-        })
-
-    }
-    if (!sales) {
-        return res.status(404).json({
-            message: 'error sales'
-        })
-
-    }
-
-    let totalPercentage = {}
-    totalPercentage = sales.map(item => {
-
-        // console.log( ((item.total/totalSales[0].total) * 100).toFixed(2))
-        percent = Number(((item.total / totalSales[0].total) * 100).toFixed(2))
-        total = {
-            name: item._id.product,
-            percent
+                total: {
+                    $sum: {
+                        $multiply: [
+                            {
+                                $subtract: [
+                                    { $ifNull: ["$orderItems.sellPrice", "$orderItems.price"] },
+                                    "$orderItems.costPrice"
+                                ]
+                            },
+                            "$orderItems.quantity"
+                        ]
+                    }
+                }
+            }
         }
-        return total
-    })
-    console.log(totalPercentage)
-    res.status(200).json({
+    ]);
+
+    const totalSales = sales.reduce((sum, item) => sum + Number(item.total || 0), 0);
+    const totalPercentage = sales.map(item => ({
+        name: item._id.product,
+        percent: totalSales > 0
+            ? Number(((Number(item.total || 0) / totalSales) * 100).toFixed(2))
+            : 0
+    }));
+
+    return res.status(200).json({
         success: true,
         totalPercentage,
         sales,
-        totalSales
-    })
-
+        totalSales: [{ total: totalSales }]
+    });
 }
 
