@@ -20,7 +20,7 @@ const Dashboard = () => {
     const { products = [], loading: productsLoading } =
         useSelector(state => state.products || {});
 
-    const { orders = [], totalAmount, totalProfit, profitUnavailableOrdersCount = 0, loading: ordersLoading } =
+    const { orders = [], totalAmount, loading: ordersLoading } =
         useSelector(state => state.allOrders || {});
 
     const { users = [], loading: usersLoading } =
@@ -64,12 +64,12 @@ const Dashboard = () => {
             footer: 'View Orders'
         },
         {
-            title: 'Gross Profit',
-            count: ordersLoading ? '...' : formatCurrency(totalProfit),
+            title: 'Total Sales',
+            count: ordersLoading ? '...' : formatCurrency(totalAmount),
             icon: 'fa-chart-line',
             color: '#16a34a',
             link: '/admin/orders',
-            footer: `${profitUnavailableOrdersCount} legacy order(s) excluded`
+            footer: 'Product margin (excluding shipping and tax)'
         },
         {
             title: 'Users',
@@ -111,7 +111,8 @@ const Dashboard = () => {
                             Dashboard
                         </h1>
 
-                        {/* Total Sales */}
+                        {/* Total Sales is displayed in the summary cards below. */}
+                        {/*
                         <div
                             style={{
                                 background: 'linear-gradient(120deg, #21102f, #35104b)',
@@ -174,6 +175,8 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
+
+                        */}
 
                         {/* Summary Cards */}
                         <div className="row">
