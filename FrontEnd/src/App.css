@@ -3966,3 +3966,38 @@ main.confirm-order-page .confirm-summary-total {
     border-color: rgba(255, 133, 43, .65) !important;
     box-shadow: 0 12px 26px rgba(36, 19, 50, .17);
 }
+
+
+/* Header Login button matches the circular orange search action */
+.navbar #login_btn {
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid #ff852b !important;
+    border-radius: 50% !important;
+    background: #ff852b !important;
+    color: #241332 !important;
+    font-family: inherit;
+    font-size: .68rem;
+    font-weight: 800;
+    line-height: 1 !important;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(255, 133, 43, .2);
+    transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.navbar #login_btn:hover,
+.navbar #login_btn:focus-visible {
+    border-color: #ffad70 !important;
+    background: #ffad70 !important;
+    color: #241332 !important;
+    box-shadow: 0 0 12px rgba(255, 133, 43, .45);
+    transform: translateY(-1px);
+}
