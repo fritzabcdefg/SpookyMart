@@ -86,18 +86,20 @@ const Profile = () => {
                     </div>
 
                     <div className="col-12 col-md-8 col-lg-9 profile-details">
-                        <h4>Full Name</h4>
-                        <p>{user.name}</p>
-
-                        <h4>Email Address</h4>
-                        <p>{user.email}</p>
-
-                        <h4>Joined On</h4>
-                        <p>
-                            {user.createdAt
-                                ? String(user.createdAt).substring(0, 10)
-                                : 'Not available'}
-                        </p>
+                        <div className="profile-info-grid">
+                            <div className="profile-info-item">
+                                <h4>Full Name</h4>
+                                <p>{user.name}</p>
+                            </div>
+                            <div className="profile-info-item">
+                                <h4>Email Address</h4>
+                                <p>{user.email}</p>
+                            </div>
+                            <div className="profile-info-item">
+                                <h4>Joined On</h4>
+                                <p>{user.createdAt ? String(user.createdAt).substring(0, 10) : 'Not available'}</p>
+                            </div>
+                        </div>
 
                         {user.role !== 'admin' && (
                             <Link
