@@ -29,9 +29,9 @@
       "last4": "4242"
     },
     "itemsPrice": 298,
-    "taxPrice": 23.84,
-    "shippingPrice": 60,
-    "totalPrice": 381.84,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 298,
     "orderStatus": "Delivered",
     "paidAt": "2026-10-25T10:15:00.000Z",
     "deliveredAt": "2026-10-28T08:30:00.000Z",
@@ -77,9 +77,9 @@
       "last4": ""
     },
     "itemsPrice": 268,
-    "taxPrice": 21.44,
-    "shippingPrice": 60,
-    "totalPrice": 349.44,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 268,
     "orderStatus": "Shipped",
     "paidAt": null,
     "deliveredAt": null,
@@ -115,12 +115,108 @@
       "last4": ""
     },
     "itemsPrice": 198,
-    "taxPrice": 15.84,
-    "shippingPrice": 60,
-    "totalPrice": 273.84,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 198,
     "orderStatus": "Processing",
     "paidAt": null,
     "deliveredAt": null,
     "createdAt": "2026-11-01T13:20:00.000Z"
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "163 Holy Family Village, Bagumbayan",
+      "city": "Taguig City",
+      "phoneNo": "+639171234567",
+      "postalCode": "1100",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Pumpkin Lantern",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png",
+        "price": 229,
+        "sellPrice": 229,
+        "costPrice": 200
+      },
+      {
+        "productName": "Hanging Ghost",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png",
+        "price": 159,
+        "sellPrice": 159,
+        "costPrice": 120
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-CARD-0002",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 388,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 388,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-10-31T09:10:00.000Z",
+    "deliveredAt": "2026-11-02T08:00:00.000Z",
+    "createdAt": "2026-10-31T09:10:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-11-02T08:00:00.000Z"
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Work",
+      "address": "456 Demo Avenue, Barangay Lower Bicutan",
+      "city": "Taguig City",
+      "phoneNo": "+639171234567",
+      "postalCode": "1105",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Witch Hat",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png",
+        "price": 189,
+        "sellPrice": 189,
+        "costPrice": 140
+      },
+      {
+        "productName": "Halloween Banner",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/halloween_banner1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 130
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 368,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 368,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-11-03T07:00:00.000Z",
+    "createdAt": "2026-11-01T12:00:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-11-03T07:00:00.000Z"
   }
 ]
