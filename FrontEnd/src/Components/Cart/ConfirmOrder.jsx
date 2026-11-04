@@ -28,9 +28,9 @@ const ConfirmOrder = () => {
     const itemsPrice = selectedItems.reduce(
         (total, item) => total + Number(item.sellPrice ?? item.price) * Number(item.quantity), 0
     );
-    const shippingPrice = Number((itemsPrice * 0.05).toFixed(2));
+    const shippingPrice = 0;
     const taxPrice = 0;
-    const totalPrice = Number((itemsPrice + shippingPrice).toFixed(2));
+    const totalPrice = Number(itemsPrice.toFixed(2));
 
     const processToPayment = () => {
         if (!hasRequiredShippingInfo(shippingInfo)) {
@@ -100,7 +100,7 @@ const ConfirmOrder = () => {
                         <section className="confirm-order-summary">
                             <h4>Order Summary</h4>
                             <p><span>Subtotal</span><strong>{formatPrice(itemsPrice)}</strong></p>
-                            <p><span>Shipping</span><strong>{formatPrice(shippingPrice)}</strong></p>
+                            <p><span>Shipping</span><strong>FREE</strong></p>
                             <div className="confirm-summary-total"><span>Total</span><strong>{formatPrice(totalPrice)}</strong></div>
                             <button id="checkout_btn" className="btn btn-primary btn-block" onClick={processToPayment}>
                                 Proceed to Payment <i className="fa fa-arrow-right ml-2" />
