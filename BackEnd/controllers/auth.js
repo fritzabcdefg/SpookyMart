@@ -234,7 +234,7 @@ exports.forgotPassword = async (req, res, next) => {
         const frontendUrl = (
             process.env.FRONTEND_URL ||
             (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')
-        ).replace(/\\/+$/, '');
+        ).replace(/\/+$/, '');
 
         if (!frontendUrl) {
             user.resetPasswordToken = undefined;
