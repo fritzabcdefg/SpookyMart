@@ -246,12 +246,12 @@ const NewProduct = () => {
                             </div>
 
                             {/* Cost and selling prices */}
-                            <div className="form-group">
+                            <div className="form-group product-form-field">
                                 <label htmlFor="cost_price_field">Cost Price (₱)</label>
                                 <input type="number" id="cost_price_field" name="costPrice" className="form-control" value={values.costPrice} onChange={handleChange} onBlur={handleBlur} min="0" step="0.01" />
                                 {showError('costPrice') && <small className="text-danger">{errors.costPrice}</small>}
                             </div>
-                            <div className="form-group">
+                            <div className="form-group product-form-field">
                                 <label htmlFor="sell_price_field">
                                     Selling Price (₱)
                                 </label>
@@ -276,7 +276,7 @@ const NewProduct = () => {
                             </div>
 
                             {/* Description */}
-                            <div className="form-group">
+                            <div className="form-group product-form-field product-form-field--wide">
                                 <label htmlFor="description_field">
                                     Description
                                 </label>
@@ -299,7 +299,7 @@ const NewProduct = () => {
                             </div>
 
                             {/* Category */}
-                            <div className="form-group">
+                            <div className="form-group product-form-field">
                                 <label htmlFor="category_field">
                                     Category
                                 </label>
@@ -325,7 +325,7 @@ const NewProduct = () => {
                             </div>
 
                             {/* Stock */}
-                            <div className="form-group">
+                            <div className="form-group product-form-field">
                                 <label htmlFor="stock_field">
                                     Stock
                                 </label>
@@ -350,7 +350,7 @@ const NewProduct = () => {
                             </div>
 
                             {/* Seller */}
-                            <div className="form-group">
+                            <div className="form-group product-form-field">
                                 <label htmlFor="seller_field">
                                     Seller Name
                                 </label>
@@ -373,7 +373,7 @@ const NewProduct = () => {
                             </div>
 
                             {/* Product Images */}
-                            <div className="form-group">
+                            <div className="form-group product-form-field product-form-field--wide">
                                 <label htmlFor="customFile">
                                     Product Images (Maximum 10)
                                 </label>
