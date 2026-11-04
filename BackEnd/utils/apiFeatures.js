@@ -32,15 +32,15 @@ class APIFeatures {
 
         const filters = {};
 
-        if (queryCopy['price[gte]'] || queryCopy['price[lte]']) {
-            filters.price = {};
+        if (queryCopy['sellPrice[gte]'] || queryCopy['sellPrice[lte]']) {
+            filters.sellPrice = {};
 
-            if (queryCopy['price[gte]']) {
-                filters.price.$gte = Number(queryCopy['price[gte]']);
+            if (queryCopy['sellPrice[gte]']) {
+                filters.sellPrice.$gte = Number(queryCopy['sellPrice[gte]']);
             }
 
-            if (queryCopy['price[lte]']) {
-                filters.price.$lte = Number(queryCopy['price[lte]']);
+            if (queryCopy['sellPrice[lte]']) {
+                filters.sellPrice.$lte = Number(queryCopy['sellPrice[lte]']);
             }
         }
 
