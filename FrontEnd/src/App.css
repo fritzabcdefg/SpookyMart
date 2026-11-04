@@ -2028,3 +2028,9 @@ ul.CTAs a {
 .payment-checkout .payment-form > h1 {
     color: #ff6600 !important;
 }
+
+
+/* Improve visibility of payment method labels */
+.payment-checkout .payment-form .custom-control-label {
+    color: #ffffff !important;
+}
