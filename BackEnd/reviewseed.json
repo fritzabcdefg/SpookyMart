@@ -1,30 +1,177 @@
 [
   {
     "userEmail": "User1_spookymart@gmail.com",
-    "productName": "Candle",
-    "orderCreatedAt": "2026-10-25T10:15:00.000Z",
+    "productName": "Halloween Treat Bag",
+    "orderCreatedAt": "2026-01-22T09:11:00.000Z",
     "rating": 5,
-    "comment": "Really nice candle! It arrived safely and looks great as part of my Halloween decorations."
+    "comment": "Really happy with this purchase. I would order from SpookyMart again."
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "productName": "Skeleton Skull Decoration",
+    "orderCreatedAt": "2026-01-22T09:11:00.000Z",
+    "rating": 4,
+    "comment": "Arrived in good condition and looks just like the product photos."
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "productName": "Creepy Mask",
+    "orderCreatedAt": "2026-01-22T09:11:00.000Z",
+    "rating": 4,
+    "comment": "Great quality and exactly what I needed for our Halloween setup."
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "productName": "Skeleton Decoration",
+    "orderCreatedAt": "2026-01-09T10:22:00.000Z",
+    "rating": 5,
+    "comment": "Nice product and easy to use. Delivery was smooth too."
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "productName": "Tombstone",
+    "orderCreatedAt": "2026-02-27T08:00:00.000Z",
+    "rating": 5,
+    "comment": "The item was well packed and perfect for our family celebration."
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "productName": "Devil Horn Hairband",
+    "orderCreatedAt": "2026-02-27T08:00:00.000Z",
+    "rating": 3,
+    "comment": "Good value for the price and a fun addition to our decorations."
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "productName": "Halloween Banner",
+    "orderCreatedAt": "2026-02-14T09:11:00.000Z",
+    "rating": 5,
+    "comment": "Really happy with this purchase. I would order from SpookyMart again."
   },
   {
     "userEmail": "User1_spookymart@gmail.com",
     "productName": "Pumpkin Lantern",
-    "orderCreatedAt": "2026-10-31T09:10:00.000Z",
+    "orderCreatedAt": "2026-02-14T09:11:00.000Z",
     "rating": 5,
-    "comment": "The lantern looks amazing on the porch. Great Halloween decoration and arrived in perfect condition."
+    "comment": "Arrived in good condition and looks just like the product photos."
   },
   {
     "userEmail": "User1_spookymart@gmail.com",
-    "productName": "Hanging Ghost",
-    "orderCreatedAt": "2026-10-31T09:10:00.000Z",
+    "productName": "Halloween Window Sticker",
+    "orderCreatedAt": "2026-02-13T11:33:00.000Z",
     "rating": 4,
-    "comment": "Cute spooky decoration and easy to hang. Looks just like the photos."
+    "comment": "Great quality and exactly what I needed for our Halloween setup."
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "productName": "Hanging Ghost",
+    "orderCreatedAt": "2026-03-24T08:00:00.000Z",
+    "rating": 4,
+    "comment": "Nice product and easy to use. Delivery was smooth too."
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "productName": "Vampire Cape",
+    "orderCreatedAt": "2026-03-24T08:00:00.000Z",
+    "rating": 5,
+    "comment": "The item was well packed and perfect for our family celebration."
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "productName": "Tombstone",
+    "orderCreatedAt": "2026-03-11T09:11:00.000Z",
+    "rating": 5,
+    "comment": "Good value for the price and a fun addition to our decorations."
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "productName": "Ghost Costume",
+    "orderCreatedAt": "2026-03-10T11:33:00.000Z",
+    "rating": 3,
+    "comment": "Really happy with this purchase. I would order from SpookyMart again."
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "productName": "Halloween Banner",
+    "orderCreatedAt": "2026-04-21T08:00:00.000Z",
+    "rating": 5,
+    "comment": "Arrived in good condition and looks just like the product photos."
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "productName": "Pumpkin Lantern",
+    "orderCreatedAt": "2026-04-21T08:00:00.000Z",
+    "rating": 5,
+    "comment": "Great quality and exactly what I needed for our Halloween setup."
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "productName": "Witch Hat",
+    "orderCreatedAt": "2026-04-21T08:00:00.000Z",
+    "rating": 4,
+    "comment": "Nice product and easy to use. Delivery was smooth too."
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "productName": "Hanging Ghost",
+    "orderCreatedAt": "2026-04-08T09:11:00.000Z",
+    "rating": 4,
+    "comment": "The item was well packed and perfect for our family celebration."
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "productName": "Creepy Mask",
+    "orderCreatedAt": "2026-04-07T11:33:00.000Z",
+    "rating": 5,
+    "comment": "Good value for the price and a fun addition to our decorations."
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "productName": "Ghost Costume",
+    "orderCreatedAt": "2026-04-19T12:44:00.000Z",
+    "rating": 5,
+    "comment": "Really happy with this purchase. I would order from SpookyMart again."
+  },
+  {
+    "userEmail": "bea.mendoza.demo@gmail.com",
+    "productName": "Ghost Costume",
+    "orderCreatedAt": "2026-05-23T08:00:00.000Z",
+    "rating": 3,
+    "comment": "Arrived in good condition and looks just like the product photos."
+  },
+  {
+    "userEmail": "mika.santos.demo@gmail.com",
+    "productName": "Halloween Window Sticker",
+    "orderCreatedAt": "2026-05-10T09:11:00.000Z",
+    "rating": 5,
+    "comment": "Great quality and exactly what I needed for our Halloween setup."
   },
   {
     "userEmail": "User1_spookymart@gmail.com",
-    "productName": "Witch Hat",
-    "orderCreatedAt": "2026-11-01T12:00:00.000Z",
+    "productName": "Candle",
+    "orderCreatedAt": "2026-05-09T11:33:00.000Z",
     "rating": 5,
-    "comment": "Lovely quality and a perfect fit for our Halloween party."
+    "comment": "Nice product and easy to use. Delivery was smooth too."
+  },
+  {
+    "userEmail": "alyssa.cruz.demo@gmail.com",
+    "productName": "Fake Fangs",
+    "orderCreatedAt": "2026-05-21T12:44:00.000Z",
+    "rating": 4,
+    "comment": "The item was well packed and perfect for our family celebration."
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "productName": "Fake Fangs",
+    "orderCreatedAt": "2026-06-25T08:00:00.000Z",
+    "rating": 4,
+    "comment": "Good value for the price and a fun addition to our decorations."
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "productName": "Skeleton Decoration",
+    "orderCreatedAt": "2026-06-24T10:22:00.000Z",
+    "rating": 5,
+    "comment": "Really happy with this purchase. I would order from SpookyMart again."
   }
 ]
