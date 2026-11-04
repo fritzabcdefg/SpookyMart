@@ -16,7 +16,9 @@
         "productName": "Candle",
         "quantity": 2,
         "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687379/candle1.png",
-        "price": 149
+        "price": 149,
+        "sellPrice": 149,
+        "costPrice": null
       }
     ],
     "paymentInfo": {
@@ -54,13 +56,17 @@
         "productName": "Witch Hat",
         "quantity": 1,
         "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png",
-        "price": 189
+        "price": 189,
+        "sellPrice": 189,
+        "costPrice": null
       },
       {
         "productName": "Fake Fangs",
         "quantity": 1,
         "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
-        "price": 79
+        "price": 79,
+        "sellPrice": 79,
+        "costPrice": null
       }
     ],
     "paymentInfo": {
@@ -96,7 +102,9 @@
         "productName": "Fake Cobwebs",
         "quantity": 2,
         "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687404/fake_cobwebs1.png",
-        "price": 99
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": null
       }
     ],
     "paymentInfo": {
