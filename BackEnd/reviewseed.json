@@ -5,5 +5,26 @@
     "orderCreatedAt": "2026-10-25T10:15:00.000Z",
     "rating": 5,
     "comment": "Really nice candle! It arrived safely and looks great as part of my Halloween decorations."
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "productName": "Pumpkin Lantern",
+    "orderCreatedAt": "2026-10-31T09:10:00.000Z",
+    "rating": 5,
+    "comment": "The lantern looks amazing on the porch. Great Halloween decoration and arrived in perfect condition."
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "productName": "Hanging Ghost",
+    "orderCreatedAt": "2026-10-31T09:10:00.000Z",
+    "rating": 4,
+    "comment": "Cute spooky decoration and easy to hang. Looks just like the photos."
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "productName": "Witch Hat",
+    "orderCreatedAt": "2026-11-01T12:00:00.000Z",
+    "rating": 5,
+    "comment": "Lovely quality and a perfect fit for our Halloween party."
   }
 ]
