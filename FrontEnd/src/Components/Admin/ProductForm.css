@@ -213,3 +213,51 @@
         height: 46px;
     }
 }
+
+
+/* High-contrast text overrides for Bootstrap/theme styles */
+.product-admin-page .product-admin-form .product-form-heading h1,
+.product-admin-page .product-admin-form .product-form-heading h1 * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+.product-admin-page .product-admin-form .product-form-heading p {
+    color: #d8cce5 !important;
+    -webkit-text-fill-color: #d8cce5 !important;
+}
+
+.product-admin-page .product-admin-form .product-form-eyebrow {
+    color: #d9a5ff !important;
+    -webkit-text-fill-color: #d9a5ff !important;
+}
+
+.product-admin-page .product-admin-form .product-form-section-title,
+.product-admin-page .product-admin-form .product-form-section-title * {
+    color: #ff914d !important;
+    -webkit-text-fill-color: #ff914d !important;
+}
+
+.product-admin-page .product-admin-form .product-form-field label,
+.product-admin-page .product-admin-form .product-form-field label * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    opacity: 1 !important;
+    font-weight: 700 !important;
+}
+
+.product-admin-page .product-admin-form .form-text {
+    color: #d8cce5 !important;
+    -webkit-text-fill-color: #d8cce5 !important;
+}
+
+.product-admin-page .product-admin-form .product-form-field .form-control {
+    color: #24152f !important;
+    -webkit-text-fill-color: #24152f !important;
+}
+
+.product-admin-page .product-admin-form .product-form-field .form-control::placeholder {
+    color: #75677f !important;
+    -webkit-text-fill-color: #75677f !important;
+}
