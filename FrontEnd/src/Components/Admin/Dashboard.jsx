@@ -64,14 +64,6 @@ const Dashboard = () => {
             footer: 'View Orders'
         },
         {
-            title: 'Total Sales',
-            count: ordersLoading ? '...' : formatCurrency(totalAmount),
-            icon: 'fa-chart-line',
-            color: '#16a34a',
-            link: '/admin/orders',
-            footer: 'Product margin (excluding shipping and tax)'
-        },
-        {
             title: 'Users',
             count: usersLoading ? '...' : userCount,
             icon: 'fa-users',
@@ -111,7 +103,33 @@ const Dashboard = () => {
                             Dashboard
                         </h1>
 
-                        {/* Summary Cards */}
+                        {/* Total Sales - top summary */}
+                        <div
+                            style={{
+                                marginBottom: '24px',
+                                padding: '22px 26px',
+                                background: '#160d22',
+                                border: '1px solid #16a34a',
+                                borderRadius: '12px',
+                                color: '#fff',
+                                boxShadow: '0 4px 14px rgba(0,0,0,0.18)'
+                            }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
+                                <div>
+                                    <p style={{ margin: 0, color: '#c9bdd6', fontSize: '14px' }}>Total Sales</p>
+                                    <h2 style={{ margin: '7px 0 0', fontSize: '32px', fontWeight: 700, color: '#f8f4ff' }}>
+                                        {ordersLoading ? '...' : formatCurrency(totalAmount)}
+                                    </h2>
+                                    <p style={{ margin: '6px 0 0', color: '#b9a9c9', fontSize: '12px' }}>
+                                        Product margin (excluding shipping and tax)
+                                    </p>
+                                </div>
+                                <i className="fa fa-chart-line" style={{ color: '#16a34a', fontSize: '34px' }} />
+                            </div>
+                        </div>
+
+                        {/* Products, Orders, Users, and Out of Stock */}
                         <div className="row">
                             {summaryCards.map(card => (
                                 <div
@@ -130,61 +148,16 @@ const Dashboard = () => {
                                             boxShadow: '0 4px 14px rgba(0,0,0,0.18)'
                                         }}
                                     >
-                                        <div
-                                            style={{
-                                                padding: '20px',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'space-between',
-                                                gap: '10px'
-                                            }}
-                                        >
+                                        <div style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
                                             <div>
-                                                <p
-                                                    style={{
-                                                        margin: 0,
-                                                        color: '#c9bdd6',
-                                                        fontSize: '14px'
-                                                    }}
-                                                >
-                                                    {card.title}
-                                                </p>
-
-                                                <h2
-                                                    style={{
-                                                        margin: '7px 0 0',
-                                                        fontSize: '28px',
-                                                        fontWeight: 700,
-                                                        color: '#f8f4ff'
-                                                    }}
-                                                >
-                                                    {card.count}
-                                                </h2>
+                                                <p style={{ margin: 0, color: '#c9bdd6', fontSize: '14px' }}>{card.title}</p>
+                                                <h2 style={{ margin: '7px 0 0', fontSize: '28px', fontWeight: 700, color: '#f8f4ff' }}>{card.count}</h2>
                                             </div>
-
-                                            <i
-                                                className={`fa ${card.icon}`}
-                                                style={{
-                                                    color: card.color,
-                                                    fontSize: '30px',
-                                                    opacity: 0.9
-                                                }}
-                                            />
+                                            <i className={`fa ${card.icon}`} style={{ color: card.color, fontSize: '30px', opacity: 0.9 }} />
                                         </div>
-
                                         <Link
                                             to={card.link}
-                                            style={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'center',
-                                                padding: '11px 18px',
-                                                background: card.color,
-                                                color: '#fff',
-                                                textDecoration: 'none',
-                                                fontSize: '13px',
-                                                fontWeight: 600
-                                            }}
+                                            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '11px 18px', background: card.color, color: '#fff', textDecoration: 'none', fontSize: '13px', fontWeight: 600 }}
                                         >
                                             {card.footer}
                                             <i className="fa fa-arrow-right" />
