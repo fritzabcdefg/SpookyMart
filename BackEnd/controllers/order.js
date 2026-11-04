@@ -71,7 +71,7 @@ exports.newOrder = async (req, res, next) => {
 
         const trustedOrderItems = requestedItems.map(item => {
             const product = productById.get(String(item.productId));
-            const sellPrice = Number(product.sellPrice ?? product.price);
+            const sellPrice = Number(product.sellPrice);
             const costPrice = Number(product.costPrice);
 
             if (!Number.isFinite(sellPrice) || sellPrice < 0 ||
