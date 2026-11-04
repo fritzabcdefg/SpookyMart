@@ -75,6 +75,7 @@ exports.newOrder = async (req, res, next) => {
             const costPrice = Number(product.costPrice);
 
             if (!Number.isFinite(sellPrice) || sellPrice < 0 ||
+                product.costPrice === null || product.costPrice === undefined ||
                 !Number.isFinite(costPrice) || costPrice < 0) {
                 throw new Error(`Please add a valid cost and selling price for ${product.name} before checkout.`);
             }
@@ -982,15 +983,7 @@ exports.customerSales = async (req, res, next) => {
         {
             $group: {
                 _id: '$user',
-                total: {
-                    $sum: {
-                        $add: [
-                            { $ifNull: ['$itemsPrice', 0] },
-                            { $ifNull: ['$taxPrice', 0] },
-                            { $ifNull: ['$shippingPrice', 0] }
-                        ]
-                    }
-                },
+                total: { $sum: { $ifNull: ['$itemsPrice', 0] } },
                 doc: { $first: '$$ROOT' }
             }
         },
