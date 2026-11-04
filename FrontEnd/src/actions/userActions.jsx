@@ -115,17 +115,21 @@ export const logout = () => async (dispatch) => {
                 'Content-Type': 'application/json',
             },
             withCredentials: true,
-        }
-        await axios.get(`${import.meta.env.VITE_API}/logout`, config)
-        dispatch({
-            type: LOGOUT_SUCCESS,
-        })
-        dispatch(clearCart())
+        };
+
+        // Clear the visible session immediately so the old account is not shown during logout.
+        dispatch({ type: LOGOUT_SUCCESS });
+        dispatch(clearCart());
+
+        // Wait for the server to expire the httpOnly authentication cookie.
+        await axios.get(`${import.meta.env.VITE_API}/logout`, config);
+        return { success: true };
     } catch (error) {
         dispatch({
             type: LOGOUT_FAIL,
-            payload: error.response.data.message
-        })
+            payload: error.response?.data?.message || 'Unable to end the server session. Please try again.'
+        });
+        return { success: false };
     }
 }
 
