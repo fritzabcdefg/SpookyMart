@@ -95,8 +95,8 @@ exports.newOrder = async (req, res, next) => {
             (sum, item) => sum + item.sellPrice * item.quantity, 0
         ).toFixed(2));
         const taxPrice = 0;
-        const shippingPrice = Number((itemsPrice * 0.05).toFixed(2));
-        const totalPrice = Number((itemsPrice + shippingPrice).toFixed(2));
+        const shippingPrice = 0;
+        const totalPrice = itemsPrice;
 
         // Find the customer's separate profile, if one exists.
         const customer = await Customer.findOne({
