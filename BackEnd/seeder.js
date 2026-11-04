@@ -92,6 +92,25 @@ const seedDatabase = async () => {
         const ordersData = readSeedFile('orderseed.json');
         const reviewsData = readSeedFile('reviewseed.json', false);
 
+        // RESET the verified demo database before inserting seed data.
+        // Delete documents from every existing collection (including carts and
+        // any other app collections), while retaining collection indexes.
+        // The strict database-name check above prevents this from touching production.
+        console.log('🧹 Resetting all data in SpookyMart...');
+        const existingCollections = await mongoose.connection.db
+            .listCollections({}, { nameOnly: true })
+            .toArray();
+
+        for (const collection of existingCollections) {
+            if (!collection.name.startsWith('system.')) {
+                await mongoose.connection.db
+                    .collection(collection.name)
+                    .deleteMany({});
+            }
+        }
+
+        console.log('🧼 Demo database cleared. Starting fresh seed...');
+
         // 1. Users: update the matching demo account or create it.
         // save() is intentional because it runs the User password-hashing hook.
         const usersByEmail = new Map();
@@ -326,7 +345,7 @@ const seedDatabase = async () => {
             console.log('⭐ Product reviews ready: ' + reviewsData.length);
         }
 
-        console.log('✅ Database seeding completed. Existing unrelated records were preserved.');
+        console.log('✅ Database reset and seeding completed successfully.');
 
     } catch (error) {
         console.error('❌ Seeding failed:', error);
