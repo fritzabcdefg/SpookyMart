@@ -38,7 +38,7 @@ export const getProducts =
         try {
             dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-            let link = `${import.meta.env.VITE_API}/products?page=${currentPage}&keyword=${encodeURIComponent(keyword)}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
+            let link = `${import.meta.env.VITE_API}/products?page=${currentPage}&keyword=${encodeURIComponent(keyword)}&sellPrice[lte]=${price[1]}&sellPrice[gte]=${price[0]}`;
 
             if (category) {
                 link += `&category=${encodeURIComponent(category)}`;
