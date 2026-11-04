@@ -1030,15 +1030,7 @@ exports.salesPerMonth = async (req, res, next) => {
                     year: { $year: '$paidAt' },
                     month: { $month: '$paidAt' }
                 },
-                total: {
-                    $sum: {
-                        $add: [
-                            { $ifNull: ['$itemsPrice', 0] },
-                            { $ifNull: ['$taxPrice', 0] },
-                            { $ifNull: ['$shippingPrice', 0] }
-                        ]
-                    }
-                }
+                total: { $sum: { $ifNull: ['$itemsPrice', 0] } }
             }
         },
         {
