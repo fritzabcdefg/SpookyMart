@@ -2022,3 +2022,9 @@ ul.CTAs a {
         padding: 1rem !important;
     }
 }
+
+
+/* Make the Payment page title orange, matching the checkout card accents */
+.payment-checkout .payment-form > h1 {
+    color: #ff6600 !important;
+}
