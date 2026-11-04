@@ -135,8 +135,8 @@ async function main() {
             );
 
             assert(
-                Number.isFinite(Number(product.price)),
-                `Invalid price: ${product.name}`
+                Number.isFinite(Number(product.sellPrice ?? product.price)),
+                `Invalid sellPrice: ${product.name}`
             );
 
             assert(
@@ -262,8 +262,11 @@ async function main() {
         const productsToInsert = demoProducts.map(product => {
             const { _id, ...data } = product;
 
+            const { price: legacyPrice, ...productFields } = data;
             return {
-                ...data,
+                ...productFields,
+                sellPrice: Number(data.sellPrice ?? legacyPrice),
+                costPrice: data.costPrice ?? null,
 
                 // Never copy demo user reviews into production.
                 reviews: [],
