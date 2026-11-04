@@ -145,8 +145,8 @@ async function main() {
             );
 
             assert(
-                Number.isFinite(Number(product.price)),
-                `Invalid price: ${product.name}`
+                Number.isFinite(Number(product.sellPrice ?? product.price)),
+                `Invalid sellPrice: ${product.name}`
             );
 
             assert(
