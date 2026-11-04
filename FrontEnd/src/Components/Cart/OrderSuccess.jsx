@@ -49,23 +49,28 @@ const OrderSuccess = () => {
         <>
             <MetaData title="Order Success - SpookyMart" />
 
-            <div className="row justify-content-center">
-                <div className="col-10 col-md-6 mt-5 text-center">
-<h2>Your Order has been placed successfully.</h2>
+            <main className="order-success-page">
+                <section className="order-success-card" aria-labelledby="order-success-title">
+                    <div className="order-success-icon" aria-hidden="true">
+                        <span>✓</span>
+                    </div>
 
-                    <p>Your purchased products have been removed from your cart.</p>
+                    <p className="order-success-eyebrow">SPOOKYMART CHECKOUT</p>
+                    <h1 id="order-success-title">Your Order has been placed successfully.</h1>
+                    <p className="order-success-message">
+                        Your purchased products have been removed from your cart.
+                    </p>
 
-                    <Link to="/orders/me">
-                        Go to Orders
-                    </Link>
-
-                    <br />
-
-                    <Link to="/cart">
-                        Return to Shopping Cart
-                    </Link>
-                </div>
-            </div>
+                    <div className="order-success-actions">
+                        <Link to="/orders/me" className="order-success-primary">
+                            Go to Orders
+                        </Link>
+                        <Link to="/cart" className="order-success-secondary">
+                            Return to Shopping Cart
+                        </Link>
+                    </div>
+                </section>
+            </main>
         </>
     );
 };

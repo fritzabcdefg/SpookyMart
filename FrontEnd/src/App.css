@@ -2162,3 +2162,110 @@ ul.CTAs a {
         padding: 1rem;
     }
 }
+
+
+/* Order success — centered confirmation card */
+.order-success-page {
+    min-height: 68vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 1rem;
+    background:
+        radial-gradient(ellipse at 50% 45%, rgba(255, 102, 0, .09), transparent 58%);
+}
+.order-success-card {
+    width: min(100%, 650px);
+    padding: clamp(2rem, 5vw, 3.5rem);
+    text-align: center;
+    background: linear-gradient(145deg, #1c132b, #13091f 72%);
+    border: 1px solid rgba(255, 102, 0, .55);
+    border-top: 4px solid #ff6600;
+    border-radius: 18px;
+    box-shadow: 0 18px 55px rgba(0, 0, 0, .38), 0 0 28px rgba(255, 102, 0, .08);
+}
+.order-success-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 1.4rem;
+    display: grid;
+    place-items: center;
+    border: 2px solid #ff6600;
+    border-radius: 50%;
+    background: rgba(255, 102, 0, .12);
+    color: #ff6600;
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1;
+}
+.order-success-eyebrow {
+    margin: 0 0 .65rem;
+    color: #ff6600;
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .18em;
+}
+.order-success-card h1 {
+    margin: 0 auto 1rem;
+    color: #ffffff;
+    font-size: clamp(1.55rem, 4vw, 2.15rem);
+    font-weight: 800;
+    line-height: 1.25;
+}
+.order-success-message {
+    margin: 0 auto 1.8rem;
+    color: #e0d8f0;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+.order-success-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .8rem;
+}
+.order-success-actions a {
+    min-width: 190px;
+    padding: .8rem 1.15rem;
+    border: 1px solid #ff6600;
+    border-radius: 8px;
+    font-weight: 750;
+    text-align: center;
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.order-success-primary {
+    background: #ff6600;
+    color: #13091f !important;
+}
+.order-success-primary:hover {
+    background: #e65c00;
+    border-color: #e65c00;
+    color: #13091f !important;
+    transform: translateY(-2px);
+}
+.order-success-secondary {
+    background: transparent;
+    color: #ff8a3d !important;
+}
+.order-success-secondary:hover {
+    background: rgba(255, 102, 0, .12);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+@media (max-width: 480px) {
+    .order-success-page {
+        min-height: 60vh;
+        padding: 2rem .85rem;
+    }
+    .order-success-card {
+        padding: 2rem 1.15rem;
+        border-radius: 14px;
+    }
+    .order-success-actions {
+        flex-direction: column;
+    }
+    .order-success-actions a {
+        width: 100%;
+    }
+}
