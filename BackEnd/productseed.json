@@ -1,7 +1,6 @@
 [
   {
     "name": "Candle",
-    "price": 149,
     "description": "A spooky Halloween candle that adds a warm, eerie atmosphere to desks, tables, shelves, and Halloween party displays.",
     "ratings": 0,
     "images": [
@@ -22,11 +21,12 @@
     "seller": "SpookyMart",
     "stock": 45,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 149,
+    "costPrice": null
   },
   {
     "name": "Creepy Mask",
-    "price": 249,
     "description": "A creepy Halloween mask for costume parties, themed events, and trick-or-treat celebrations.",
     "ratings": 0,
     "images": [
@@ -47,11 +47,12 @@
     "seller": "SpookyMart",
     "stock": 32,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 249,
+    "costPrice": null
   },
   {
     "name": "Devil Horn Hairband",
-    "price": 129,
     "description": "A devil horn hairband that completes a playful Halloween costume for parties and themed celebrations.",
     "ratings": 0,
     "images": [
@@ -68,11 +69,12 @@
     "seller": "SpookyMart",
     "stock": 40,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 129,
+    "costPrice": null
   },
   {
     "name": "Fake Cobwebs",
-    "price": 99,
     "description": "Stretchable fake cobweb decorations for doors, corners, windows, shelves, and haunted-house displays.",
     "ratings": 0,
     "images": [
@@ -93,11 +95,12 @@
     "seller": "SpookyMart",
     "stock": 80,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 99,
+    "costPrice": null
   },
   {
     "name": "Fake Fangs",
-    "price": 79,
     "description": "A pair of novelty vampire-style fake fangs for Halloween costumes, parties, and spooky photo moments.",
     "ratings": 0,
     "images": [
@@ -118,11 +121,12 @@
     "seller": "SpookyMart",
     "stock": 55,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 79,
+    "costPrice": null
   },
   {
     "name": "Ghost Costume",
-    "price": 399,
     "description": "A ghost costume for Halloween parties, school events, costume contests, and trick-or-treat festivities.",
     "ratings": 0,
     "images": [
@@ -143,11 +147,12 @@
     "seller": "SpookyMart",
     "stock": 20,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 399,
+    "costPrice": null
   },
   {
     "name": "Halloween Banner",
-    "price": 179,
     "description": "A festive Halloween banner for decorating walls, party tables, photo areas, and celebration spaces.",
     "ratings": 0,
     "images": [
@@ -168,11 +173,12 @@
     "seller": "SpookyMart",
     "stock": 35,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 179,
+    "costPrice": null
   },
   {
     "name": "Halloween Gift Wrap",
-    "price": 119,
     "description": "Halloween-themed gift wrap for treats, party favors, and seasonal presents.",
     "ratings": 0,
     "images": [
@@ -193,11 +199,12 @@
     "seller": "SpookyMart",
     "stock": 50,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 119,
+    "costPrice": null
   },
   {
     "name": "Halloween Treat Bag",
-    "price": 89,
     "description": "A Halloween treat bag for collecting candy, handing out party favors, and seasonal gift-giving.",
     "ratings": 0,
     "images": [
@@ -218,11 +225,12 @@
     "seller": "SpookyMart",
     "stock": 60,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 89,
+    "costPrice": null
   },
   {
     "name": "Halloween Window Sticker",
-    "price": 99,
     "description": "Halloween window stickers that add a spooky seasonal touch to glass doors, windows, and display areas.",
     "ratings": 0,
     "images": [
@@ -247,11 +255,12 @@
     "seller": "SpookyMart",
     "stock": 65,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 99,
+    "costPrice": null
   },
   {
     "name": "Hanging Ghost",
-    "price": 159,
     "description": "A hanging ghost decoration for porches, doorways, rooms, and Halloween party spaces.",
     "ratings": 0,
     "images": [
@@ -272,11 +281,12 @@
     "seller": "SpookyMart",
     "stock": 30,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 159,
+    "costPrice": null
   },
   {
     "name": "Pumpkin Lantern",
-    "price": 229,
     "description": "A pumpkin lantern decoration for creating a classic Halloween look on tables, shelves, and party displays.",
     "ratings": 0,
     "images": [
@@ -297,11 +307,12 @@
     "seller": "SpookyMart",
     "stock": 28,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 229,
+    "costPrice": null
   },
   {
     "name": "Skeleton Decoration",
-    "price": 199,
     "description": "A skeleton decoration for Halloween displays, themed parties, and haunted-house setups.",
     "ratings": 0,
     "images": [
@@ -322,11 +333,12 @@
     "seller": "SpookyMart",
     "stock": 30,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 199,
+    "costPrice": null
   },
   {
     "name": "Skeleton Skull Decoration",
-    "price": 179,
     "description": "A skeleton skull decoration that adds a spooky accent to Halloween tables, shelves, and themed displays.",
     "ratings": 0,
     "images": [
@@ -347,11 +359,12 @@
     "seller": "SpookyMart",
     "stock": 25,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 179,
+    "costPrice": null
   },
   {
     "name": "Tombstone",
-    "price": 249,
     "description": "A tombstone prop for Halloween yard displays, haunted-house scenes, and spooky party decorations.",
     "ratings": 0,
     "images": [
@@ -372,11 +385,12 @@
     "seller": "SpookyMart",
     "stock": 22,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 249,
+    "costPrice": null
   },
   {
     "name": "Vampire Cape",
-    "price": 299,
     "description": "A vampire cape for Halloween costumes, themed parties, school celebrations, and dress-up events.",
     "ratings": 0,
     "images": [
@@ -397,11 +411,12 @@
     "seller": "SpookyMart",
     "stock": 24,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 299,
+    "costPrice": null
   },
   {
     "name": "Witch Hat",
-    "price": 189,
     "description": "A classic witch hat accessory for Halloween costumes, themed parties, and seasonal celebrations.",
     "ratings": 0,
     "images": [
@@ -422,6 +437,8 @@
     "seller": "SpookyMart",
     "stock": 35,
     "numOfReviews": 0,
-    "reviews": []
+    "reviews": [],
+    "sellPrice": 189,
+    "costPrice": null
   }
 ]
