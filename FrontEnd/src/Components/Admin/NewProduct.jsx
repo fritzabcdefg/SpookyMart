@@ -16,6 +16,7 @@ import {
 
 import { NEW_PRODUCT_RESET } from '../../constants/productConstants';
 import { getCategories } from '../../actions/categoryActions';
+import './ProductForm.css';
 
 // Yup validation rules
 const productSchema = Yup.object({
@@ -202,16 +203,26 @@ const NewProduct = () => {
                 </div>
 
                 <div className="col-12 col-md-10">
-                    <div className="wrapper my-5">
+                    <div className="product-admin-page">
                         <form
-                            className="shadow-lg"
+                            className="product-admin-form"
                             onSubmit={handleSubmit}
                             noValidate
                         >
-                            <h1 className="mb-4">New Product</h1>
+                            <div className="product-form-heading">
+                                <div className="product-form-heading-icon"><i className="fa fa-cube" /></div>
+                                <div>
+                                    <span className="product-form-eyebrow">INVENTORY MANAGEMENT</span>
+                                    <h1>New Product</h1>
+                                    <p>Add a product to your SpookyMart catalog.</p>
+                                </div>
+                            </div>
+                            <div className="product-form-section-title">
+                                <i className="fa fa-info-circle" /> Product information
+                            </div>
 
                             {/* Product Name */}
-                            <div className="form-group">
+                            <div className="form-group product-form-field">
                                 <label htmlFor="name_field">
                                     Name
                                 </label>
@@ -421,7 +432,7 @@ const NewProduct = () => {
 
                             <button
                                 type="submit"
-                                className="btn btn-block py-3"
+                                className="product-form-submit"
                                 disabled={loading}
                             >
                                 {loading ? 'CREATING...' : 'CREATE PRODUCT'}
