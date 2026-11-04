@@ -5,68 +5,120 @@
     "shippingInfo": {
       "recipientName": "SpookyMart User1",
       "label": "Home",
-      "address": "163 Holy Family Village, Bagumbayan",
+      "address": "28 Acacia Avenue, Barangay Ususan",
       "city": "Taguig City",
-      "phoneNo": "+639171234567",
-      "postalCode": "1100",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
       "country": "Philippines"
     },
     "orderItems": [
       {
-        "productName": "Candle",
-        "quantity": 2,
-        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687379/candle1.png",
-        "price": 149,
-        "sellPrice": 149,
-        "costPrice": null
+        "productName": "Fake Fangs",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
+        "price": 79,
+        "sellPrice": 79,
+        "costPrice": 40
       }
     ],
     "paymentInfo": {
-      "id": "DEMO-CARD-0001",
-      "status": "succeeded",
+      "id": "DEMO-PAY-00001",
+      "status": "cancelled",
       "method": "Card",
       "brand": "Visa",
       "last4": "4242"
     },
-    "itemsPrice": 298,
+    "itemsPrice": 237,
     "taxPrice": 0,
     "shippingPrice": 0,
-    "totalPrice": 298,
-    "orderStatus": "Delivered",
-    "paidAt": "2026-10-25T10:15:00.000Z",
-    "deliveredAt": "2026-10-28T08:30:00.000Z",
-    "createdAt": "2026-10-25T10:15:00.000Z",
-    "isReceived": true,
-    "receivedAt": "2026-10-28T08:30:00.000Z"
+    "totalPrice": 237,
+    "orderStatus": "Cancelled",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-01-10T08:00:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": "2026-01-11T09:00:00.000Z",
+    "cancelledBy": "customer"
   },
   {
     "userEmail": "User1_spookymart@gmail.com",
     "customerUserEmail": "User1_spookymart@gmail.com",
     "shippingInfo": {
       "recipientName": "SpookyMart User1",
-      "label": "Work",
-      "address": "456 Demo Avenue, Barangay Lower Bicutan",
+      "label": "Home",
+      "address": "28 Acacia Avenue, Barangay Ususan",
       "city": "Taguig City",
-      "phoneNo": "+639171234567",
-      "postalCode": "1105",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
       "country": "Philippines"
     },
     "orderItems": [
       {
-        "productName": "Witch Hat",
+        "productName": "Halloween Treat Bag",
         "quantity": 1,
-        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png",
-        "price": 189,
-        "sellPrice": 189,
-        "costPrice": null
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png",
+        "price": 89,
+        "sellPrice": 89,
+        "costPrice": 40
       },
       {
-        "productName": "Fake Fangs",
-        "quantity": 1,
-        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
-        "price": 79,
-        "sellPrice": 79,
-        "costPrice": null
+        "productName": "Skeleton Skull Decoration",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687425/skeleton_skull_deco_1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 150
+      },
+      {
+        "productName": "Creepy Mask",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00002",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 1194,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1194,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-01-22T09:11:00.000Z",
+    "deliveredAt": "2026-01-24T14:20:00.000Z",
+    "createdAt": "2026-01-22T09:11:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-01-24T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "28 Acacia Avenue, Barangay Ususan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Skeleton Decoration",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration1.png",
+        "price": 199,
+        "sellPrice": 199,
+        "costPrice": 150
       }
     ],
     "paymentInfo": {
@@ -76,14 +128,68 @@
       "brand": "",
       "last4": ""
     },
-    "itemsPrice": 268,
+    "itemsPrice": 398,
     "taxPrice": 0,
     "shippingPrice": 0,
-    "totalPrice": 268,
-    "orderStatus": "Shipped",
+    "totalPrice": 398,
+    "orderStatus": "Delivered",
     "paidAt": null,
-    "deliveredAt": null,
-    "createdAt": "2026-10-30T06:45:00.000Z"
+    "deliveredAt": "2026-01-11T14:20:00.000Z",
+    "createdAt": "2026-01-09T10:22:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-01-11T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "customerUserEmail": "jared.reyes.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Jared Reyes",
+      "label": "Home",
+      "address": "71 Narra Street, Barangay Western Bicutan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000411",
+      "postalCode": "1630",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Tombstone",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/tombstone1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      },
+      {
+        "productName": "Devil Horn Hairband",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687389/devil_horn_hairban_1.png",
+        "price": 129,
+        "sellPrice": 129,
+        "costPrice": 80
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00004",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 507,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 507,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-02-27T08:00:00.000Z",
+    "deliveredAt": "2026-02-28T14:20:00.000Z",
+    "createdAt": "2026-02-27T08:00:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-02-28T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
   },
   {
     "userEmail": "User1_spookymart@gmail.com",
@@ -91,20 +197,1404 @@
     "shippingInfo": {
       "recipientName": "SpookyMart User1",
       "label": "Home",
-      "address": "163 Holy Family Village, Bagumbayan",
+      "address": "28 Acacia Avenue, Barangay Ususan",
       "city": "Taguig City",
-      "phoneNo": "+639171234567",
-      "postalCode": "1100",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Creepy Mask",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      },
+      {
+        "productName": "Halloween Banner",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/halloween_banner1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 130
+      },
+      {
+        "productName": "Pumpkin Lantern",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png",
+        "price": 229,
+        "sellPrice": 229,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00005",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 1264,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1264,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-02-14T09:11:00.000Z",
+    "deliveredAt": "2026-02-16T14:20:00.000Z",
+    "createdAt": "2026-02-14T09:11:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-02-16T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "customerUserEmail": "jared.reyes.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Jared Reyes",
+      "label": "Home",
+      "address": "71 Narra Street, Barangay Western Bicutan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000411",
+      "postalCode": "1630",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Ghost Costume",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/ghost_costume_1.png",
+        "price": 399,
+        "sellPrice": 399,
+        "costPrice": 350
+      },
+      {
+        "productName": "Hanging Ghost",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png",
+        "price": 159,
+        "sellPrice": 159,
+        "costPrice": 120
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 1356,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1356,
+    "orderStatus": "Processing",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-02-26T10:22:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "28 Acacia Avenue, Barangay Ususan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Window Sticker",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687410/halloween_window_sticker_1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 70
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00007",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 99,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 99,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-02-13T11:33:00.000Z",
+    "deliveredAt": "2026-02-15T14:20:00.000Z",
+    "createdAt": "2026-02-13T11:33:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-02-15T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "customerUserEmail": "paolo.garcia.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Paolo Garcia",
+      "label": "Home",
+      "address": "33 Jasmine Street, Barangay Poblacion",
+      "city": "Makati City",
+      "phoneNo": "+639171000685",
+      "postalCode": "1210",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Hanging Ghost",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png",
+        "price": 159,
+        "sellPrice": 159,
+        "costPrice": 120
+      },
+      {
+        "productName": "Vampire Cape",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687427/vampire_cape_1.png",
+        "price": 299,
+        "sellPrice": 299,
+        "costPrice": 250
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00008",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 776,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 776,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-03-24T08:00:00.000Z",
+    "deliveredAt": "2026-03-26T14:20:00.000Z",
+    "createdAt": "2026-03-24T08:00:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-03-26T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "customerUserEmail": "paolo.garcia.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Paolo Garcia",
+      "label": "Home",
+      "address": "33 Jasmine Street, Barangay Poblacion",
+      "city": "Makati City",
+      "phoneNo": "+639171000685",
+      "postalCode": "1210",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Tombstone",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/tombstone1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 249,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 249,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-03-13T14:20:00.000Z",
+    "createdAt": "2026-03-11T09:11:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-03-13T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "customerUserEmail": "paolo.garcia.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Paolo Garcia",
+      "label": "Home",
+      "address": "33 Jasmine Street, Barangay Poblacion",
+      "city": "Makati City",
+      "phoneNo": "+639171000685",
+      "postalCode": "1210",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Creepy Mask",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      },
+      {
+        "productName": "Halloween Banner",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/halloween_banner1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 130
+      },
+      {
+        "productName": "Pumpkin Lantern",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png",
+        "price": 229,
+        "sellPrice": 229,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00010",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 1264,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1264,
+    "orderStatus": "Shipped",
+    "paidAt": "2026-03-23T10:22:00.000Z",
+    "deliveredAt": null,
+    "createdAt": "2026-03-23T10:22:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "customerUserEmail": "paolo.garcia.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Paolo Garcia",
+      "label": "Home",
+      "address": "33 Jasmine Street, Barangay Poblacion",
+      "city": "Makati City",
+      "phoneNo": "+639171000685",
+      "postalCode": "1210",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Ghost Costume",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/ghost_costume_1.png",
+        "price": 399,
+        "sellPrice": 399,
+        "costPrice": 350
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00011",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 1197,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1197,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-03-10T11:33:00.000Z",
+    "deliveredAt": "2026-03-12T14:20:00.000Z",
+    "createdAt": "2026-03-10T11:33:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-03-12T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "customerUserEmail": "paolo.garcia.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Paolo Garcia",
+      "label": "Home",
+      "address": "33 Jasmine Street, Barangay Poblacion",
+      "city": "Makati City",
+      "phoneNo": "+639171000685",
+      "postalCode": "1210",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Banner",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/halloween_banner1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 130
+      },
+      {
+        "productName": "Pumpkin Lantern",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png",
+        "price": 229,
+        "sellPrice": 229,
+        "costPrice": 200
+      },
+      {
+        "productName": "Witch Hat",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png",
+        "price": 189,
+        "sellPrice": 189,
+        "costPrice": 140
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 1234,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1234,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-04-23T14:20:00.000Z",
+    "createdAt": "2026-04-21T08:00:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-04-23T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "customerUserEmail": "jared.reyes.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Jared Reyes",
+      "label": "Home",
+      "address": "71 Narra Street, Barangay Western Bicutan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000411",
+      "postalCode": "1630",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Hanging Ghost",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png",
+        "price": 159,
+        "sellPrice": 159,
+        "costPrice": 120
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00013",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 477,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 477,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-04-08T09:11:00.000Z",
+    "deliveredAt": "2026-04-10T14:20:00.000Z",
+    "createdAt": "2026-04-08T09:11:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-04-10T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "28 Acacia Avenue, Barangay Ususan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Tombstone",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/tombstone1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      },
+      {
+        "productName": "Devil Horn Hairband",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687389/devil_horn_hairban_1.png",
+        "price": 129,
+        "sellPrice": 129,
+        "costPrice": 80
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00014",
+      "status": "cancelled",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 507,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 507,
+    "orderStatus": "Cancelled",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-04-20T10:22:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": "2026-04-21T09:00:00.000Z",
+    "cancelledBy": "customer"
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "customerUserEmail": "paolo.garcia.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Paolo Garcia",
+      "label": "Home",
+      "address": "33 Jasmine Street, Barangay Poblacion",
+      "city": "Makati City",
+      "phoneNo": "+639171000685",
+      "postalCode": "1210",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Creepy Mask",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      },
+      {
+        "productName": "Halloween Banner",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/halloween_banner1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 130
+      },
+      {
+        "productName": "Pumpkin Lantern",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png",
+        "price": 229,
+        "sellPrice": 229,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 1264,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1264,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-04-09T14:20:00.000Z",
+    "createdAt": "2026-04-07T11:33:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-04-09T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "customerUserEmail": "jared.reyes.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Jared Reyes",
+      "label": "Home",
+      "address": "71 Narra Street, Barangay Western Bicutan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000411",
+      "postalCode": "1630",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Ghost Costume",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/ghost_costume_1.png",
+        "price": 399,
+        "sellPrice": 399,
+        "costPrice": 350
+      },
+      {
+        "productName": "Hanging Ghost",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png",
+        "price": 159,
+        "sellPrice": 159,
+        "costPrice": 120
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00016",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 1356,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1356,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-04-19T12:44:00.000Z",
+    "deliveredAt": "2026-04-21T14:20:00.000Z",
+    "createdAt": "2026-04-19T12:44:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-04-21T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "bea.mendoza.demo@gmail.com",
+    "customerUserEmail": "bea.mendoza.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Bea Mendoza",
+      "label": "Home",
+      "address": "88 Rose Avenue, Barangay San Isidro",
+      "city": "Pasay City",
+      "phoneNo": "+639171000822",
+      "postalCode": "1300",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Ghost Costume",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/ghost_costume_1.png",
+        "price": 399,
+        "sellPrice": 399,
+        "costPrice": 350
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00017",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 798,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 798,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-05-23T08:00:00.000Z",
+    "deliveredAt": "2026-05-25T14:20:00.000Z",
+    "createdAt": "2026-05-23T08:00:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-05-25T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "mika.santos.demo@gmail.com",
+    "customerUserEmail": "mika.santos.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Mika Santos",
+      "label": "Home",
+      "address": "45 Mahogany Road, Barangay Pinagsama",
+      "city": "Taguig City",
+      "phoneNo": "+639171000274",
+      "postalCode": "1632",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Window Sticker",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687410/halloween_window_sticker_1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 70
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 297,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 297,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-05-12T14:20:00.000Z",
+    "createdAt": "2026-05-10T09:11:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-05-12T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "customerUserEmail": "paolo.garcia.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Paolo Garcia",
+      "label": "Home",
+      "address": "33 Jasmine Street, Barangay Poblacion",
+      "city": "Makati City",
+      "phoneNo": "+639171000685",
+      "postalCode": "1210",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Skeleton Skull Decoration",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687425/skeleton_skull_deco_1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 150
+      },
+      {
+        "productName": "Creepy Mask",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      },
+      {
+        "productName": "Halloween Banner",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/halloween_banner1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 130
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00019",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 1214,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1214,
+    "orderStatus": "Processing",
+    "paidAt": "2026-05-22T10:22:00.000Z",
+    "deliveredAt": null,
+    "createdAt": "2026-05-22T10:22:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "28 Acacia Avenue, Barangay Ususan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Candle",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687379/candle1.png",
+        "price": 149,
+        "sellPrice": 149,
+        "costPrice": 100
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00020",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 298,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 298,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-05-09T11:33:00.000Z",
+    "deliveredAt": "2026-05-11T14:20:00.000Z",
+    "createdAt": "2026-05-09T11:33:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-05-11T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "alyssa.cruz.demo@gmail.com",
+    "customerUserEmail": "alyssa.cruz.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Alyssa Cruz",
+      "label": "Home",
+      "address": "19 Orchid Lane, Barangay Pembo",
+      "city": "Makati City",
+      "phoneNo": "+639171000548",
+      "postalCode": "1218",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Fake Fangs",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
+        "price": 79,
+        "sellPrice": 79,
+        "costPrice": 40
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 237,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 237,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-05-23T14:20:00.000Z",
+    "createdAt": "2026-05-21T12:44:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-05-23T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "28 Acacia Avenue, Barangay Ususan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Fake Fangs",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
+        "price": 79,
+        "sellPrice": 79,
+        "costPrice": 40
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00022",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 158,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 158,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-06-25T08:00:00.000Z",
+    "deliveredAt": "2026-06-27T14:20:00.000Z",
+    "createdAt": "2026-06-25T08:00:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-06-27T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "customerUserEmail": "jared.reyes.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Jared Reyes",
+      "label": "Home",
+      "address": "71 Narra Street, Barangay Western Bicutan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000411",
+      "postalCode": "1630",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Treat Bag",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png",
+        "price": 89,
+        "sellPrice": 89,
+        "costPrice": 40
+      },
+      {
+        "productName": "Skeleton Skull Decoration",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687425/skeleton_skull_deco_1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 150
+      },
+      {
+        "productName": "Creepy Mask",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00023",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 944,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 944,
+    "orderStatus": "Shipped",
+    "paidAt": "2026-06-12T09:11:00.000Z",
+    "deliveredAt": null,
+    "createdAt": "2026-06-12T09:11:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "customerUserEmail": "paolo.garcia.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Paolo Garcia",
+      "label": "Home",
+      "address": "33 Jasmine Street, Barangay Poblacion",
+      "city": "Makati City",
+      "phoneNo": "+639171000685",
+      "postalCode": "1210",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Skeleton Decoration",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration1.png",
+        "price": 199,
+        "sellPrice": 199,
+        "costPrice": 150
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 199,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 199,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-06-26T14:20:00.000Z",
+    "createdAt": "2026-06-24T10:22:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-06-26T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Witch Hat",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png",
+        "price": 189,
+        "sellPrice": 189,
+        "costPrice": 140
+      },
+      {
+        "productName": "Fake Fangs",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
+        "price": 79,
+        "sellPrice": 79,
+        "costPrice": 40
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00025",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 615,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 615,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-06-11T11:33:00.000Z",
+    "deliveredAt": "2026-06-13T14:20:00.000Z",
+    "createdAt": "2026-06-11T11:33:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-06-13T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "28 Acacia Avenue, Barangay Ususan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
       "country": "Philippines"
     },
     "orderItems": [
       {
         "productName": "Fake Cobwebs",
-        "quantity": 2,
+        "quantity": 3,
         "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687404/fake_cobwebs1.png",
         "price": 99,
         "sellPrice": 99,
-        "costPrice": null
+        "costPrice": 50
+      },
+      {
+        "productName": "Halloween Treat Bag",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png",
+        "price": 89,
+        "sellPrice": 89,
+        "costPrice": 40
+      },
+      {
+        "productName": "Skeleton Skull Decoration",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687425/skeleton_skull_deco_1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 150
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00026",
+      "status": "cancelled",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 744,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 744,
+    "orderStatus": "Cancelled",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-06-23T12:44:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": "2026-06-24T09:00:00.000Z",
+    "cancelledBy": "customer"
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "customerUserEmail": "jared.reyes.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Jared Reyes",
+      "label": "Home",
+      "address": "71 Narra Street, Barangay Western Bicutan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000411",
+      "postalCode": "1630",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Gift Wrap",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_gift_wrap_1.png",
+        "price": 119,
+        "sellPrice": 119,
+        "costPrice": 90
+      },
+      {
+        "productName": "Skeleton Decoration",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration1.png",
+        "price": 199,
+        "sellPrice": 199,
+        "costPrice": 150
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 517,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 517,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-06-12T14:20:00.000Z",
+    "createdAt": "2026-06-10T13:55:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-06-12T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "bea.mendoza.demo@gmail.com",
+    "customerUserEmail": "bea.mendoza.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Bea Mendoza",
+      "label": "Home",
+      "address": "88 Rose Avenue, Barangay San Isidro",
+      "city": "Pasay City",
+      "phoneNo": "+639171000822",
+      "postalCode": "1300",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Banner",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/halloween_banner1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 130
+      },
+      {
+        "productName": "Pumpkin Lantern",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png",
+        "price": 229,
+        "sellPrice": 229,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00028",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 766,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 766,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-07-07T08:00:00.000Z",
+    "deliveredAt": "2026-07-09T14:20:00.000Z",
+    "createdAt": "2026-07-07T08:00:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-07-09T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Hanging Ghost",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png",
+        "price": 159,
+        "sellPrice": 159,
+        "costPrice": 120
+      },
+      {
+        "productName": "Vampire Cape",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687427/vampire_cape_1.png",
+        "price": 299,
+        "sellPrice": 299,
+        "costPrice": 250
+      },
+      {
+        "productName": "Fake Cobwebs",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687404/fake_cobwebs1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 50
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00029",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 1054,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1054,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-07-19T09:11:00.000Z",
+    "deliveredAt": "2026-07-21T14:20:00.000Z",
+    "createdAt": "2026-07-19T09:11:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-07-21T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "chloe.ramirez.demo@gmail.com",
+    "customerUserEmail": "chloe.ramirez.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Chloe Ramirez",
+      "label": "Home",
+      "address": "52 Sunflower Road, Barangay Fairview",
+      "city": "Quezon City",
+      "phoneNo": "+639171001096",
+      "postalCode": "1118",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Tombstone",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/tombstone1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      },
+      {
+        "productName": "Devil Horn Hairband",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687389/devil_horn_hairban_1.png",
+        "price": 129,
+        "sellPrice": 129,
+        "costPrice": 80
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 885,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 885,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-07-08T14:20:00.000Z",
+    "createdAt": "2026-07-06T10:22:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-07-08T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "ethan.flores.demo@gmail.com",
+    "customerUserEmail": "ethan.flores.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Ethan Flores",
+      "label": "Home",
+      "address": "24 Camia Street, Barangay Kapitolyo",
+      "city": "Pasig City",
+      "phoneNo": "+639171001233",
+      "postalCode": "1603",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Creepy Mask",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00031",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 747,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 747,
+    "orderStatus": "Processing",
+    "paidAt": "2026-07-18T11:33:00.000Z",
+    "deliveredAt": null,
+    "createdAt": "2026-07-18T11:33:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "User1_spookymart@gmail.com",
+    "customerUserEmail": "User1_spookymart@gmail.com",
+    "shippingInfo": {
+      "recipientName": "SpookyMart User1",
+      "label": "Home",
+      "address": "28 Acacia Avenue, Barangay Ususan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000137",
+      "postalCode": "1635",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Ghost Costume",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/ghost_costume_1.png",
+        "price": 399,
+        "sellPrice": 399,
+        "costPrice": 350
+      },
+      {
+        "productName": "Hanging Ghost",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png",
+        "price": 159,
+        "sellPrice": 159,
+        "costPrice": 120
+      },
+      {
+        "productName": "Vampire Cape",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687427/vampire_cape_1.png",
+        "price": 299,
+        "sellPrice": 299,
+        "costPrice": 250
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00032",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 1614,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1614,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-07-05T12:44:00.000Z",
+    "deliveredAt": "2026-07-07T14:20:00.000Z",
+    "createdAt": "2026-07-05T12:44:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-07-07T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "mika.santos.demo@gmail.com",
+    "customerUserEmail": "mika.santos.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Mika Santos",
+      "label": "Home",
+      "address": "45 Mahogany Road, Barangay Pinagsama",
+      "city": "Taguig City",
+      "phoneNo": "+639171000274",
+      "postalCode": "1632",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Window Sticker",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687410/halloween_window_sticker_1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 70
       }
     ],
     "paymentInfo": {
@@ -118,72 +1608,286 @@
     "taxPrice": 0,
     "shippingPrice": 0,
     "totalPrice": 198,
-    "orderStatus": "Processing",
+    "orderStatus": "Delivered",
     "paidAt": null,
-    "deliveredAt": null,
-    "createdAt": "2026-11-01T13:20:00.000Z"
+    "deliveredAt": "2026-07-19T14:20:00.000Z",
+    "createdAt": "2026-07-17T13:55:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-07-19T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
   },
   {
-    "userEmail": "User1_spookymart@gmail.com",
-    "customerUserEmail": "User1_spookymart@gmail.com",
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
     "shippingInfo": {
-      "recipientName": "SpookyMart User1",
+      "recipientName": "Noah Villanueva",
       "label": "Home",
-      "address": "163 Holy Family Village, Bagumbayan",
-      "city": "Taguig City",
-      "phoneNo": "+639171234567",
-      "postalCode": "1100",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
       "country": "Philippines"
     },
     "orderItems": [
       {
-        "productName": "Pumpkin Lantern",
+        "productName": "Halloween Treat Bag",
         "quantity": 1,
-        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png",
-        "price": 229,
-        "sellPrice": 229,
-        "costPrice": 200
-      },
-      {
-        "productName": "Hanging Ghost",
-        "quantity": 1,
-        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png",
-        "price": 159,
-        "sellPrice": 159,
-        "costPrice": 120
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png",
+        "price": 89,
+        "sellPrice": 89,
+        "costPrice": 40
       }
     ],
     "paymentInfo": {
-      "id": "DEMO-CARD-0002",
+      "id": "DEMO-PAY-00034",
       "status": "succeeded",
       "method": "Card",
       "brand": "Mastercard",
       "last4": "4444"
     },
-    "itemsPrice": 388,
+    "itemsPrice": 89,
     "taxPrice": 0,
     "shippingPrice": 0,
-    "totalPrice": 388,
+    "totalPrice": 89,
     "orderStatus": "Delivered",
-    "paidAt": "2026-10-31T09:10:00.000Z",
-    "deliveredAt": "2026-11-02T08:00:00.000Z",
-    "createdAt": "2026-10-31T09:10:00.000Z",
+    "paidAt": "2026-08-14T08:00:00.000Z",
+    "deliveredAt": "2026-08-16T14:20:00.000Z",
+    "createdAt": "2026-08-14T08:00:00.000Z",
     "isReceived": true,
-    "receivedAt": "2026-11-02T08:00:00.000Z"
+    "receivedAt": "2026-08-16T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
   },
   {
-    "userEmail": "User1_spookymart@gmail.com",
-    "customerUserEmail": "User1_spookymart@gmail.com",
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
     "shippingInfo": {
-      "recipientName": "SpookyMart User1",
-      "label": "Work",
-      "address": "456 Demo Avenue, Barangay Lower Bicutan",
-      "city": "Taguig City",
-      "phoneNo": "+639171234567",
-      "postalCode": "1105",
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
       "country": "Philippines"
     },
     "orderItems": [
+      {
+        "productName": "Skeleton Decoration",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration1.png",
+        "price": 199,
+        "sellPrice": 199,
+        "costPrice": 150
+      },
+      {
+        "productName": "Candle",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687379/candle1.png",
+        "price": 149,
+        "sellPrice": 149,
+        "costPrice": 100
+      },
+      {
+        "productName": "Ghost Costume",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/ghost_costume_1.png",
+        "price": 399,
+        "sellPrice": 399,
+        "costPrice": 350
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00035",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 1244,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1244,
+    "orderStatus": "Shipped",
+    "paidAt": "2026-08-26T09:11:00.000Z",
+    "deliveredAt": null,
+    "createdAt": "2026-08-26T09:11:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Witch Hat",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png",
+        "price": 189,
+        "sellPrice": 189,
+        "costPrice": 140
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 567,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 567,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-08-15T14:20:00.000Z",
+    "createdAt": "2026-08-13T10:22:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-08-15T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Fake Cobwebs",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687404/fake_cobwebs1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 50
+      },
+      {
+        "productName": "Halloween Treat Bag",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png",
+        "price": 89,
+        "sellPrice": 89,
+        "costPrice": 40
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00037",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 277,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 277,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-08-25T11:33:00.000Z",
+    "deliveredAt": "2026-08-27T14:20:00.000Z",
+    "createdAt": "2026-08-25T11:33:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-08-27T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Gift Wrap",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_gift_wrap_1.png",
+        "price": 119,
+        "sellPrice": 119,
+        "costPrice": 90
+      },
+      {
+        "productName": "Skeleton Decoration",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration1.png",
+        "price": 199,
+        "sellPrice": 199,
+        "costPrice": 150
+      },
+      {
+        "productName": "Candle",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687379/candle1.png",
+        "price": 149,
+        "sellPrice": 149,
+        "costPrice": 100
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00038",
+      "status": "cancelled",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 984,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 984,
+    "orderStatus": "Cancelled",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-08-12T12:44:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": "2026-08-13T09:00:00.000Z",
+    "cancelledBy": "customer"
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Pumpkin Lantern",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png",
+        "price": 229,
+        "sellPrice": 229,
+        "costPrice": 200
+      },
       {
         "productName": "Witch Hat",
         "quantity": 1,
@@ -191,6 +1895,1134 @@
         "price": 189,
         "sellPrice": 189,
         "costPrice": 140
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 876,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 876,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-08-26T14:20:00.000Z",
+    "createdAt": "2026-08-24T13:55:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-08-26T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Vampire Cape",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687427/vampire_cape_1.png",
+        "price": 299,
+        "sellPrice": 299,
+        "costPrice": 250
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00040",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 299,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 299,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-08-11T14:06:00.000Z",
+    "deliveredAt": "2026-08-13T14:20:00.000Z",
+    "createdAt": "2026-08-11T14:06:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-08-13T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "liam.torres.demo@gmail.com",
+    "customerUserEmail": "liam.torres.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Liam Torres",
+      "label": "Home",
+      "address": "10 Lily Street, Barangay Alabang",
+      "city": "Muntinlupa City",
+      "phoneNo": "+639171001507",
+      "postalCode": "1781",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Skeleton Skull Decoration",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687425/skeleton_skull_deco_1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 150
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00041",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 537,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 537,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-09-26T08:00:00.000Z",
+    "deliveredAt": "2026-09-28T14:20:00.000Z",
+    "createdAt": "2026-09-26T08:00:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-09-28T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "sofia.castillo.demo@gmail.com",
+    "customerUserEmail": "sofia.castillo.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Sofia Castillo",
+      "label": "Home",
+      "address": "39 Ilang-Ilang Avenue, Barangay San Antonio",
+      "city": "Pasig City",
+      "phoneNo": "+639171001370",
+      "postalCode": "1600",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Candle",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687379/candle1.png",
+        "price": 149,
+        "sellPrice": 149,
+        "costPrice": 100
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 149,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 149,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-09-15T14:20:00.000Z",
+    "createdAt": "2026-09-13T09:11:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-09-15T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "ethan.flores.demo@gmail.com",
+    "customerUserEmail": "ethan.flores.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Ethan Flores",
+      "label": "Home",
+      "address": "24 Camia Street, Barangay Kapitolyo",
+      "city": "Pasig City",
+      "phoneNo": "+639171001233",
+      "postalCode": "1603",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Fake Fangs",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
+        "price": 79,
+        "sellPrice": 79,
+        "costPrice": 40
+      },
+      {
+        "productName": "Halloween Window Sticker",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687410/halloween_window_sticker_1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 70
+      },
+      {
+        "productName": "Tombstone",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/tombstone1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00043",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 704,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 704,
+    "orderStatus": "Processing",
+    "paidAt": "2026-09-25T10:22:00.000Z",
+    "deliveredAt": null,
+    "createdAt": "2026-09-25T10:22:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "chloe.ramirez.demo@gmail.com",
+    "customerUserEmail": "chloe.ramirez.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Chloe Ramirez",
+      "label": "Home",
+      "address": "52 Sunflower Road, Barangay Fairview",
+      "city": "Quezon City",
+      "phoneNo": "+639171001096",
+      "postalCode": "1118",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Treat Bag",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png",
+        "price": 89,
+        "sellPrice": 89,
+        "costPrice": 40
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00044",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 267,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 267,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-09-12T11:33:00.000Z",
+    "deliveredAt": "2026-09-14T14:20:00.000Z",
+    "createdAt": "2026-09-12T11:33:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-09-14T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Skeleton Decoration",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration1.png",
+        "price": 199,
+        "sellPrice": 199,
+        "costPrice": 150
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 199,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 199,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-09-26T14:20:00.000Z",
+    "createdAt": "2026-09-24T12:44:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-09-26T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "bea.mendoza.demo@gmail.com",
+    "customerUserEmail": "bea.mendoza.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Bea Mendoza",
+      "label": "Home",
+      "address": "88 Rose Avenue, Barangay San Isidro",
+      "city": "Pasay City",
+      "phoneNo": "+639171000822",
+      "postalCode": "1300",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Witch Hat",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png",
+        "price": 189,
+        "sellPrice": 189,
+        "costPrice": 140
+      },
+      {
+        "productName": "Fake Fangs",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
+        "price": 79,
+        "sellPrice": 79,
+        "costPrice": 40
+      },
+      {
+        "productName": "Halloween Window Sticker",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687410/halloween_window_sticker_1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 70
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00046",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 714,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 714,
+    "orderStatus": "Shipped",
+    "paidAt": "2026-09-11T13:55:00.000Z",
+    "deliveredAt": null,
+    "createdAt": "2026-09-11T13:55:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "customerUserEmail": "paolo.garcia.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Paolo Garcia",
+      "label": "Home",
+      "address": "33 Jasmine Street, Barangay Poblacion",
+      "city": "Makati City",
+      "phoneNo": "+639171000685",
+      "postalCode": "1210",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Fake Cobwebs",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687404/fake_cobwebs1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 50
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00047",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 297,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 297,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-09-23T14:06:00.000Z",
+    "deliveredAt": "2026-09-25T14:20:00.000Z",
+    "createdAt": "2026-09-23T14:06:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-09-25T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "alyssa.cruz.demo@gmail.com",
+    "customerUserEmail": "alyssa.cruz.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Alyssa Cruz",
+      "label": "Home",
+      "address": "19 Orchid Lane, Barangay Pembo",
+      "city": "Makati City",
+      "phoneNo": "+639171000548",
+      "postalCode": "1218",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Gift Wrap",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_gift_wrap_1.png",
+        "price": 119,
+        "sellPrice": 119,
+        "costPrice": 90
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 119,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 119,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-09-12T14:20:00.000Z",
+    "createdAt": "2026-09-10T15:17:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-09-12T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "bea.mendoza.demo@gmail.com",
+    "customerUserEmail": "bea.mendoza.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Bea Mendoza",
+      "label": "Home",
+      "address": "88 Rose Avenue, Barangay San Isidro",
+      "city": "Pasay City",
+      "phoneNo": "+639171000822",
+      "postalCode": "1300",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Fake Fangs",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687391/fake_fangs_1.png",
+        "price": 79,
+        "sellPrice": 79,
+        "costPrice": 40
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00049",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 237,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 237,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-10-18T08:00:00.000Z",
+    "deliveredAt": "2026-10-20T14:20:00.000Z",
+    "createdAt": "2026-10-18T08:00:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-10-20T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "alyssa.cruz.demo@gmail.com",
+    "customerUserEmail": "alyssa.cruz.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Alyssa Cruz",
+      "label": "Home",
+      "address": "19 Orchid Lane, Barangay Pembo",
+      "city": "Makati City",
+      "phoneNo": "+639171000548",
+      "postalCode": "1218",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Treat Bag",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png",
+        "price": 89,
+        "sellPrice": 89,
+        "costPrice": 40
+      },
+      {
+        "productName": "Skeleton Skull Decoration",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687425/skeleton_skull_deco_1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 150
+      },
+      {
+        "productName": "Creepy Mask",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00050",
+      "status": "cancelled",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 1194,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1194,
+    "orderStatus": "Cancelled",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-10-05T09:11:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": "2026-10-06T09:00:00.000Z",
+    "cancelledBy": "customer"
+  },
+  {
+    "userEmail": "mika.santos.demo@gmail.com",
+    "customerUserEmail": "mika.santos.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Mika Santos",
+      "label": "Home",
+      "address": "45 Mahogany Road, Barangay Pinagsama",
+      "city": "Taguig City",
+      "phoneNo": "+639171000274",
+      "postalCode": "1632",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Skeleton Decoration",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration1.png",
+        "price": 199,
+        "sellPrice": 199,
+        "costPrice": 150
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 398,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 398,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-10-19T14:20:00.000Z",
+    "createdAt": "2026-10-17T10:22:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-10-19T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "isabelle.aquino.demo@gmail.com",
+    "customerUserEmail": "isabelle.aquino.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Isabelle Aquino",
+      "label": "Home",
+      "address": "63 Gumamela Road, Barangay Moonwalk",
+      "city": "Parañaque City",
+      "phoneNo": "+639171001644",
+      "postalCode": "1709",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Witch Hat",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687429/witch_hat_1.png",
+        "price": 189,
+        "sellPrice": 189,
+        "costPrice": 140
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00052",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 567,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 567,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-10-04T11:33:00.000Z",
+    "deliveredAt": "2026-10-06T14:20:00.000Z",
+    "createdAt": "2026-10-04T11:33:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-10-06T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "sofia.castillo.demo@gmail.com",
+    "customerUserEmail": "sofia.castillo.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Sofia Castillo",
+      "label": "Home",
+      "address": "39 Ilang-Ilang Avenue, Barangay San Antonio",
+      "city": "Pasig City",
+      "phoneNo": "+639171001370",
+      "postalCode": "1600",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Fake Cobwebs",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687404/fake_cobwebs1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 50
+      },
+      {
+        "productName": "Halloween Treat Bag",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png",
+        "price": 89,
+        "sellPrice": 89,
+        "costPrice": 40
+      },
+      {
+        "productName": "Skeleton Skull Decoration",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687425/skeleton_skull_deco_1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 150
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00053",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 814,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 814,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-10-16T12:44:00.000Z",
+    "deliveredAt": "2026-10-18T14:20:00.000Z",
+    "createdAt": "2026-10-16T12:44:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-10-18T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "chloe.ramirez.demo@gmail.com",
+    "customerUserEmail": "chloe.ramirez.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Chloe Ramirez",
+      "label": "Home",
+      "address": "52 Sunflower Road, Barangay Fairview",
+      "city": "Quezon City",
+      "phoneNo": "+639171001096",
+      "postalCode": "1118",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Gift Wrap",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_gift_wrap_1.png",
+        "price": 119,
+        "sellPrice": 119,
+        "costPrice": 90
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 238,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 238,
+    "orderStatus": "Processing",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-10-03T13:55:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "bea.mendoza.demo@gmail.com",
+    "customerUserEmail": "bea.mendoza.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Bea Mendoza",
+      "label": "Home",
+      "address": "88 Rose Avenue, Barangay San Isidro",
+      "city": "Pasay City",
+      "phoneNo": "+639171000822",
+      "postalCode": "1300",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Pumpkin Lantern",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/pumpkin_lantern_1.png",
+        "price": 229,
+        "sellPrice": 229,
+        "costPrice": 200
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00055",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 687,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 687,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-10-15T14:06:00.000Z",
+    "deliveredAt": "2026-10-17T14:20:00.000Z",
+    "createdAt": "2026-10-15T14:06:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-10-17T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "alyssa.cruz.demo@gmail.com",
+    "customerUserEmail": "alyssa.cruz.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Alyssa Cruz",
+      "label": "Home",
+      "address": "19 Orchid Lane, Barangay Pembo",
+      "city": "Makati City",
+      "phoneNo": "+639171000548",
+      "postalCode": "1218",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Vampire Cape",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687427/vampire_cape_1.png",
+        "price": 299,
+        "sellPrice": 299,
+        "costPrice": 250
+      },
+      {
+        "productName": "Fake Cobwebs",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687404/fake_cobwebs1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 50
+      },
+      {
+        "productName": "Halloween Treat Bag",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687420/holloween_treat_bag_1.png",
+        "price": 89,
+        "sellPrice": 89,
+        "costPrice": 40
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00056",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 764,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 764,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-10-27T15:17:00.000Z",
+    "deliveredAt": "2026-10-28T14:20:00.000Z",
+    "createdAt": "2026-10-27T15:17:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-10-28T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "mika.santos.demo@gmail.com",
+    "customerUserEmail": "mika.santos.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Mika Santos",
+      "label": "Home",
+      "address": "45 Mahogany Road, Barangay Pinagsama",
+      "city": "Taguig City",
+      "phoneNo": "+639171000274",
+      "postalCode": "1632",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Devil Horn Hairband",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687389/devil_horn_hairban_1.png",
+        "price": 129,
+        "sellPrice": 129,
+        "costPrice": 80
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 258,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 258,
+    "orderStatus": "Shipped",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-10-14T16:28:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "mika.santos.demo@gmail.com",
+    "customerUserEmail": "mika.santos.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Mika Santos",
+      "label": "Home",
+      "address": "45 Mahogany Road, Barangay Pinagsama",
+      "city": "Taguig City",
+      "phoneNo": "+639171000274",
+      "postalCode": "1632",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Vampire Cape",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687427/vampire_cape_1.png",
+        "price": 299,
+        "sellPrice": 299,
+        "costPrice": 250
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00058",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 299,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 299,
+    "orderStatus": "Processing",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-11-03T08:00:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "isabelle.aquino.demo@gmail.com",
+    "customerUserEmail": "isabelle.aquino.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Isabelle Aquino",
+      "label": "Home",
+      "address": "63 Gumamela Road, Barangay Moonwalk",
+      "city": "Parañaque City",
+      "phoneNo": "+639171001644",
+      "postalCode": "1709",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Devil Horn Hairband",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687389/devil_horn_hairban_1.png",
+        "price": 129,
+        "sellPrice": 129,
+        "costPrice": 80
+      },
+      {
+        "productName": "Halloween Gift Wrap",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_gift_wrap_1.png",
+        "price": 119,
+        "sellPrice": 119,
+        "costPrice": 90
+      },
+      {
+        "productName": "Skeleton Decoration",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687421/skeleton_decoration1.png",
+        "price": 199,
+        "sellPrice": 199,
+        "costPrice": 150
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00059",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 814,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 814,
+    "orderStatus": "Shipped",
+    "paidAt": "2026-11-03T09:11:00.000Z",
+    "deliveredAt": null,
+    "createdAt": "2026-11-03T09:11:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "ethan.flores.demo@gmail.com",
+    "customerUserEmail": "ethan.flores.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Ethan Flores",
+      "label": "Home",
+      "address": "24 Camia Street, Barangay Kapitolyo",
+      "city": "Pasig City",
+      "phoneNo": "+639171001233",
+      "postalCode": "1603",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Banner",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/halloween_banner1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 130
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 537,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 537,
+    "orderStatus": "Delivered",
+    "paidAt": null,
+    "deliveredAt": "2026-11-04T14:20:00.000Z",
+    "createdAt": "2026-11-03T10:22:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-11-04T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "bea.mendoza.demo@gmail.com",
+    "customerUserEmail": "bea.mendoza.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Bea Mendoza",
+      "label": "Home",
+      "address": "88 Rose Avenue, Barangay San Isidro",
+      "city": "Pasay City",
+      "phoneNo": "+639171000822",
+      "postalCode": "1300",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Hanging Ghost",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687418/hanging_ghost1.png",
+        "price": 159,
+        "sellPrice": 159,
+        "costPrice": 120
+      },
+      {
+        "productName": "Vampire Cape",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687427/vampire_cape_1.png",
+        "price": 299,
+        "sellPrice": 299,
+        "costPrice": 250
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00061",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 757,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 757,
+    "orderStatus": "Processing",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-11-03T11:33:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "customerUserEmail": "jared.reyes.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Jared Reyes",
+      "label": "Home",
+      "address": "71 Narra Street, Barangay Western Bicutan",
+      "city": "Taguig City",
+      "phoneNo": "+639171000411",
+      "postalCode": "1630",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Tombstone",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/tombstone1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      },
+      {
+        "productName": "Devil Horn Hairband",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687389/devil_horn_hairban_1.png",
+        "price": 129,
+        "sellPrice": 129,
+        "costPrice": 80
+      },
+      {
+        "productName": "Halloween Gift Wrap",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687413/halloween_gift_wrap_1.png",
+        "price": 119,
+        "sellPrice": 119,
+        "costPrice": 90
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00062",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 1004,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1004,
+    "orderStatus": "Shipped",
+    "paidAt": "2026-11-03T12:44:00.000Z",
+    "deliveredAt": null,
+    "createdAt": "2026-11-03T12:44:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "gabriel.lim.demo@gmail.com",
+    "customerUserEmail": "gabriel.lim.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Gabriel Lim",
+      "label": "Home",
+      "address": "12 Sampaguita Street, Barangay Central",
+      "city": "Taguig City",
+      "phoneNo": "+639171001781",
+      "postalCode": "1630",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Creepy Mask",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687388/creepy_mask_1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
       },
       {
         "productName": "Halloween Banner",
@@ -208,15 +3040,159 @@
       "brand": "",
       "last4": ""
     },
-    "itemsPrice": 368,
+    "itemsPrice": 926,
     "taxPrice": 0,
     "shippingPrice": 0,
-    "totalPrice": 368,
+    "totalPrice": 926,
     "orderStatus": "Delivered",
     "paidAt": null,
-    "deliveredAt": "2026-11-03T07:00:00.000Z",
-    "createdAt": "2026-11-01T12:00:00.000Z",
+    "deliveredAt": "2026-11-04T14:20:00.000Z",
+    "createdAt": "2026-11-03T13:55:00.000Z",
     "isReceived": true,
-    "receivedAt": "2026-11-03T07:00:00.000Z"
+    "receivedAt": "2026-11-04T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "sofia.castillo.demo@gmail.com",
+    "customerUserEmail": "sofia.castillo.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Sofia Castillo",
+      "label": "Home",
+      "address": "39 Ilang-Ilang Avenue, Barangay San Antonio",
+      "city": "Pasig City",
+      "phoneNo": "+639171001370",
+      "postalCode": "1600",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Ghost Costume",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687398/ghost_costume_1.png",
+        "price": 399,
+        "sellPrice": 399,
+        "costPrice": 350
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00064",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Mastercard",
+      "last4": "4444"
+    },
+    "itemsPrice": 399,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 399,
+    "orderStatus": "Delivered",
+    "paidAt": "2026-11-03T14:06:00.000Z",
+    "deliveredAt": "2026-11-04T14:20:00.000Z",
+    "createdAt": "2026-11-03T14:06:00.000Z",
+    "isReceived": true,
+    "receivedAt": "2026-11-04T14:20:00.000Z",
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "customerUserEmail": "noah.villanueva.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Noah Villanueva",
+      "label": "Home",
+      "address": "16 Dahlia Street, Barangay South Triangle",
+      "city": "Quezon City",
+      "phoneNo": "+639171000959",
+      "postalCode": "1103",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Halloween Window Sticker",
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687410/halloween_window_sticker_1.png",
+        "price": 99,
+        "sellPrice": 99,
+        "costPrice": 70
+      },
+      {
+        "productName": "Tombstone",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687430/tombstone1.png",
+        "price": 249,
+        "sellPrice": 249,
+        "costPrice": 200
+      },
+      {
+        "productName": "Devil Horn Hairband",
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687389/devil_horn_hairban_1.png",
+        "price": 129,
+        "sellPrice": 129,
+        "costPrice": 80
+      }
+    ],
+    "paymentInfo": {
+      "id": "DEMO-PAY-00065",
+      "status": "succeeded",
+      "method": "Card",
+      "brand": "Visa",
+      "last4": "4242"
+    },
+    "itemsPrice": 1074,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 1074,
+    "orderStatus": "Processing",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-11-03T15:17:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
+  },
+  {
+    "userEmail": "alyssa.cruz.demo@gmail.com",
+    "customerUserEmail": "alyssa.cruz.demo@gmail.com",
+    "shippingInfo": {
+      "recipientName": "Alyssa Cruz",
+      "label": "Home",
+      "address": "19 Orchid Lane, Barangay Pembo",
+      "city": "Makati City",
+      "phoneNo": "+639171000548",
+      "postalCode": "1218",
+      "country": "Philippines"
+    },
+    "orderItems": [
+      {
+        "productName": "Skeleton Skull Decoration",
+        "quantity": 3,
+        "image": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1793687425/skeleton_skull_deco_1.png",
+        "price": 179,
+        "sellPrice": 179,
+        "costPrice": 150
+      }
+    ],
+    "paymentInfo": {
+      "id": "",
+      "status": "pending",
+      "method": "COD",
+      "brand": "",
+      "last4": ""
+    },
+    "itemsPrice": 537,
+    "taxPrice": 0,
+    "shippingPrice": 0,
+    "totalPrice": 537,
+    "orderStatus": "Shipped",
+    "paidAt": null,
+    "deliveredAt": null,
+    "createdAt": "2026-11-03T16:28:00.000Z",
+    "isReceived": false,
+    "receivedAt": null,
+    "cancelledAt": null,
+    "cancelledBy": null
   }
 ]
