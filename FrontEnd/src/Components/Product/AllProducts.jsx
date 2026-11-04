@@ -157,9 +157,11 @@ const AllProducts = () => {
                                 <h4>Category</h4>
                                 <select className="form-control" value={category} onChange={categoryChangeHandler}>
                                     <option value="">All Categories</option>
-                                    {categories.map(item => (
-                                        <option key={item._id} value={item.name}>{item.name}</option>
-                                    ))}
+                                    {categories
+                                        .filter(item => !['costumes', 'decorations'].includes(item.name?.trim().toLowerCase()))
+                                        .map(item => (
+                                            <option key={item._id} value={item.name}>{item.name}</option>
+                                        ))}
                                 </select>
                             </div>
 
