@@ -66,6 +66,10 @@ const ListOrders = () => {
     };
 
     const formatPaymentStatus = paymentInfo => {
+        if (String(paymentInfo?.status || '').toLowerCase() === 'cancelled') {
+            return 'CANCELLED';
+        }
+
         if (paymentInfo?.status === 'succeeded') {
             return 'Paid';
         }

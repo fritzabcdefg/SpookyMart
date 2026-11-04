@@ -138,11 +138,13 @@ const OrderDetails = () => {
     const paymentMethod = paymentInfo?.method || 'Not specified';
 
     const paymentStatus =
-        paymentInfo?.status === 'succeeded'
-            ? 'Paid'
-            : paymentInfo?.status === 'pending'
-                ? 'Pending'
-                : 'Not paid';
+        String(paymentInfo?.status || '').toLowerCase() === 'cancelled'
+            ? 'CANCELLED'
+            : paymentInfo?.status === 'succeeded'
+                ? 'Paid'
+                : paymentInfo?.status === 'pending'
+                    ? 'Pending'
+                    : 'Not paid';
     const updateForm = (productId, field, value) => {
         setForms(previous => ({
             ...previous,

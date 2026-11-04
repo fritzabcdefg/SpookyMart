@@ -149,7 +149,7 @@ const ProcessOrder = () => {
                                     <p><b>Amount:</b> ₱{totalPrice.toFixed(2)}</p>
                                     <hr />
                                     <h4 className="my-4">Payment</h4>
-                                    <p className={isPaid ? "greenColor" : "redColor"}><b>{isPaid ? "PAID" : "NOT PAID"}</b></p>
+                                    <p className={paymentInfo?.status === 'cancelled' ? "redColor" : isPaid ? "greenColor" : "redColor"}><b>{paymentInfo?.status === 'cancelled' ? "CANCELLED" : isPaid ? "PAID" : "NOT PAID"}</b></p>
                                     <h4 className="my-4">Stripe ID</h4>
                                     <p><b>{paymentInfo && paymentInfo.id}</b></p>
 
