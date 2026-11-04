@@ -49,7 +49,7 @@ const Product = ({ product }) => {
                     </div>
 
                     <p className="card-text product-card-price">
-                        ₱{Number(product.price).toLocaleString('en-PH', {
+                        ₱{Number(product.sellPrice).toLocaleString('en-PH', {
                             minimumFractionDigits: 2
                         })}
                     </p>
