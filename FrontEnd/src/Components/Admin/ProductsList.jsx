@@ -161,6 +161,15 @@ const ProductsList = () => {
                 `₱${Number(value || 0).toFixed(2)}`
         },
         {
+            field: 'costPrice',
+            headerName: 'Cost Price',
+            width: 120,
+            valueFormatter: value =>
+                value === null || value === undefined
+                    ? 'Not set'
+                    : `₱${Number(value).toFixed(2)}`
+        },
+        {
             field: 'stock',
             headerName: 'Stock',
             width: 100,
@@ -243,6 +252,7 @@ const ProductsList = () => {
         name: product.name,
         category: product.category,
         sellPrice: Number(product.sellPrice || 0),
+        costPrice: product.costPrice ?? null,
         stock: product.stock
     }));
 
