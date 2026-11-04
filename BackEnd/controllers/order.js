@@ -15,10 +15,6 @@ exports.newOrder = async (req, res, next) => {
         const {
             orderItems,
             shippingInfo,
-            itemsPrice,
-            taxPrice,
-            shippingPrice,
-            totalPrice,
             paymentInfo
         } = req.body;
 
@@ -37,6 +33,69 @@ exports.newOrder = async (req, res, next) => {
                 message: 'Shipping information is required.'
             });
         }
+
+        // Rebuild checkout prices from the database; never trust browser totals.
+        const requestedItems = orderItems.map(item => ({
+            productId: item.product || item._id,
+            quantity: Number(item.quantity)
+        }));
+
+        if (requestedItems.some(item =>
+            !item.productId ||
+            !Number.isInteger(item.quantity) ||
+            item.quantity < 1
+        )) {
+            return res.status(400).json({
+                success: false,
+                message: 'Your cart contains an invalid product or quantity.'
+            });
+        }
+
+        const productIds = requestedItems.map(item => item.productId);
+        const products = await Product.find({
+            _id: { $in: productIds },
+            isDeleted: { $ne: true }
+        });
+
+        if (products.length !== new Set(productIds.map(String)).size) {
+            return res.status(400).json({
+                success: false,
+                message: 'One or more products are no longer available.'
+            });
+        }
+
+        const productById = new Map(products.map(product => [
+            product._id.toString(),
+            product
+        ]));
+
+        const trustedOrderItems = requestedItems.map(item => {
+            const product = productById.get(String(item.productId));
+            const sellPrice = Number(product.sellPrice ?? product.price);
+            const costPrice = Number(product.costPrice);
+
+            if (!Number.isFinite(sellPrice) || sellPrice < 0 ||
+                !Number.isFinite(costPrice) || costPrice < 0) {
+                throw new Error(`Please add a valid cost and selling price for ${product.name} before checkout.`);
+            }
+
+            return {
+                name: product.name,
+                quantity: item.quantity,
+                image: product.images?.[0]?.url || '',
+                product: product._id,
+                price: sellPrice,
+                sellPrice,
+                costPrice
+            };
+        });
+
+        const itemsPrice = Number(trustedOrderItems.reduce(
+            (sum, item) => sum + item.sellPrice * item.quantity, 0
+        ).toFixed(2));
+        const taxPrice = 0;
+        const shippingPrice = Number((itemsPrice * 0.05).toFixed(2));
+        const totalPrice = Number((itemsPrice + shippingPrice).toFixed(2));
 
         // Find the customer's separate profile, if one exists.
         const customer = await Customer.findOne({
@@ -60,14 +119,14 @@ exports.newOrder = async (req, res, next) => {
             paymentInfo?.status === 'succeeded';
 
         // Reserve stock only after checkout validation.
-        const reservedStock = await reserveStock(orderItems);
+        const reservedStock = await reserveStock(trustedOrderItems);
 
         // Create the order.
         let order;
 
         try {
             order = await Order.create({
-                orderItems,
+                orderItems: trustedOrderItems,
                 shippingInfo,
                 itemsPrice,
                 taxPrice,
@@ -175,8 +234,7 @@ exports.newOrder = async (req, res, next) => {
 
                             <div style="margin-top:20px;text-align:right;">
                                 <p>Subtotal: ${formatPrice(emailSubtotal)}</p>
-                                <p>Tax: ${formatPrice(emailTax)}</p>
-                                <p>Shipping: ${formatPrice(emailShipping)}</p>
+                                                <p>Shipping: ${formatPrice(emailShipping)}</p>
 
                                 <h2 style="color:#f28c28;">
                                     Grand Total: ${formatPrice(emailGrandTotal)}
@@ -282,15 +340,36 @@ exports.allOrders = async (req, res, next) => {
             .populate('user', 'name email')
             .sort({ createdAt: -1 });
 
-        const totalAmount = orders.reduce(
-            (total, order) => total + Number(order.totalPrice || 0),
+        const activeOrders = orders.filter(order => order.orderStatus !== 'Cancelled');
+
+        // Sales are product revenue only; shipping is collected separately.
+        const totalAmount = activeOrders.reduce(
+            (total, order) => total + Number(order.itemsPrice || 0),
             0
         );
+
+        // Legacy orders without cost snapshots are excluded from profit, not guessed.
+        const profitOrders = activeOrders.filter(order =>
+            order.orderItems?.length &&
+            order.orderItems.every(item =>
+                Number.isFinite(Number(item.costPrice)) &&
+                item.costPrice !== null &&
+                item.costPrice !== undefined
+            )
+        );
+        const totalProfit = profitOrders.reduce((total, order) =>
+            total + order.orderItems.reduce((orderProfit, item) =>
+                orderProfit + (Number(item.sellPrice ?? item.price) - Number(item.costPrice)) * Number(item.quantity || 0),
+            0),
+        0);
 
         return res.status(200).json({
             success: true,
             orders,
-            totalAmount
+            totalAmount,
+            totalProfit,
+            profitOrdersCount: profitOrders.length,
+            profitUnavailableOrdersCount: activeOrders.length - profitOrders.length
         });
 
     } catch (error) {
@@ -866,17 +945,12 @@ exports.totalOrders = async (req, res, next) => {
 // ============================================
 exports.totalSales = async (req, res, next) => {
     const totalSales = await Order.aggregate([
+        { $match: { orderStatus: { $ne: 'Cancelled' } } },
         {
             $group: {
                 _id: null,
                 totalSales: {
-                    $sum: {
-                        $add: [
-                            { $ifNull: ['$itemsPrice', 0] },
-                            { $ifNull: ['$taxPrice', 0] },
-                            { $ifNull: ['$shippingPrice', 0] }
-                        ]
-                    }
+                    $sum: { $ifNull: ['$itemsPrice', 0] }
                 }
             }
         }
@@ -956,6 +1030,7 @@ exports.customerSales = async (req, res, next) => {
 // ============================================
 exports.salesPerMonth = async (req, res, next) => {
     const salesPerMonth = await Order.aggregate([
+        { $match: { orderStatus: { $ne: 'Cancelled' }, paidAt: { $ne: null } } },
         {
             $group: {
                 _id: {
@@ -1064,6 +1139,7 @@ exports.salesByDateRange = async (req, res) => {
         const salesByDate = await Order.aggregate([
             {
                 $match: {
+                    orderStatus: { $ne: 'Cancelled' },
                     createdAt: {
                         $gte: start,
                         $lt: endExclusive
@@ -1079,21 +1155,7 @@ exports.salesByDateRange = async (req, res) => {
                             timezone: 'Asia/Manila'
                         }
                     },
-                    totalSales: {
-                        $sum: {
-                            $cond: [
-                                { $gt: [{ $ifNull: ['$totalPrice', 0] }, 0] },
-                                '$totalPrice',
-                                {
-                                    $add: [
-                                        { $ifNull: ['$itemsPrice', 0] },
-                                        { $ifNull: ['$taxPrice', 0] },
-                                        { $ifNull: ['$shippingPrice', 0] }
-                                    ]
-                                }
-                            ]
-                        }
-                    },
+                    totalSales: { $sum: { $ifNull: ['$itemsPrice', 0] } },
                     totalOrders: { $sum: 1 }
                 }
             },
