@@ -36,21 +36,29 @@ nav {
   box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
 }
 
-#search_btn {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  padding: 0;
-  margin-left: 0.55rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 40px;
-  border-radius: 50%;
-  background-color: #ff6600;
-  color: #0d0814;
-  border: 1px solid #ff6600;
+#search_btn,
+.input-group #search_btn,
+.input-group-append #search_btn {
+  box-sizing: border-box !important;
+  width: 42px !important;
+  min-width: 42px !important;
+  max-width: 42px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
+  padding: 0 !important;
+  margin: 0 0 0 0.55rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 42px !important;
+  border-radius: 50% !important;
+  overflow: hidden;
+  background-color: #ff6600 !important;
+  color: #0d0814 !important;
+  border: 1px solid #ff6600 !important;
   font-weight: bold;
+  line-height: 1 !important;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
