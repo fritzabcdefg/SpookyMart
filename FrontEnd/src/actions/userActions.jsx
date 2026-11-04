@@ -190,9 +190,13 @@ export const loadUser = () => async (dispatch) => {
         });
 
     } catch (error) {
+        // A 401 is normal for visitors who have not logged in yet.
+        // Keep the user logged out without showing an alarming auth error on the login page.
         dispatch({
             type: LOAD_USER_FAIL,
-            payload: error.response?.data?.message || error.message
+            payload: error.response?.status === 401
+                ? null
+                : (error.response?.data?.message || error.message)
         });
     }
 };
