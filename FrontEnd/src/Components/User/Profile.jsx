@@ -61,11 +61,11 @@ const Profile = () => {
         <>
             <MetaData title="Your Profile" />
 
-            <div className="container mt-5 mb-5">
-                <h2>My Profile</h2>
+            <div className="container mt-5 mb-5 profile-page">
+                <div className="profile-page-heading"><h2>My Profile</h2><p>Manage your account details, shipping addresses, and payment methods.</p></div>
 
-                <div className="row mt-4 user-info">
-                    <div className="col-12 col-md-3 text-center">
+                <div className="row mt-4 user-info profile-overview">
+                    <div className="col-12 col-md-4 col-lg-3 text-center profile-sidebar">
                         <figure className="avatar avatar-profile">
                             <img
                                 className="rounded-circle img-fluid"
@@ -79,13 +79,13 @@ const Profile = () => {
 
                         <Link
                             to="/me/update"
-                            className="btn btn-primary btn-block my-3"
+                            className="btn btn-primary btn-block my-3 profile-action-btn"
                         >
                             Edit Profile
                         </Link>
                     </div>
 
-                    <div className="col-12 col-md-8">
+                    <div className="col-12 col-md-8 col-lg-9 profile-details">
                         <h4>Full Name</h4>
                         <p>{user.name}</p>
 
@@ -102,7 +102,7 @@ const Profile = () => {
                         {user.role !== 'admin' && (
                             <Link
                                 to="/orders/me"
-                                className="btn btn-danger btn-block mt-3"
+                                className="btn btn-danger btn-block mt-3 profile-action-btn profile-orders-btn"
                             >
                                 My Orders
                             </Link>
@@ -110,7 +110,7 @@ const Profile = () => {
 
                         <Link
                             to="/password/update"
-                            className="btn btn-primary btn-block mt-3"
+                            className="btn btn-primary btn-block mt-3 profile-action-btn"
                         >
                             Change Password
                         </Link>
@@ -121,15 +121,15 @@ const Profile = () => {
 
                 <div className="row">
                     <div className="col-12">
-                        <div className="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                        <div className="d-flex justify-content-between align-items-center flex-wrap mb-3 profile-section-header">
                             <h3>My Shipping Addresses</h3>
                             <Link
                                 to="/shipping"
-                                className="btn btn-primary"
+                                className="btn btn-primary profile-action-btn"
                             >
                                 Add Address at Checkout
                             </Link>
-                            <Link to="/me/addresses" className="btn btn-outline-primary">
+                            <Link to="/me/addresses" className="btn btn-outline-primary profile-action-btn profile-outline-btn">
                                 Manage Addresses
                             </Link>
                         </div>
@@ -149,7 +149,7 @@ const Profile = () => {
                                         className="col-12 col-md-6 mb-3"
                                         key={address._id}
                                     >
-                                        <div className="card h-100">
+                                        <div className="card h-100 profile-data-card">
                                             <div className="card-body">
                                                 <h5>
                                                     {address.label || 'Address'}
