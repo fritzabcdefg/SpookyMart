@@ -53,7 +53,8 @@ const ConfirmOrder = () => {
         const data = {
             itemsPrice: Number(itemsPrice.toFixed(2)),
             shippingPrice,
-            taxPrice
+            taxPrice,
+            totalPrice
         };
 
         sessionStorage.setItem('orderInfo', JSON.stringify(data));
