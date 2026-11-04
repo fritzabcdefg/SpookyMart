@@ -51,11 +51,11 @@ const seedDatabase = async () => {
     try {
         // Seeding must use its own Atlas URI and a separate database.
         // Never fall back to DB_URI: that variable belongs to the running application.
-        const mongoUri = process.env.DB_SEED_URI;
+        const mongoUri = process.env.DB_URI;
 
         if (!mongoUri) {
             throw new Error(
-                'DB_SEED_URI is missing from BackEnd/config/.env. ' +
+                'DB_URI is missing from BackEnd/config/.env. ' +
                 'Use a MongoDB Atlas connection string whose database path is exactly /SpookyMart_demo.'
             );
         }
@@ -67,14 +67,14 @@ const seedDatabase = async () => {
         );
 
         if (!databasePathMatch) {
-            throw new Error('DB_SEED_URI is not a valid MongoDB connection URI with a database name.');
+            throw new Error('DB_URI is not a valid MongoDB connection URI with a database name.');
         }
 
         const seedDatabaseName = decodeURIComponent(databasePathMatch[1]);
 
         if (seedDatabaseName !== 'SpookyMart_demo') {
             throw new Error(
-                'Safety stop: DB_SEED_URI must target the separate database named SpookyMart_demo. ' +
+                'Safety stop: DB_URI must target the separate database named SpookyMart_demo. ' +
                 'The existing SpookyMart database will not be used or modified.'
             );
         }
