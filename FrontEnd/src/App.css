@@ -1879,3 +1879,146 @@ ul.CTAs a {
         border-left-width: 10px;
     }
 }
+
+
+/* Payment page cards match the Confirm Order design */
+.payment-checkout {
+    width: min(100% - 32px, 760px);
+    margin: 1.5rem auto 4rem !important;
+    display: flex;
+    justify-content: center;
+}
+
+.payment-checkout .checkout-form-column {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.payment-checkout .payment-form {
+    width: 100%;
+    padding: 1.6rem !important;
+    background: #13091f !important;
+    border: 1px solid rgba(153, 0, 255, .55) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, .22) !important;
+    color: #e0d8f0;
+}
+
+.payment-checkout .payment-form h1,
+.payment-checkout .payment-form h5 {
+    color: #ff6600;
+    font-weight: 800;
+}
+
+.payment-checkout .payment-form p,
+.payment-checkout .payment-form label {
+    color: #e0d8f0;
+}
+
+.payment-checkout .payment-form hr {
+    border-color: #49305e;
+    margin: 1.25rem 0;
+}
+
+.payment-checkout .payment-form .custom-control {
+    padding: .8rem .8rem .8rem 2.4rem;
+    background: #1c132b;
+    border: 1px solid rgba(153, 0, 255, .3);
+    border-radius: 8px;
+}
+
+.payment-checkout .payment-form .custom-control-label {
+    cursor: pointer;
+}
+
+.payment-checkout .payment-form .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #ff6600;
+    border-color: #ff6600;
+}
+
+.payment-checkout .payment-form .form-control,
+.payment-checkout .payment-form select {
+    background: #1c132b;
+    color: #f2edf8;
+    border: 1px solid #49305e;
+    border-radius: 7px;
+}
+
+.payment-checkout .payment-form .form-control:focus,
+.payment-checkout .payment-form select:focus {
+    border-color: #ff6600;
+    box-shadow: 0 0 0 2px rgba(255, 102, 0, .15);
+}
+
+.payment-checkout .payment-form .card {
+    height: auto;
+    padding: 0;
+    background: #1c132b;
+    border: 1px solid rgba(153, 0, 255, .4);
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+.payment-checkout .payment-form .card-body {
+    padding: 1rem !important;
+    background: transparent;
+}
+
+.payment-checkout .payment-form .card h5 {
+    color: #ff6600;
+}
+
+.payment-checkout .payment-form .card p {
+    color: #e0d8f0;
+}
+
+.payment-checkout .payment-form a {
+    color: #00ffcc;
+}
+
+.payment-checkout .payment-form a:hover {
+    color: #ff6600;
+}
+
+.payment-checkout .payment-form .alert {
+    border-radius: 8px;
+    background: #1c132b;
+    border: 1px solid rgba(153, 0, 255, .35);
+    color: #e0d8f0;
+}
+
+.payment-checkout .payment-form .alert strong {
+    color: #ff6600;
+}
+
+.payment-checkout .payment-form #pay_btn {
+    margin-top: 1.2rem;
+    border: 1px solid #ff6600;
+    border-radius: 8px;
+    background: #ff6600;
+    color: #0d0814;
+    font-weight: 800;
+    transition: .2s ease;
+}
+
+.payment-checkout .payment-form #pay_btn:hover:not(:disabled) {
+    background: #e65c00;
+    border-color: #e65c00;
+    box-shadow: 0 0 12px rgba(255, 102, 0, .35);
+}
+
+.payment-checkout .payment-form #pay_btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+@media (max-width: 576px) {
+    .payment-checkout {
+        width: calc(100% - 24px);
+        margin-top: 1rem !important;
+    }
+
+    .payment-checkout .payment-form {
+        padding: 1rem !important;
+    }
+}
