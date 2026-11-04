@@ -53,12 +53,11 @@ exports.newProduct = async (req, res, next) => {
         }
 
         req.body.images = imagesLinks;
-        const sellPrice = Number(req.body.sellPrice ?? req.body.price);
+        const sellPrice = Number(req.body.sellPrice);
         const costPrice = Number(req.body.costPrice);
         if (!Number.isFinite(sellPrice) || sellPrice < 0 || !Number.isFinite(costPrice) || costPrice < 0) {
             return res.status(400).json({ success: false, message: 'Valid cost and selling prices are required.' });
         }
-        req.body.price = sellPrice;
         req.body.sellPrice = sellPrice;
         req.body.costPrice = costPrice;
 
@@ -208,12 +207,11 @@ exports.updateProduct = async (req, res, next) => {
         ];
 
         const updateData = { ...req.body };
-        const sellPrice = Number(updateData.sellPrice ?? updateData.price);
+        const sellPrice = Number(updateData.sellPrice);
         const costPrice = Number(updateData.costPrice);
         if (!Number.isFinite(sellPrice) || sellPrice < 0 || !Number.isFinite(costPrice) || costPrice < 0) {
             return res.status(400).json({ success: false, message: 'Valid cost and selling prices are required.' });
         }
-        updateData.price = sellPrice;
         updateData.sellPrice = sellPrice;
         updateData.costPrice = costPrice;
 
