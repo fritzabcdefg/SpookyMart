@@ -3062,3 +3062,43 @@ main.confirm-order-page .confirm-summary-total {
     border-color: #ff852b !important;
     color: #241332 !important;
 }
+
+
+/* My Profile dashboard cards and navigation actions — final contrast override */
+.profile-page .card,
+.profile-page .card:not(.profile-data-card),
+.profile-page .card .card-body {
+    background: linear-gradient(145deg, #241332 0%, #38204e 100%) !important;
+    border-color: rgba(197, 166, 227, .38) !important;
+    color: #f7f1fc !important;
+}
+.profile-page .card h1,
+.profile-page .card h2,
+.profile-page .card h3,
+.profile-page .card h4,
+.profile-page .card h5,
+.profile-page .card p,
+.profile-page .card label,
+.profile-page .card span:not(.badge),
+.profile-page .card strong {
+    color: #f7f1fc !important;
+}
+.profile-page a.btn,
+.profile-page a.btn-primary,
+.profile-page a.btn-outline-primary,
+.profile-page a.profile-action-btn,
+.profile-page a[href="/me/addresses"],
+.profile-page a[href="/me/payment-methods"] {
+    background: #765295 !important;
+    border: 1px solid #c5a6e3 !important;
+    color: #ffffff !important;
+    font-weight: 750 !important;
+}
+.profile-page a.btn:hover,
+.profile-page a.btn:focus,
+.profile-page a[href="/me/addresses"]:hover,
+.profile-page a[href="/me/payment-methods"]:hover {
+    background: #8b68aa !important;
+    border-color: #e0c8fa !important;
+    color: #ffffff !important;
+}
