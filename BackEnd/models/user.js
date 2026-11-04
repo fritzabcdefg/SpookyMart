@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema({
         default: 'user'
     },
     
+    emailVerified: { type: Boolean, default: false },
+    emailVerificationToken: String,
+    emailVerificationExpire: Date,
+    authProvider: { type: String, enum: ['password', 'google', 'facebook'], default: 'password' },
+    
     isActive: {
     type: Boolean,
     default: true
