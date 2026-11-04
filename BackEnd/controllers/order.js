@@ -419,6 +419,7 @@ exports.cancelMyOrder = async (req, res) => {
         })));
 
         order.orderStatus = 'Cancelled';
+        order.paymentInfo.status = 'cancelled';
         order.cancelledAt = Date.now();
         order.cancelledBy = 'customer';
         await order.save();
@@ -548,6 +549,7 @@ exports.updateOrder = async (req, res, next) => {
                 productId: item.product,
                 quantity: item.quantity
             })));
+            order.paymentInfo.status = 'cancelled';
             order.cancelledAt = Date.now();
             order.cancelledBy = 'admin';
         }
