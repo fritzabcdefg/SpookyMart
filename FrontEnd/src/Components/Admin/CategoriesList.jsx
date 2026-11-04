@@ -8,6 +8,7 @@ import Loader from '../Layout/Loader';
 import Sidebar from './SideBar';
 import {getCategories,createCategory,updateCategory,deleteCategory} from '../../actions/categoryActions';
 import {CATEGORY_ACTION_RESET} from '../../constants/categoryConstants';
+import './CategoriesList.css';
 
 const CategoriesList=()=>{
  const dispatch=useDispatch();
@@ -27,7 +28,7 @@ const CategoriesList=()=>{
   {field:'description',headerName:'Description',flex:1.3,minWidth:190,valueGetter:value=>value||'—'},
   {field:'isActive',headerName:'Status',width:115,renderCell:p=><span style={{padding:'5px 10px',borderRadius:20,fontSize:12,fontWeight:700,color:p.value?'#22c55e':'#f59e0b',background:p.value?'rgba(34,197,94,.14)':'rgba(245,158,11,.14)'}}>{p.value?'Active':'Inactive'}</span>},
   {field:'actions',headerName:'Actions',width:150,sortable:false,filterable:false,renderCell:p=><div style={{display:'flex',gap:8,alignItems:'center',height:'100%'}}>
-   <button className="btn btn-primary btn-sm" onClick={()=>edit(p.row)} title="Edit"><i className="fa fa-pencil"/></button>
+   <button className="btn category-primary-btn btn-sm" onClick={()=>edit(p.row)} title="Edit"><i className="fa fa-pencil"/></button>
    <button className={`btn btn-sm ${p.row.isActive?'btn-warning':'btn-success'}`} onClick={()=>dispatch(updateCategory(p.row._id,{isActive:!p.row.isActive}))} title={p.row.isActive?'Deactivate':'Activate'}><i className={`fa ${p.row.isActive?'fa-eye-slash':'fa-eye'}`}/></button>
    <button className="btn btn-danger btn-sm" onClick={()=>remove(p.row)} title="Delete"><i className="fa fa-trash"/></button>
   </div>}
@@ -44,7 +45,7 @@ const CategoriesList=()=>{
      <div className="row">
       <div className="col-12 col-lg-4 form-group"><label htmlFor="category-name" style={{color:'#f5f0ff'}}>Name</label><input id="category-name" className="form-control" value={name} onChange={e=>setName(e.target.value)} maxLength={60} placeholder="e.g. Halloween Props" required/></div>
       <div className="col-12 col-lg-6 form-group"><label htmlFor="category-description" style={{color:'#f5f0ff'}}>Description</label><input id="category-description" className="form-control" value={description} onChange={e=>setDescription(e.target.value)} placeholder="Optional category description" maxLength={250}/></div>
-      <div className="col-12 col-lg-2 d-flex align-items-end mb-3" style={{gap:8}}><button type="submit" className="btn btn-primary" style={{flex:1}}>{editingId?'Save':'Add'}</button>{editingId&&<button type="button" className="btn btn-secondary" onClick={()=>{setEditingId(null);setName('');setDescription('');}}>Cancel</button>}</div>
+      <div className="col-12 col-lg-2 d-flex align-items-end mb-3" style={{gap:8}}><button type="submit" className="btn category-primary-btn" style={{flex:1}}>{editingId?'Save':'Add'}</button>{editingId&&<button type="button" className="btn btn-secondary" onClick={()=>{setEditingId(null);setName('');setDescription('');}}>Cancel</button>}</div>
      </div>
     </form>
     <div style={{color:'#d8b4fe',marginBottom:12,fontWeight:600}}>{categories.length} categor{categories.length===1?'y':'ies'}</div>
