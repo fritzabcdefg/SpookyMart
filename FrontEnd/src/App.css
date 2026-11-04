@@ -2034,3 +2034,131 @@ ul.CTAs a {
 .payment-checkout .payment-form .custom-control-label {
     color: #ffffff !important;
 }
+
+/* Saved payment methods page — align with the SpookyMart header palette */
+.payment-methods-page {
+    width: min(1080px, calc(100% - 32px));
+    margin: 2rem auto 4rem;
+    color: #e0d8f0;
+}
+.payment-methods-header {
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    background: #13091f;
+    border: 1px solid rgba(255, 102, 0, .55);
+    border-left: 4px solid #ff6600;
+    border-radius: 10px;
+}
+.payment-methods-header h2 {
+    color: #ff6600;
+    font-weight: 800;
+    margin: 0 0 .35rem;
+}
+.payment-methods-header p {
+    color: #e0d8f0;
+    margin: 0;
+}
+.payment-methods-page .payment-methods-section-title {
+    color: #ff6600;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+.payment-methods-grid {
+    justify-content: flex-start;
+}
+.payment-methods-page .payment-method-card {
+    height: auto;
+    background: #13091f;
+    border: 1px solid rgba(255, 102, 0, .45);
+    border-radius: 10px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.22);
+    transition: border-color .2s ease, transform .2s ease;
+}
+.payment-methods-page .payment-method-card:hover {
+    transform: translateY(-2px);
+    border-color: #ff6600;
+}
+.payment-methods-page .payment-method-card .card-body {
+    padding: 1.25rem;
+    background: transparent;
+}
+.payment-methods-page .payment-method-card h5 {
+    color: #ff6600;
+    font-weight: 800;
+}
+.payment-methods-page .payment-method-card p,
+.payment-methods-page p {
+    color: #e0d8f0;
+}
+.payment-methods-page .badge-success {
+    background: #ff6600;
+    color: #13091f;
+}
+.payment-method-form {
+    max-width: 720px;
+    padding: 1.5rem;
+    background: #13091f;
+    border: 1px solid rgba(255, 102, 0, .45);
+    border-radius: 10px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.22);
+}
+.payment-method-form label {
+    color: #ffffff;
+    font-weight: 600;
+}
+.payment-method-form .form-control {
+    background: #1c132b;
+    border: 1px solid #5b4638;
+    border-radius: 7px;
+    color: #ffffff;
+}
+.payment-method-form .form-control:focus {
+    background: #1c132b;
+    color: #ffffff;
+    border-color: #ff6600;
+    box-shadow: 0 0 0 2px rgba(255,102,0,.15);
+}
+.payment-method-form select option {
+    background: #13091f;
+    color: #ffffff;
+}
+.payment-method-form .alert {
+    background: #1c132b;
+    border: 1px solid rgba(255,102,0,.4);
+    border-radius: 8px;
+    color: #ffffff;
+}
+.payment-method-back,
+.payment-method-default-btn,
+.payment-method-save-btn {
+    background: #ff6600;
+    border: 1px solid #ff6600;
+    color: #13091f;
+    font-weight: 700;
+}
+.payment-method-back:hover,
+.payment-method-default-btn:hover,
+.payment-method-save-btn:hover:not(:disabled) {
+    background: #e65c00;
+    border-color: #e65c00;
+    color: #13091f;
+}
+.payment-method-delete-btn {
+    background: transparent;
+    border: 1px solid #dc5555;
+    color: #ff7777;
+}
+.payment-method-delete-btn:hover {
+    background: #dc3545;
+    color: #ffffff;
+}
+@media (max-width: 576px) {
+    .payment-methods-page {
+        width: calc(100% - 24px);
+        margin-top: 1.2rem;
+    }
+    .payment-methods-header,
+    .payment-method-form {
+        padding: 1rem;
+    }
+}

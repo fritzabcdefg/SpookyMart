@@ -140,10 +140,10 @@ const PaymentMethods = () => {
         <>
             <MetaData title="Saved Payment Methods" />
 
-            <div className="container mt-5 mb-5">
-                <h2>My Payment Methods</h2>
+            <main className="container payment-methods-page">
+                <header className="payment-methods-header"><h2>My Payment Methods</h2><p>Manage your saved cards and payment preferences.</p></header>
 
-                <Link to="/me" className="btn btn-secondary mb-4">
+                <Link to="/me" className="btn payment-method-back mb-4">
                     Back to Profile
                 </Link>
 
@@ -159,18 +159,18 @@ const PaymentMethods = () => {
                     </div>
                 )}
 
-                <h4>Saved Cards</h4>
+                <h4 className="payment-methods-section-title">Saved Cards</h4>
 
                 {paymentMethods.length === 0 ? (
                     <p>You have no saved payment methods.</p>
                 ) : (
-                    <div className="row mb-5">
+                    <div className="row payment-methods-grid mb-5">
                         {paymentMethods.map(card => (
                             <div
-                                className="col-12 col-md-6 mb-3"
+                                className="col-12 col-md-6 col-lg-5 mb-3"
                                 key={card._id}
                             >
-                                <div className="card shadow-sm">
+                                <div className="card payment-method-card">
                                     <div className="card-body">
                                         <h5>
                                             {card.brand} ending in {card.last4}
@@ -198,7 +198,7 @@ const PaymentMethods = () => {
                                             {!card.isDefault && (
                                                 <button
                                                     type="button"
-                                                    className="btn btn-primary btn-sm mr-2"
+                                                    className="btn payment-method-default-btn btn-sm mr-2"
                                                     onClick={() => setDefault(card._id)}
                                                 >
                                                     Set as Default
@@ -207,7 +207,7 @@ const PaymentMethods = () => {
 
                                             <button
                                                 type="button"
-                                                className="btn btn-danger btn-sm"
+                                                className="btn payment-method-delete-btn btn-sm"
                                                 onClick={() => deletePaymentMethod(card._id)}
                                             >
                                                 Delete
@@ -222,12 +222,12 @@ const PaymentMethods = () => {
 
                 <hr />
 
-                <h4 className="mt-4">Add a Card</h4>
+                <h4 className="payment-methods-section-title mt-4">Add a Card</h4>
 
                 <div className="row">
-                    <div className="col-12 col-lg-6">
+                    <div className="col-12 col-lg-7">
                         <form
-                            className="shadow-lg p-4"
+                            className="payment-method-form"
                             onSubmit={addPaymentMethod}
                         >
                             <div className="form-group">
@@ -342,7 +342,7 @@ const PaymentMethods = () => {
 
                             <button
                                 type="submit"
-                                className="btn btn-primary btn-block"
+                                className="btn payment-method-save-btn btn-block"
                                 disabled={saving}
                             >
                                 {saving ? 'Saving...' : 'Save Card'}
@@ -350,7 +350,7 @@ const PaymentMethods = () => {
                         </form>
                     </div>
                 </div>
-            </div>
+            </main>
         </>
     );
 };
