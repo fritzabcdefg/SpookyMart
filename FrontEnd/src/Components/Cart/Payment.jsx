@@ -256,7 +256,7 @@ const Payment = () => {
                                             You have no saved cards yet.
                                         </p>
 
-                                        <Link to="/me/payment-methods">
+                                        <Link to="/me/payment-methods" className="manage-payment-methods-btn">
                                             Manage Payment Methods
                                         </Link>
                                     </div>
@@ -310,8 +310,8 @@ const Payment = () => {
                                             </div>
                                         )}
 
-                                        <Link to="/me/payment-methods">
-                                            Manage Saved Cards
+                                        <Link to="/me/payment-methods" className="manage-payment-methods-btn">
+                                            Manage Payment Methods
                                         </Link>
                                     </>
                                 )}
