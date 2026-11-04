@@ -44,7 +44,7 @@ const Cart = () => {
 
     const selectedSubtotal = selectedItems.reduce(
         (total, item) =>
-            total + Number(item.price) * Number(item.quantity),
+            total + Number(item.sellPrice ?? (item.sellPrice ?? item.price)) * Number(item.quantity),
         0
     );
 
@@ -199,7 +199,7 @@ const Cart = () => {
                                         </Link>
 
                                         <p className="cart-product-price">
-                                            {formatPrice(item.price)}
+                                            {formatPrice((item.sellPrice ?? item.price))}
                                         </p>
 
                                         <p className="cart-product-stock">
@@ -245,7 +245,7 @@ const Cart = () => {
                                     <div className="cart-item-total">
                                         <strong>
                                             {formatPrice(
-                                                Number(item.price) *
+                                                Number(item.sellPrice ?? (item.sellPrice ?? item.price)) *
                                                 Number(item.quantity)
                                             )}
                                         </strong>
