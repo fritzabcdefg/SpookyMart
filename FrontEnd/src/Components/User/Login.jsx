@@ -17,6 +17,7 @@ import { firebaseAuth, isFirebaseConfigured } from '../../firebase';
 import axios from 'axios';
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL } from '../../constants/userConstants';
 import { loadCartForUser } from '../../actions/cartActions';
+import './PasswordVisibility.css';
 
 
 const loginSchema = Yup.object({
@@ -164,18 +165,32 @@ const Login = () => {
                                         Password
                                     </label>
 
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        id="password_field"
-                                        name="password"
-                                        className="form-control"
-                                        value={formik.values.password}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <button type="button" className="btn btn-link p-0 mt-2" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? 'Hide password' : 'Show password'}>
-                                        {showPassword ? 'Hide password' : 'Show password'}
-                                    </button>
+                                    <div className="password-input-wrap">
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            id="password_field"
+                                            name="password"
+                                            className="form-control password-input"
+                                            value={formik.values.password}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            autoComplete="current-password"
+                                        />
+                                        <button
+                                            type="button"
+                                            className="password-visibility-toggle"
+                                            onClick={() => setShowPassword(value => !value)}
+                                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                            aria-pressed={showPassword}
+                                            title={showPassword ? 'Hide password' : 'Show password'}
+                                        >
+                                            {showPassword ? (
+                                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0112 5c5.2 0 9 5.1 10 7-.4.8-1.5 2.3-3.5 3.8M6.2 6.2C3.8 7.7 2.4 10 2 12c1 1.9 4.8 7 10 7 1.1 0 2.1-.2 3-.6"/></svg>
+                                            ) : (
+                                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                                            )}
+                                        </button>
+                                    </div>
 
                                     {showError('password') && (
                                         <small className="text-danger">
