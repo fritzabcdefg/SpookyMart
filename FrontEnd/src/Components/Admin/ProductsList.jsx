@@ -154,8 +154,8 @@ const ProductsList = () => {
             width: 160
         },
         {
-            field: 'price',
-            headerName: 'Price',
+            field: 'sellPrice',
+            headerName: 'Selling Price',
             width: 120,
             valueFormatter: value =>
                 `₱${Number(value || 0).toFixed(2)}`
@@ -242,7 +242,7 @@ const ProductsList = () => {
         id: product._id,
         name: product.name,
         category: product.category,
-        price: Number(product.price || 0),
+        sellPrice: Number(product.sellPrice || 0),
         stock: product.stock
     }));
 
