@@ -121,7 +121,7 @@ const Profile = () => {
 
                 <hr className="my-5" />
 
-                <div className="row">
+                <div className="row profile-content-section profile-address-section">
                     <div className="col-12">
                         <div className="d-flex justify-content-between align-items-center flex-wrap mb-3 profile-section-header">
                             <h3>My Shipping Addresses</h3>
@@ -192,7 +192,7 @@ const Profile = () => {
 
                 <hr className="my-5" />
 
-                <div className="row">
+                <div className="row profile-content-section profile-payment-section">
                     <div className="col-12">
                         <div className="d-flex justify-content-between align-items-center flex-wrap mb-3 profile-section-header">
                             <h3>My Payment Methods</h3>
