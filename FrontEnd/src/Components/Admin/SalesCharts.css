@@ -172,3 +172,30 @@
         grid-row: auto;
     }
 }
+
+/* Keep report labels and summary values readable on the dark dashboard.
+   These overrides also neutralize global label/heading highlight styles. */
+.sales-chart-card .form-label,
+.sales-chart-card .sales-chart-summary h6,
+.sales-chart-card .sales-chart-summary h4 {
+    background: transparent !important;
+    color: #f5f0ff !important;
+    -webkit-text-fill-color: #f5f0ff !important;
+    opacity: 1 !important;
+}
+
+.sales-chart-card .sales-chart-summary h6 {
+    font-weight: 600;
+}
+
+.sales-chart-card .sales-chart-summary h4 {
+    font-weight: 700;
+}
+
+/* Use a dark native date control so its text and date segments remain legible. */
+.sales-chart-card input[type="date"].form-control {
+    color-scheme: dark;
+    background-color: #241333 !important;
+    color: #f5f0ff !important;
+    -webkit-text-fill-color: #f5f0ff !important;
+}
