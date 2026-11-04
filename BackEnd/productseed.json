@@ -23,7 +23,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 149,
-    "costPrice": null
+    "costPrice": 100
   },
   {
     "name": "Creepy Mask",
@@ -49,7 +49,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 249,
-    "costPrice": null
+    "costPrice": 200
   },
   {
     "name": "Devil Horn Hairband",
@@ -71,7 +71,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 129,
-    "costPrice": null
+    "costPrice": 80
   },
   {
     "name": "Fake Cobwebs",
@@ -97,7 +97,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 99,
-    "costPrice": null
+    "costPrice": 50
   },
   {
     "name": "Fake Fangs",
@@ -123,7 +123,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 79,
-    "costPrice": null
+    "costPrice": 40
   },
   {
     "name": "Ghost Costume",
@@ -149,7 +149,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 399,
-    "costPrice": null
+    "costPrice": 350
   },
   {
     "name": "Halloween Banner",
@@ -175,7 +175,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 179,
-    "costPrice": null
+    "costPrice": 130
   },
   {
     "name": "Halloween Gift Wrap",
@@ -201,7 +201,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 119,
-    "costPrice": null
+    "costPrice": 90
   },
   {
     "name": "Halloween Treat Bag",
@@ -227,7 +227,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 89,
-    "costPrice": null
+    "costPrice": 40
   },
   {
     "name": "Halloween Window Sticker",
@@ -257,7 +257,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 99,
-    "costPrice": null
+    "costPrice": 70
   },
   {
     "name": "Hanging Ghost",
@@ -283,7 +283,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 159,
-    "costPrice": null
+    "costPrice": 120
   },
   {
     "name": "Pumpkin Lantern",
@@ -309,7 +309,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 229,
-    "costPrice": null
+    "costPrice": 200
   },
   {
     "name": "Skeleton Decoration",
@@ -335,7 +335,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 199,
-    "costPrice": null
+    "costPrice": 150
   },
   {
     "name": "Skeleton Skull Decoration",
@@ -361,7 +361,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 179,
-    "costPrice": null
+    "costPrice": 150
   },
   {
     "name": "Tombstone",
@@ -387,7 +387,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 249,
-    "costPrice": null
+    "costPrice": 200
   },
   {
     "name": "Vampire Cape",
@@ -413,7 +413,7 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 299,
-    "costPrice": null
+    "costPrice": 250
   },
   {
     "name": "Witch Hat",
@@ -439,6 +439,6 @@
     "numOfReviews": 0,
     "reviews": [],
     "sellPrice": 189,
-    "costPrice": null
+    "costPrice": 140
   }
 ]
