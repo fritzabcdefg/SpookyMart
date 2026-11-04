@@ -952,7 +952,39 @@ exports.totalSales = async (req, res, next) => {
             $group: {
                 _id: null,
                 totalSales: {
-                    $sum: { $ifNull: ['$itemsPrice', 0] }
+                    $sum: {
+                        $reduce: {
+                            input: { $ifNull: ['$orderItems', []] },
+                            initialValue: 0,
+                            in: {
+                                $add: [
+                                    '$value',
+                                    {
+                                        $cond: [
+                                            {
+                                                $and: [
+                                                    { $ne: ['$this.costPrice', null] },
+                                                    { $ne: ['$this.costPrice', undefined] }
+                                                ]
+                                            },
+                                            {
+                                                $multiply: [
+                                                    {
+                                                        $subtract: [
+                                                            { $ifNull: ['$this.sellPrice', '$this.price'] },
+                                                            '$this.costPrice'
+                                                        ]
+                                                    },
+                                                    { $ifNull: ['$this.quantity', 0] }
+                                                ]
+                                            },
+                                            0
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -984,7 +1016,39 @@ exports.customerSales = async (req, res, next) => {
         {
             $group: {
                 _id: '$user',
-                total: { $sum: { $ifNull: ['$itemsPrice', 0] } },
+                total: { $sum: {
+                        $reduce: {
+                            input: { $ifNull: ['$orderItems', []] },
+                            initialValue: 0,
+                            in: {
+                                $add: [
+                                    '$value',
+                                    {
+                                        $cond: [
+                                            {
+                                                $and: [
+                                                    { $ne: ['$this.costPrice', null] },
+                                                    { $ne: ['$this.costPrice', undefined] }
+                                                ]
+                                            },
+                                            {
+                                                $multiply: [
+                                                    {
+                                                        $subtract: [
+                                                            { $ifNull: ['$this.sellPrice', '$this.price'] },
+                                                            '$this.costPrice'
+                                                        ]
+                                                    },
+                                                    { $ifNull: ['$this.quantity', 0] }
+                                                ]
+                                            },
+                                            0
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    } },
                 doc: { $first: '$$ROOT' }
             }
         },
@@ -1141,7 +1205,39 @@ exports.salesByDateRange = async (req, res) => {
                             timezone: 'Asia/Manila'
                         }
                     },
-                    totalSales: { $sum: { $ifNull: ['$itemsPrice', 0] } },
+                    totalSales: { $sum: {
+                        $reduce: {
+                            input: { $ifNull: ['$orderItems', []] },
+                            initialValue: 0,
+                            in: {
+                                $add: [
+                                    '$value',
+                                    {
+                                        $cond: [
+                                            {
+                                                $and: [
+                                                    { $ne: ['$this.costPrice', null] },
+                                                    { $ne: ['$this.costPrice', undefined] }
+                                                ]
+                                            },
+                                            {
+                                                $multiply: [
+                                                    {
+                                                        $subtract: [
+                                                            { $ifNull: ['$this.sellPrice', '$this.price'] },
+                                                            '$this.costPrice'
+                                                        ]
+                                                    },
+                                                    { $ifNull: ['$this.quantity', 0] }
+                                                ]
+                                            },
+                                            0
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    } },
                     totalOrders: { $sum: 1 }
                 }
             },
