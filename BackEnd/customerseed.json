@@ -1,40 +1,223 @@
 [
   {
     "userEmail": "User1_spookymart@gmail.com",
-    "phoneNo": "+639171234567",
+    "phoneNo": "+639171000137",
     "addresses": [
       {
         "label": "Home",
         "recipientName": "SpookyMart User1",
-        "phoneNo": "+639171234567",
-        "address": "163 Holy Family Village, Bagumbayan",
+        "phoneNo": "+639171000137",
+        "address": "28 Acacia Avenue, Barangay Ususan",
         "city": "Taguig City",
-        "postalCode": "1100",
+        "postalCode": "1635",
         "country": "Philippines",
         "isDefault": true
-      },
-      {
-        "label": "Work",
-        "recipientName": "SpookyMart User1",
-        "phoneNo": "+639171234567",
-        "address": "456 Demo Avenue, Barangay Lower Bicutan",
-        "city": "Taguig City",
-        "postalCode": "1105",
-        "country": "Philippines",
-        "isDefault": false
       }
     ],
-    "paymentMethods": [
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "mika.santos.demo@gmail.com",
+    "phoneNo": "+639171000274",
+    "addresses": [
       {
-        "label": "Demo Visa",
-        "type": "card",
-        "cardholderName": "SpookyMart User1",
-        "brand": "Visa",
-        "last4": "4242",
-        "expiryMonth": 12,
-        "expiryYear": 2028,
+        "label": "Home",
+        "recipientName": "Mika Santos",
+        "phoneNo": "+639171000274",
+        "address": "45 Mahogany Road, Barangay Pinagsama",
+        "city": "Taguig City",
+        "postalCode": "1632",
+        "country": "Philippines",
         "isDefault": true
       }
-    ]
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "jared.reyes.demo@gmail.com",
+    "phoneNo": "+639171000411",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Jared Reyes",
+        "phoneNo": "+639171000411",
+        "address": "71 Narra Street, Barangay Western Bicutan",
+        "city": "Taguig City",
+        "postalCode": "1630",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "alyssa.cruz.demo@gmail.com",
+    "phoneNo": "+639171000548",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Alyssa Cruz",
+        "phoneNo": "+639171000548",
+        "address": "19 Orchid Lane, Barangay Pembo",
+        "city": "Makati City",
+        "postalCode": "1218",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "paolo.garcia.demo@gmail.com",
+    "phoneNo": "+639171000685",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Paolo Garcia",
+        "phoneNo": "+639171000685",
+        "address": "33 Jasmine Street, Barangay Poblacion",
+        "city": "Makati City",
+        "postalCode": "1210",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "bea.mendoza.demo@gmail.com",
+    "phoneNo": "+639171000822",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Bea Mendoza",
+        "phoneNo": "+639171000822",
+        "address": "88 Rose Avenue, Barangay San Isidro",
+        "city": "Pasay City",
+        "postalCode": "1300",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "noah.villanueva.demo@gmail.com",
+    "phoneNo": "+639171000959",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Noah Villanueva",
+        "phoneNo": "+639171000959",
+        "address": "16 Dahlia Street, Barangay South Triangle",
+        "city": "Quezon City",
+        "postalCode": "1103",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "chloe.ramirez.demo@gmail.com",
+    "phoneNo": "+639171001096",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Chloe Ramirez",
+        "phoneNo": "+639171001096",
+        "address": "52 Sunflower Road, Barangay Fairview",
+        "city": "Quezon City",
+        "postalCode": "1118",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "ethan.flores.demo@gmail.com",
+    "phoneNo": "+639171001233",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Ethan Flores",
+        "phoneNo": "+639171001233",
+        "address": "24 Camia Street, Barangay Kapitolyo",
+        "city": "Pasig City",
+        "postalCode": "1603",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "sofia.castillo.demo@gmail.com",
+    "phoneNo": "+639171001370",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Sofia Castillo",
+        "phoneNo": "+639171001370",
+        "address": "39 Ilang-Ilang Avenue, Barangay San Antonio",
+        "city": "Pasig City",
+        "postalCode": "1600",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "liam.torres.demo@gmail.com",
+    "phoneNo": "+639171001507",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Liam Torres",
+        "phoneNo": "+639171001507",
+        "address": "10 Lily Street, Barangay Alabang",
+        "city": "Muntinlupa City",
+        "postalCode": "1781",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "isabelle.aquino.demo@gmail.com",
+    "phoneNo": "+639171001644",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Isabelle Aquino",
+        "phoneNo": "+639171001644",
+        "address": "63 Gumamela Road, Barangay Moonwalk",
+        "city": "Parañaque City",
+        "postalCode": "1709",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
+  },
+  {
+    "userEmail": "gabriel.lim.demo@gmail.com",
+    "phoneNo": "+639171001781",
+    "addresses": [
+      {
+        "label": "Home",
+        "recipientName": "Gabriel Lim",
+        "phoneNo": "+639171001781",
+        "address": "12 Sampaguita Street, Barangay Central",
+        "city": "Taguig City",
+        "postalCode": "1630",
+        "country": "Philippines",
+        "isDefault": true
+      }
+    ],
+    "paymentMethods": []
   }
 ]
