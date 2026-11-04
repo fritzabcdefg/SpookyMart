@@ -3165,3 +3165,10 @@ main.confirm-order-page .confirm-summary-total {
         margin-right: 0 !important;
     }
 }
+
+
+/* My Profile section headings — orange accent for stronger visibility */
+.profile-page .profile-section-header h3,
+.profile-page > .row > .col-12 > .d-flex h3 {
+    color: #ff852b !important;
+}
