@@ -7,13 +7,19 @@ import MetaData from '../Layout/MetaData';
 import CheckoutSteps from './CheckoutSteps';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingInfo } from '../../actions/cartActions';
+import { getCheckoutShippingInfo } from '../../utils/shippingInfo';
 
 const Shipping = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const shippingInfo = useSelector(
+    const reduxShippingInfo = useSelector(
         state => state.cart.shippingInfo || {}
+    );
+    const user = useSelector(state => state.auth?.user);
+    const shippingInfo = getCheckoutShippingInfo(
+        reduxShippingInfo,
+        user?._id
     );
 
     const API = import.meta.env.VITE_API;

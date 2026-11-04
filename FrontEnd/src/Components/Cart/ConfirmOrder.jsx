@@ -3,11 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import MetaData from '../Layout/MetaData';
 import CheckoutSteps from './CheckoutSteps';
 import { useSelector } from 'react-redux';
+import { getCheckoutShippingInfo, hasRequiredShippingInfo } from '../../utils/shippingInfo';
 
 const ConfirmOrder = () => {
     const navigate = useNavigate();
-    const { shippingInfo } = useSelector(state => state.cart);
+    const reduxShippingInfo = useSelector(state => state.cart.shippingInfo || {});
     const { user } = useSelector(state => state.auth);
+    const shippingInfo = getCheckoutShippingInfo(reduxShippingInfo, user?._id);
 
     let selectedItems = [];
     try {
@@ -31,6 +33,11 @@ const ConfirmOrder = () => {
     const totalPrice = Number((itemsPrice + shippingPrice).toFixed(2));
 
     const processToPayment = () => {
+        if (!hasRequiredShippingInfo(shippingInfo)) {
+            navigate('/shipping');
+            return;
+        }
+
         if (selectedItems.length === 0) {
             navigate('/cart');
             return;

@@ -6,6 +6,7 @@ import MetaData from '../Layout/MetaData';
 import CheckoutSteps from './CheckoutSteps';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder, clearErrors } from '../../actions/orderActions';
+import { getCheckoutShippingInfo, hasRequiredShippingInfo } from '../../utils/shippingInfo';
 
 const Payment = () => {
     const dispatch = useDispatch();
@@ -19,7 +20,9 @@ const Payment = () => {
     const [loadingCards, setLoadingCards] = useState(true);
     const [cardError, setCardError] = useState('');
 
-    const { shippingInfo } = useSelector(state => state.cart);
+    const reduxShippingInfo = useSelector(state => state.cart.shippingInfo || {});
+    const { user } = useSelector(state => state.auth);
+    const shippingInfo = getCheckoutShippingInfo(reduxShippingInfo, user?._id);
     const { error, loading } = useSelector(state => state.newOrder);
 
     const [checkoutData] = useState(() => {
@@ -102,6 +105,11 @@ const Payment = () => {
 
         if (selectedItems.length === 0 || !orderInfo) {
             navigate('/cart');
+            return;
+        }
+
+        if (!hasRequiredShippingInfo(shippingInfo)) {
+            navigate('/shipping');
             return;
         }
 
