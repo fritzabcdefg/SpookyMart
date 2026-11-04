@@ -867,3 +867,83 @@ body:has(.sidebar-wrapper) main > .row > div > div a {
     transition:none !important;
   }
 }
+
+
+/* Update Profile page: restore a full-width, centered form card.
+   Scoped to the name field so other .wrapper forms are unaffected. */
+.wrapper:has(#name_field) {
+  display:flex !important;
+  flex-direction:row !important;
+  justify-content:center !important;
+  align-items:flex-start !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:clamp(24px,4vw,48px) auto !important;
+  padding:0 20px !important;
+  box-sizing:border-box !important;
+}
+.wrapper:has(#name_field) > [class*="col-"] {
+  flex:0 1 620px !important;
+  width:100% !important;
+  max-width:620px !important;
+  min-width:0 !important;
+  padding-left:12px !important;
+  padding-right:12px !important;
+  box-sizing:border-box !important;
+}
+.wrapper:has(#name_field) form.shadow-lg {
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  margin:0 auto !important;
+  padding:clamp(22px,4vw,42px) !important;
+  box-sizing:border-box !important;
+  border:1px solid #e8e0ed !important;
+  border-radius:20px !important;
+  background:#fff !important;
+  box-shadow:0 14px 36px rgba(37,19,61,.10) !important;
+}
+.wrapper:has(#name_field) form.shadow-lg h1 {
+  margin:0 0 28px !important;
+  font-size:clamp(1.65rem,3vw,2.1rem) !important;
+  line-height:1.2;
+  color:#25133d !important;
+}
+.wrapper:has(#name_field) form.shadow-lg .form-group {
+  width:100% !important;
+  min-width:0 !important;
+  margin-bottom:20px !important;
+}
+.wrapper:has(#name_field) form.shadow-lg .form-control {
+  display:block !important;
+  width:100% !important;
+  min-width:0 !important;
+  min-height:48px !important;
+  box-sizing:border-box !important;
+}
+.wrapper:has(#name_field) form.shadow-lg .d-flex.align-items-center {
+  flex-wrap:wrap !important;
+  gap:12px !important;
+}
+.wrapper:has(#name_field) form.shadow-lg .custom-file {
+  flex:1 1 220px !important;
+  min-width:0 !important;
+}
+.wrapper:has(#name_field) form.shadow-lg .custom-file-label {
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.wrapper:has(#name_field) form.shadow-lg .update-btn {
+  width:100% !important;
+  min-height:48px;
+  border-radius:999px !important;
+  margin-top:12px !important;
+}
+@media (max-width:575.98px) {
+  .wrapper:has(#name_field) { padding:0 12px !important; margin:22px auto !important; }
+  .wrapper:has(#name_field) > [class*="col-"] { padding:0 !important; }
+  .wrapper:has(#name_field) form.shadow-lg { padding:22px 18px !important; }
+}
