@@ -139,6 +139,8 @@ const seedDatabase = async () => {
             user.avatar = userData.avatar;
             user.role = userData.role || 'user';
             user.isActive = userData.isActive !== false;
+            user.emailVerified = userData.emailVerified === true;
+            user.authProvider = userData.authProvider || 'password';
 
             await user.save();
             usersByEmail.set(user.email.toLowerCase(), user);
