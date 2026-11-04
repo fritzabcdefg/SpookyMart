@@ -8,11 +8,22 @@ const productSchema = new mongoose.Schema({
         trim: true,
         maxLength: [100, 'Product name cannot exceed 100 characters']
     },
+    // price remains as a backwards-compatible alias for the selling price.
     price: {
         type: Number,
-        required: [true, 'Please enter product price'],
-        maxLength: [5, 'Product name cannot exceed 5 characters'],
+        required: [true, 'Please enter product selling price'],
+        min: [0, 'Selling price cannot be negative'],
         default: 0.0
+    },
+    sellPrice: {
+        type: Number,
+        min: [0, 'Selling price cannot be negative'],
+        default: null
+    },
+    costPrice: {
+        type: Number,
+        min: [0, 'Cost price cannot be negative'],
+        default: null
     },
     description: {
         type: String,
@@ -92,6 +103,16 @@ const productSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+});
+
+// Keep legacy product.price and the explicit sellPrice field synchronized.
+productSchema.pre('validate', function (next) {
+    if (this.sellPrice !== null && this.sellPrice !== undefined) {
+        this.price = this.sellPrice;
+    } else if (this.price !== null && this.price !== undefined) {
+        this.sellPrice = this.price;
+    }
+    next();
 });
 
 module.exports = mongoose.model('Product', productSchema);
