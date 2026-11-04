@@ -78,7 +78,6 @@ const NewProduct = () => {
             const formData = new FormData();
 
             formData.set('name', values.name.trim());
-            formData.set('price', values.sellPrice);
             formData.set('sellPrice', values.sellPrice);
             formData.set('costPrice', values.costPrice);
             formData.set('description', values.description.trim());
@@ -242,13 +241,13 @@ const NewProduct = () => {
                                 {showError('costPrice') && <small className="text-danger">{errors.costPrice}</small>}
                             </div>
                             <div className="form-group">
-                                <label htmlFor="price_field">
+                                <label htmlFor="sell_price_field">
                                     Selling Price (₱)
                                 </label>
 
                                 <input
                                     type="number"
-                                    id="price_field"
+                                    id="sell_price_field"
                                     name="sellPrice"
                                     className="form-control"
                                     value={values.sellPrice}
