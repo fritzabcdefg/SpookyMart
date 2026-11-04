@@ -1,0 +1,215 @@
+.product-admin-page {
+    width: min(100%, 1120px);
+    margin: 28px auto 56px;
+    padding: 0 24px;
+    color: #f5f0ff;
+}
+
+.product-admin-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 22px;
+    padding: clamp(20px, 3vw, 34px);
+    background: linear-gradient(145deg, #1b1028 0%, #13091f 75%);
+    border: 1px solid rgba(153, 0, 255, .42);
+    border-top: 3px solid #ff6600;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, .28);
+}
+
+.product-form-heading {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #49305e;
+}
+
+.product-form-heading-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 54px;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: rgba(255, 102, 0, .13);
+    border: 1px solid rgba(255, 102, 0, .42);
+    color: #ff8533;
+    font-size: 22px;
+}
+
+.product-form-eyebrow {
+    display: block;
+    margin-bottom: 5px;
+    color: #c084fc;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .16em;
+}
+
+.product-form-heading h1 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(23px, 3vw, 30px);
+    font-weight: 800;
+    letter-spacing: -.025em;
+}
+
+.product-form-heading p {
+    margin: 5px 0 0;
+    color: #b9a9c9;
+    font-size: 13px;
+}
+
+.product-form-section-title {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    color: #ff8533;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.product-form-section-title i {
+    font-size: 15px;
+}
+
+.product-form-field {
+    min-width: 0;
+    margin: 0;
+}
+
+.product-form-field--wide {
+    grid-column: 1 / -1;
+}
+
+.product-admin-form .product-form-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #eee6f7;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.product-admin-form .product-form-field .form-control {
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid #49305e;
+    border-radius: 9px;
+    background: #21142f;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: none;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.product-admin-form .product-form-field textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.product-admin-form .product-form-field .form-control:focus {
+    border-color: #ff8533;
+    background: #251735;
+    color: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 102, 0, .13);
+    outline: none;
+}
+
+.product-admin-form .product-form-field .form-control::placeholder {
+    color: #8f819d;
+}
+
+.product-admin-form .product-form-field select option {
+    background: #21142f;
+    color: #fff;
+}
+
+.product-admin-form .product-form-field input[type="file"] {
+    height: auto;
+    padding: 10px;
+}
+
+.product-admin-form .form-text {
+    color: #a99ab8 !important;
+    margin-top: 8px;
+}
+
+.product-admin-form .text-danger {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+.product-admin-form .product-form-field img {
+    display: block;
+    width: 104px;
+    height: 104px;
+    object-fit: cover;
+    border: 1px solid #604078;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.product-form-submit {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 50px;
+    margin-top: 5px;
+    padding: 13px 20px;
+    border: 1px solid #ff6600;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ff7a1a, #e85d00);
+    color: #170d20;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .06em;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+.product-form-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255, 102, 0, .24);
+    filter: brightness(1.06);
+}
+
+.product-form-submit:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.product-admin-page .text-center {
+    color: #f5f0ff;
+}
+
+@media (max-width: 767px) {
+    .product-admin-page {
+        margin: 18px auto 36px;
+        padding: 0 14px;
+    }
+
+    .product-admin-form {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px 16px;
+        border-radius: 13px;
+    }
+
+    .product-form-heading,
+    .product-form-section-title,
+    .product-form-field--wide,
+    .product-form-submit {
+        grid-column: 1;
+    }
+
+    .product-form-heading-icon {
+        flex-basis: 46px;
+        width: 46px;
+        height: 46px;
+    }
+}
