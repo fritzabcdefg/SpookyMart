@@ -17,7 +17,7 @@ const getFormattedCart = async (userId) => {
         .map(item => ({
             product: item.product._id,
             name: item.product.name,
-            price: item.product.price,
+            sellPrice: item.product.sellPrice,
             image: item.product.images?.[0]?.url || '',
             stock: item.product.stock,
             quantity: item.quantity
