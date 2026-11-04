@@ -1,88 +1,67 @@
-import React, { useState, } from 'react'
-
-import MetaData from '../Layout/MetaData'
-import axios from 'axios'
-import { toast } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import MetaData from '../Layout/MetaData';
 import { forgotPassword } from '../../actions/userActions';
-
-
+import './PasswordRecovery.css';
 
 const ForgotPassword = () => {
     const dispatch = useDispatch();
-    const { error, loading, message } = useSelector(state => state.forgotPassword)
+    const { error, loading, message } = useSelector(state => state.forgotPassword);
+    const [email, setEmail] = useState('');
 
-
-    const [email, setEmail] = useState('')
-    // const [loading, setLoading] = useState('')
-
-    const navigate = useNavigate()
-
-    // const forgotPassword = async (formData) => {
-    //     const config = {
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }
-    //     try {
-    //         const { data } = await axios.post(`http://localhost:4001/api/v1/password/forgot`, formData, config)
-    //         console.log(data.message)
-
-    //         setLoading(false)
-    //         toast.success(data.message, {
-    //             position: 'bottom-center'
-    //         });
-    //         navigate('/login')
-    //     } catch (error) {
-    //         toast.error(error.response.data.message, {
-    //             position: 'top-right'
-    //         });
-    //     }
-    // }
-
-
-    const submitHandler = (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.set('email', email);
-        dispatch(forgotPassword(formData))
-    }
+    const submitHandler = (event) => {
+        event.preventDefault();
+        dispatch(forgotPassword(email.trim()));
+    };
 
     return (
         <>
-            <MetaData title={'Forgot Password'} />
-            <div className="row wrapper">
-                <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" onSubmit={submitHandler}>
-                        <h1 className="mb-3">Forgot Password</h1>
-                        <div className="form-group">
-                            <label htmlFor="email_field">Enter Email</label>
-                            <input
-                                type="email"
-                                id="email_field"
-                                className="form-control"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+            <MetaData title="Forgot Password - SpookyMart" />
+            <main className="password-recovery-page">
+                <section className="password-recovery-card">
+                    <div className="password-recovery-mark" aria-hidden="true">✦</div>
+                    <p className="password-recovery-eyebrow">SPOOKYMART ACCOUNT</p>
+                    <h1>Forgot your password?</h1>
+                    <p className="password-recovery-copy">
+                        No worries! Enter the email address linked to your account and
+                        we’ll send you a secure link to create a new password.
+                    </p>
+
+                    {message && (
+                        <div className="password-recovery-notice" role="status">
+                            <strong>Check your inbox</strong>
+                            <span>{message}</span>
                         </div>
+                    )}
+                    {error && <p className="password-recovery-error" role="alert">{error}</p>}
 
-                        <button
-                            id="forgot_password_button"
-                            type="submit"
-                            className="btn btn-block py-3"
-                            disabled={loading ? true : false} >
-                            Send Email
-                        </button>
+                    {!message && (
+                        <form onSubmit={submitHandler}>
+                            <label htmlFor="recovery-email">Email address</label>
+                            <input
+                                id="recovery-email"
+                                type="email"
+                                value={email}
+                                onChange={event => setEmail(event.target.value)}
+                                placeholder="you@example.com"
+                                autoComplete="email"
+                                required
+                            />
+                            <button type="submit" disabled={loading || !email.trim()}>
+                                {loading ? 'Sending link…' : 'Send reset link'}
+                            </button>
+                        </form>
+                    )}
 
-                    </form>
-                </div>
-            </div>
-
+                    <Link className="password-recovery-back" to="/login">← Back to login</Link>
+                    <p className="password-recovery-footnote">
+                        For your security, reset links expire after 30 minutes.
+                    </p>
+                </section>
+            </main>
         </>
-    )
-}
+    );
+};
 
-export default ForgotPassword
+export default ForgotPassword;
