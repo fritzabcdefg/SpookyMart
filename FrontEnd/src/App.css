@@ -2398,3 +2398,92 @@ ul.CTAs a {
 .payment-methods-page .payment-method-card:hover {
     border-color: #d0b2ed !important;
 }
+
+
+/* Explicit purple styling for the three checkout steps */
+.shipping-checkout .checkout-form,
+.payment-checkout .checkout-form,
+main.confirm-order-page .confirm-order-card,
+main.confirm-order-page .confirm-order-summary {
+    background: linear-gradient(135deg, #241332 0%, #38204e 62%, #4a285f 100%) !important;
+    border: 1px solid rgba(174, 139, 205, .62) !important;
+    border-radius: 16px !important;
+    color: #f5effb !important;
+    box-shadow: 0 12px 30px rgba(37, 19, 61, .22) !important;
+}
+
+main.confirm-order-page .confirm-order-heading h2 {
+    color: #38204e !important;
+}
+main.confirm-order-page .confirm-order-heading p {
+    color: #71677d !important;
+}
+main.confirm-order-page .confirm-card-heading h4,
+main.confirm-order-page .confirm-order-summary h4,
+main.confirm-order-page .confirm-item-details a {
+    color: #e0c8fa !important;
+}
+main.confirm-order-page .confirm-card-heading p,
+main.confirm-order-page .confirm-info-item small,
+main.confirm-order-page .confirm-info-item strong,
+main.confirm-order-page .confirm-item-details small,
+main.confirm-order-page .confirm-summary-note,
+main.confirm-order-page .confirm-order-summary p,
+main.confirm-order-page .confirm-order-summary p strong,
+main.confirm-order-page .confirm-summary-total {
+    color: #f0e8f8 !important;
+}
+main.confirm-order-page .confirm-card-icon {
+    color: #d0b2ed !important;
+    background: rgba(197, 166, 227, .14) !important;
+}
+main.confirm-order-page .confirm-item {
+    border-color: rgba(197, 166, 227, .25) !important;
+}
+main.confirm-order-page .confirm-summary-total {
+    border-top-color: rgba(197, 166, 227, .4) !important;
+}
+
+.shipping-checkout .checkout-form h1,
+.shipping-checkout .checkout-form h2,
+.shipping-checkout .checkout-form h3,
+.shipping-checkout .checkout-form h4,
+.shipping-checkout .checkout-form h5,
+.payment-checkout .checkout-form h1,
+.payment-checkout .checkout-form h2,
+.payment-checkout .checkout-form h3,
+.payment-checkout .checkout-form h4,
+.payment-checkout .checkout-form h5 {
+    color: #e0c8fa !important;
+}
+.shipping-checkout .checkout-form label,
+.shipping-checkout .checkout-form p,
+.payment-checkout .checkout-form label,
+.payment-checkout .checkout-form p {
+    color: #f0e8f8 !important;
+}
+.shipping-checkout .checkout-form .form-control,
+.shipping-checkout .checkout-form select,
+.payment-checkout .checkout-form .form-control,
+.payment-checkout .checkout-form select {
+    background: rgba(25, 13, 39, .78) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(197, 166, 227, .48) !important;
+}
+.shipping-checkout .checkout-form .form-control:focus,
+.shipping-checkout .checkout-form select:focus,
+.payment-checkout .checkout-form .form-control:focus,
+.payment-checkout .checkout-form select:focus {
+    border-color: #c5a6e3 !important;
+    box-shadow: 0 0 0 3px rgba(197, 166, 227, .16) !important;
+}
+.payment-checkout .checkout-form .custom-control,
+.payment-checkout .checkout-form .card,
+.payment-checkout .checkout-form .alert {
+    background: rgba(25, 13, 39, .62) !important;
+    border-color: rgba(197, 166, 227, .42) !important;
+    color: #f0e8f8 !important;
+}
+.payment-checkout .checkout-form .custom-control-label {
+    color: #ffffff !important;
+}
