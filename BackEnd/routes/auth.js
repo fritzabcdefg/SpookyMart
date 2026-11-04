@@ -4,6 +4,7 @@ const upload = require("../utils/multer");
 const {
     registerUser,
     loginUser,
+    verifyEmail,
     forgotPassword,
     resetPassword,
     getUserProfile,
@@ -19,6 +20,7 @@ const {
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth')
 
 router.post('/register', upload.single("avatar"), registerUser);
+router.get('/email/verify/:token', verifyEmail);
 router.post('/login', loginUser);
 router.post('/password/forgot', forgotPassword);
 router.put('/password/reset/:token', resetPassword);
