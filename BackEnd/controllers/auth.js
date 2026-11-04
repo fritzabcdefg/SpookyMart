@@ -8,12 +8,11 @@ const sendToken = require('../utils/jwtToken');
 
 
 exports.registerUser = async (req, res, next) => {
-    let uploadedAvatar = null;
     let createdUser = null;
     let createdCustomer = null;
 
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, confirmPassword } = req.body;
 
         // Validate required registration fields.
         if (!name || !email || !password) {
@@ -23,12 +22,11 @@ exports.registerUser = async (req, res, next) => {
             });
         }
 
-        // Avatar is required by the existing User model.
-        if (!req.body.avatar) {
-            return res.status(400).json({
-                success: false,
-                message: 'Please choose a profile picture.'
-            });
+        if (String(password).length < 6) {
+            return res.status(400).json({ success: false, message: 'Password must be at least 6 characters.' });
+        }
+        if (password !== confirmPassword) {
+            return res.status(400).json({ success: false, message: 'Passwords do not match.' });
         }
 
         // Parse optional JSON arrays from FormData.
@@ -62,16 +60,6 @@ exports.registerUser = async (req, res, next) => {
             'Payment methods'
         );
 
-        // Upload the Base64 avatar to Cloudinary.
-        uploadedAvatar = await cloudinary.v2.uploader.upload(
-            req.body.avatar,
-            {
-                folder: 'avatars',
-                width: 150,
-                crop: 'scale'
-            }
-        );
-
         // Create an account that remains locked until its email is verified.
         const verificationToken = crypto.randomBytes(32).toString('hex');
         createdUser = await User.create({
@@ -82,8 +70,8 @@ exports.registerUser = async (req, res, next) => {
             emailVerificationToken: crypto.createHash('sha256').update(verificationToken).digest('hex'),
             emailVerificationExpire: Date.now() + 24 * 60 * 60 * 1000,
             avatar: {
-                public_id: uploadedAvatar.public_id,
-                url: uploadedAvatar.secure_url
+                public_id: 'default-avatar',
+                url: `${(process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\\/$/, '')}/images/default_avatar.jpg`
             }
         });
 
@@ -109,11 +97,25 @@ exports.registerUser = async (req, res, next) => {
             paymentMethods: safePaymentMethods
         });
 
-        const verifyUrl = `${process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`}/api/v1/email/verify/${verificationToken}`;
+        const frontendUrl = (process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\\/$/, '');
+        if (!frontendUrl) throw new Error('FRONTEND_URL must be configured for production email verification.');
+        const verifyUrl = `${(process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`).replace(/\\/$/, '')}/api/v1/email/verify/${verificationToken}`;
+        const safeName = String(name).replace(/[&<>"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[character]));
         await sendEmail({
             email: createdUser.email,
-            subject: 'Verify your SpookyMart email',
-            html: `<p>Hi ${String(name).replace(/[<>]/g, '')},</p><p>Please verify your email address to activate your SpookyMart account.</p><p><a href="${verifyUrl}">Verify my email</a></p><p>This link expires in 24 hours.</p>`
+            subject: 'Verify your SpookyMart email address',
+            html: `
+            <!doctype html><html><body style="margin:0;padding:32px 12px;background:#f4f0f7;font-family:Arial,Helvetica,sans-serif;color:#292235;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center">
+                <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;">
+                  <tr><td style="background:#24152f;padding:28px 36px;text-align:center;"><div style="font-size:28px;font-weight:800;letter-spacing:1px;color:#ff8a32;">SPOOKYMART</div><div style="margin-top:6px;color:#f5eafc;font-size:12px;letter-spacing:2px;">A LITTLE SPOOKY. A LOT OF FUN.</div></td></tr>
+                  <tr><td style="padding:38px 36px 20px;"><div style="font-size:13px;font-weight:bold;letter-spacing:1.5px;color:#f07827;">WELCOME TO THE FAMILY</div><h1 style="margin:12px 0 16px;font-size:26px;color:#2b2034;">Verify your email address</h1><p style="font-size:15px;line-height:1.7;color:#5d5365;">Hi ${safeName},</p><p style="font-size:15px;line-height:1.7;color:#5d5365;">Thanks for creating a SpookyMart account! Please confirm your email address to activate your account. You won't be able to log in until this step is complete.</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" style="margin:28px auto;"><tr><td align="center" bgcolor="#f07827" style="border-radius:8px;"><a href="${verifyUrl}" style="display:inline-block;padding:15px 30px;color:#ffffff;text-decoration:none;font-size:15px;font-weight:bold;">VERIFY MY EMAIL</a></td></tr></table>
+                    <p style="font-size:13px;line-height:1.7;color:#766b7d;">This secure link expires in 24 hours. If you didn't create this account, you can ignore this email.</p><p style="font-size:12px;line-height:1.6;color:#8b8291;word-break:break-all;">Button not working? Copy this link:<br/>${verifyUrl}</p></td></tr>
+                  <tr><td style="padding:20px 36px;background:#faf8fb;text-align:center;color:#8b8291;font-size:12px;">© ${new Date().getFullYear()} SpookyMart · Happy haunting!</td></tr>
+                </table>
+              </td></tr></table>
+            </body></html>`
         });
 
         return res.status(201).json({
@@ -132,13 +134,6 @@ exports.registerUser = async (req, res, next) => {
         // Remove the incomplete user account.
         if (createdUser) {
             await User.findByIdAndDelete(createdUser._id);
-        }
-
-        // Remove the uploaded avatar if registration failed.
-        if (uploadedAvatar?.public_id) {
-            await cloudinary.v2.uploader.destroy(
-                uploadedAvatar.public_id
-            );
         }
 
         return res.status(400).json({
@@ -160,7 +155,9 @@ exports.verifyEmail = async (req, res) => {
         user.emailVerificationToken = undefined;
         user.emailVerificationExpire = undefined;
         await user.save();
-        return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?verified=1`);
+        const frontendUrl = (process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\\/$/, '');
+        if (!frontendUrl) return res.status(500).send('FRONTEND_URL is not configured. Please contact the store administrator.');
+        return res.redirect(`${frontendUrl}/login?verified=1`);
     } catch (error) {
         return res.status(500).send('Unable to verify your email. Please try again.');
     }
