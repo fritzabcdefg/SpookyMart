@@ -224,7 +224,9 @@ const seedDatabase = async () => {
                     product: product._id,
                     quantity: item.quantity,
                     image: String(item.image || product.images?.[0]?.url || '').trim(),
-                    price: item.price
+                    price: item.price,
+                    sellPrice: item.price,
+                    costPrice: product.costPrice ?? null
                 };
             });
 
