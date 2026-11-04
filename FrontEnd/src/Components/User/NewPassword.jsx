@@ -1,103 +1,114 @@
-import  {  useState, useEffect } from 'react'
-import { useNavigate, useParams } from "react-router-dom";
-import MetaData from '../Layout/MetaData'
+import React, { useState } from 'react';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import MetaData from '../Layout/MetaData';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import './PasswordRecovery.css';
 
 const NewPassword = () => {
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const { token } = useParams();
 
-    let navigate = useNavigate();
-    const [error, setError] = useState('')
-    const [success, setSuccess] = useState(false)
+    const submitHandler = async (event) => {
+        event.preventDefault();
+        setError('');
 
-    let { token } = useParams();
-    console.log(token)
+        if (password.length < 6) {
+            setError('Your password must be at least 6 characters long.');
+            return;
+        }
+        if (password !== confirmPassword) {
+            setError('Your passwords do not match.');
+            return;
+        }
 
-    const resetPassword = async (token, passwords) => {
-        console.log(passwords)
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            setLoading(true);
+            const { data } = await axios.put(
+                `${import.meta.env.VITE_API}/password/reset/${token}`,
+                { password, confirmPassword },
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+
+            if (data.success) {
+                toast.success('Your password has been updated. Please log in with your new password.');
+                navigate('/login', { replace: true });
             }
-            const { data } = await axios.put(`http://localhost:4001/api/v1/password/reset/${token}`, passwords, config)
-            
-            setSuccess(data.success)
-        } catch (error) {
-            console.log(error)
-            setError(error)
+        } catch (requestError) {
+            const message = requestError.response?.data?.message ||
+                'This reset link is invalid or has expired. Please request a new one.';
+            setError(message);
+        } finally {
+            setLoading(false);
         }
-    }
-    useEffect(() => {
-        if (error) {
-            toast.error(error, {
-                position: 'bottom-right'
-            });
-        }
-        if (success) {
-            toast.success('Password updated successfully!', {
-                position: 'bottom-right'
-            });
-            navigate('/login')
-        }
-
-    }, [error, success,])
-
-    const submitHandler = (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.set('password', password);
-        formData.set('confirmPassword', confirmPassword);
-        resetPassword(token, formData)
-    }
+    };
 
     return (
         <>
-            <MetaData title={'New Password Reset'} />
-            <div className="row wrapper">
-                <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" onSubmit={submitHandler}>
-                        <h1 className="mb-3">New Password</h1>
+            <MetaData title="Reset Password - SpookyMart" />
+            <main className="password-recovery-page">
+                <section className="password-recovery-card">
+                    <div className="password-recovery-mark" aria-hidden="true">✦</div>
+                    <p className="password-recovery-eyebrow">ACCOUNT SECURITY</p>
+                    <h1>Create a new password</h1>
+                    <p className="password-recovery-copy">
+                        Choose a strong password you haven’t used for SpookyMart before.
+                    </p>
 
-                        <div className="form-group">
-                            <label htmlFor="password_field">Password</label>
+                    {error && <p className="password-recovery-error" role="alert">{error}</p>}
+
+                    <form onSubmit={submitHandler}>
+                        <label htmlFor="new-password">New password</label>
+                        <div className="password-recovery-input-wrap">
                             <input
-                                type="password"
-                                id="password_field"
-                                className="form-control"
+                                id="new-password"
+                                type={showPassword ? 'text' : 'password'}
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={event => setPassword(event.target.value)}
+                                placeholder="At least 6 characters"
+                                autoComplete="new-password"
+                                minLength={6}
+                                required
                             />
+                            <button type="button" className="password-recovery-eye" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? 'Hide password' : 'Show password'}>
+                                {showPassword ? 'Hide' : 'Show'}
+                            </button>
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="confirm_password_field">Confirm Password</label>
+                        <label htmlFor="confirm-new-password">Confirm new password</label>
+                        <div className="password-recovery-input-wrap">
                             <input
-                                type="password"
-                                id="confirm_password_field"
-                                className="form-control"
+                                id="confirm-new-password"
+                                type={showConfirmPassword ? 'text' : 'password'}
                                 value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                onChange={event => setConfirmPassword(event.target.value)}
+                                placeholder="Enter your password again"
+                                autoComplete="new-password"
+                                minLength={6}
+                                required
                             />
+                            <button type="button" className="password-recovery-eye" onClick={() => setShowConfirmPassword(value => !value)} aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}>
+                                {showConfirmPassword ? 'Hide' : 'Show'}
+                            </button>
                         </div>
 
-                        <button
-                            id="new_password_button"
-                            type="submit"
-                            className="btn btn-block py-3">
-                            Set Password
+                        <p className="password-recovery-hint">Use at least 6 characters.</p>
+                        <button type="submit" disabled={loading}>
+                            {loading ? 'Updating password…' : 'Save new password'}
                         </button>
-
                     </form>
-                </div>
-            </div>
 
+                    <Link className="password-recovery-back" to="/login">← Back to login</Link>
+                </section>
+            </main>
         </>
-    )
-}
+    );
+};
 
-export default NewPassword
+export default NewPassword;
