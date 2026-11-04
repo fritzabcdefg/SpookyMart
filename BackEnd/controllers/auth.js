@@ -72,11 +72,15 @@ exports.registerUser = async (req, res, next) => {
             }
         );
 
-        // Create the user's authentication account.
+        // Create an account that remains locked until its email is verified.
+        const verificationToken = crypto.randomBytes(32).toString('hex');
         createdUser = await User.create({
             name,
-            email,
+            email: email.trim().toLowerCase(),
             password,
+            emailVerified: false,
+            emailVerificationToken: crypto.createHash('sha256').update(verificationToken).digest('hex'),
+            emailVerificationExpire: Date.now() + 24 * 60 * 60 * 1000,
             avatar: {
                 public_id: uploadedAvatar.public_id,
                 url: uploadedAvatar.secure_url
@@ -105,8 +109,18 @@ exports.registerUser = async (req, res, next) => {
             paymentMethods: safePaymentMethods
         });
 
-        // Preserve the existing authentication cookie and response.
-        return sendToken(createdUser, 201, res);
+        const verifyUrl = `${process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`}/api/v1/email/verify/${verificationToken}`;
+        await sendEmail({
+            email: createdUser.email,
+            subject: 'Verify your SpookyMart email',
+            html: `<p>Hi ${String(name).replace(/[<>]/g, '')},</p><p>Please verify your email address to activate your SpookyMart account.</p><p><a href="${verifyUrl}">Verify my email</a></p><p>This link expires in 24 hours.</p>`
+        });
+
+        return res.status(201).json({
+            success: true,
+            requiresEmailVerification: true,
+            message: 'Registration successful. Please check your email to verify your account before logging in.'
+        });
 
     } catch (error) {
 
@@ -134,6 +148,24 @@ exports.registerUser = async (req, res, next) => {
     }
 }
 
+exports.verifyEmail = async (req, res) => {
+    try {
+        const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+        const user = await User.findOne({
+            emailVerificationToken: hashedToken,
+            emailVerificationExpire: { $gt: Date.now() }
+        });
+        if (!user) return res.status(400).send('This verification link is invalid or has expired. Please register again or request a new link.');
+        user.emailVerified = true;
+        user.emailVerificationToken = undefined;
+        user.emailVerificationExpire = undefined;
+        await user.save();
+        return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?verified=1`);
+    } catch (error) {
+        return res.status(500).send('Unable to verify your email. Please try again.');
+    }
+};
+
 exports.loginUser = async (req, res, next) => {
     const { email, password } = req.body;
 
@@ -152,6 +184,13 @@ exports.loginUser = async (req, res, next) => {
             message: 'Invalid email or password.'
         });
     }
+    if (!user.emailVerified) {
+        return res.status(403).json({
+            success: false,
+            message: 'Please verify your email before logging in. Check your inbox for the verification link.'
+        });
+    }
+
     //To block inactive users from logging in
     if (user.isActive === false) {
         return res.status(403).json({
