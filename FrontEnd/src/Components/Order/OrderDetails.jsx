@@ -286,8 +286,8 @@ const OrderDetails = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <div className="row d-flex justify-content-between">
-                    <div className="col-12 col-lg-8 mt-5 order-details">
+                <div className="row d-flex justify-content-center order-details-page">
+                    <div className="col-12 col-lg-10 mt-4 order-details">
                         <h1 className="my-5">
                             Order # {order._id}
                         </h1>
@@ -382,11 +382,7 @@ const OrderDetails = () => {
                             return (
                                 <div
                                     key={productId}
-                                    className="my-4 p-3"
-                                    style={{
-                                        border: '1px solid #ddd',
-                                        borderRadius: '8px'
-                                    }}
+                                    className="my-4 p-3 order-detail-item-card"
                                 >
                                     <div className="row align-items-center">
                                         <div className="col-4 col-lg-2">

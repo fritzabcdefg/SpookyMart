@@ -3858,3 +3858,74 @@ main.confirm-order-page .confirm-summary-total {
         min-width: 0;
     }
 }
+
+/* My Orders > View Order Details: cohesive SpookyMart themed layout */
+.order-details-page { width:100%; margin:0 auto 3rem; }
+.order-details-page .order-details {
+ max-width:1080px; padding:clamp(1.15rem,3vw,2.2rem);
+ border:1px solid rgba(208,178,237,.28); border-radius:20px;
+ background:linear-gradient(150deg,#241332 0%,#321d4d 58%,#38204e 100%);
+ color:#f7f1fc; box-shadow:0 14px 34px rgba(15,6,25,.2);
+}
+.order-details-page .order-details > h1 {
+ margin:0 0 1.35rem!important; padding:0 0 1.1rem;
+ border-bottom:1px solid rgba(208,178,237,.25); color:#ff9a4d!important;
+ font-size:clamp(1.35rem,3vw,2rem); font-weight:850; overflow-wrap:anywhere;
+}
+.order-details-page .order-details > h4 {
+ margin:1.5rem 0 .85rem!important; color:#ffad70!important;
+ font-size:1.12rem; font-weight:800;
+}
+.order-details-page .order-details > p {
+ margin:.55rem 0; padding:.72rem .9rem;
+ border:1px solid rgba(208,178,237,.14); border-radius:10px;
+ background:rgba(18,9,29,.32); color:#eee5f7!important;
+ line-height:1.6; overflow-wrap:anywhere;
+}
+.order-details-page .order-details > p b { color:#fff!important; }
+.order-details-page .order-details hr { margin:1.5rem 0; border-color:rgba(208,178,237,.25); opacity:1; }
+.order-details-page .order-details > button {
+ min-height:42px; margin:0 .55rem .8rem 0!important; padding:.62rem 1rem;
+ border:1px solid #ff852b!important; border-radius:9px;
+ background:#ff852b!important; color:#241332!important; font-weight:800;
+ box-shadow:0 4px 12px rgba(255,133,43,.15);
+}
+.order-details-page .order-details > button:hover:not(:disabled) {
+ border-color:#ffad70!important; background:#ffad70!important; color:#241332!important;
+}
+.order-details-page .order-details > button.btn-danger {
+ border-color:#bd5264!important; background:#8f3549!important; color:#fff!important;
+}
+.order-details-page .order-details > button:disabled { opacity:.6; }
+.order-details-page .order-details a { color:#ffad70!important; font-weight:700; text-decoration:none; }
+.order-details-page .order-details a:hover { color:#ffd0a8!important; text-decoration:underline; }
+.order-details-page .order-details .greenColor { color:#8fe0ae!important; }
+.order-details-page .order-details .redColor { color:#ff9b9b!important; }
+.order-details-page .order-detail-item-card {
+ padding:1.1rem!important; border:1px solid rgba(208,178,237,.26);
+ border-radius:14px; background:linear-gradient(145deg,#302044 0%,#3b2551 100%);
+ color:#f7f1fc; box-shadow:0 6px 18px rgba(10,4,18,.14);
+}
+.order-details-page .order-detail-item-card .row { align-items:center; row-gap:.5rem; }
+.order-details-page .order-detail-item-card img {
+ max-width:100%; padding:.25rem; border-radius:8px; background:#fff;
+}
+.order-details-page .order-detail-item-card p { margin-top:.35rem; color:#d9c8e8!important; }
+.order-details-page .order-detail-item-card b { color:#ffad70!important; }
+.order-details-page .order-detail-item-card .btn {
+ margin-top:.35rem; border:1px solid #ff852b!important; border-radius:8px;
+ background:#ff852b!important; color:#241332!important; font-weight:750;
+}
+.order-details-page .order-detail-item-card .btn:hover { background:#ffad70!important; }
+.order-details-page .order-detail-item-card .form-label { color:#ffad70!important; font-weight:700; }
+.order-details-page .order-detail-item-card .form-control {
+ border:1px solid #c5a6e3; border-radius:8px; background:#fff; color:#241332;
+}
+.order-details-page .order-detail-item-card textarea::placeholder { color:#786985; }
+@media(max-width:767.98px) {
+ .order-details-page { padding-right:.5rem; padding-left:.5rem; }
+ .order-details-page .order-details { padding:1rem; border-radius:15px; }
+ .order-details-page .order-details > h1 { font-size:1.25rem; }
+ .order-details-page .order-details > button { width:100%; margin-right:0!important; }
+ .order-details-page .order-detail-item-card { padding:.85rem!important; }
+}
