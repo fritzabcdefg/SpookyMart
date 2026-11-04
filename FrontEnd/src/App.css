@@ -2309,3 +2309,92 @@ ul.CTAs a {
     background: rgba(197, 166, 227, .14);
     color: #ffffff !important;
 }
+
+
+/* Checkout and account cards — use the same purple gradient as the header */
+.confirm-order-card,
+.confirm-order-summary,
+.checkout-form-wrapper .checkout-form,
+.payment-checkout .payment-form,
+.payment-checkout .payment-form .card,
+.payment-methods-header,
+.payment-methods-page .payment-method-card,
+.payment-method-form {
+    background: linear-gradient(135deg, #241332 0%, #38204e 62%, #4a285f 100%) !important;
+    border: 1px solid rgba(174, 139, 205, .55) !important;
+    color: #f5effb !important;
+    box-shadow: 0 10px 28px rgba(37, 19, 61, .2) !important;
+}
+
+.confirm-order-card,
+.confirm-order-summary,
+.checkout-form-wrapper .checkout-form,
+.payment-checkout .payment-form,
+.payment-methods-header,
+.payment-methods-page .payment-method-card,
+.payment-method-form {
+    border-radius: 14px !important;
+}
+
+.confirm-order-card h1,
+.confirm-order-card h2,
+.confirm-order-card h3,
+.confirm-order-card h4,
+.confirm-order-card h5,
+.confirm-order-summary h1,
+.confirm-order-summary h2,
+.confirm-order-summary h3,
+.confirm-order-summary h4,
+.confirm-order-summary h5,
+.checkout-form-wrapper .checkout-form h1,
+.checkout-form-wrapper .checkout-form h2,
+.checkout-form-wrapper .checkout-form h3,
+.checkout-form-wrapper .checkout-form h4,
+.checkout-form-wrapper .checkout-form h5,
+.payment-checkout .payment-form h1,
+.payment-checkout .payment-form h5,
+.payment-methods-header h2,
+.payment-methods-page .payment-method-card h5 {
+    color: #e0c8fa !important;
+}
+
+.confirm-order-card p,
+.confirm-order-summary p,
+.confirm-order-card label,
+.confirm-order-summary label,
+.checkout-form-wrapper .checkout-form p,
+.checkout-form-wrapper .checkout-form label,
+.payment-checkout .payment-form p,
+.payment-checkout .payment-form label,
+.payment-methods-header p,
+.payment-methods-page .payment-method-card p,
+.payment-method-form label {
+    color: #f0e8f8 !important;
+}
+
+.payment-checkout .payment-form .custom-control,
+.payment-checkout .payment-form .form-control,
+.payment-checkout .payment-form select,
+.payment-method-form .form-control {
+    background: rgba(25, 13, 39, .72) !important;
+    border-color: rgba(197, 166, 227, .45) !important;
+    color: #ffffff !important;
+}
+
+.payment-checkout .payment-form .card,
+.payment-checkout .payment-form .alert,
+.payment-method-form .alert {
+    background: rgba(25, 13, 39, .55) !important;
+    border-color: rgba(197, 166, 227, .4) !important;
+}
+
+.payment-checkout .payment-form .form-control:focus,
+.payment-checkout .payment-form select:focus,
+.payment-method-form .form-control:focus {
+    border-color: #c5a6e3 !important;
+    box-shadow: 0 0 0 3px rgba(197, 166, 227, .16) !important;
+}
+
+.payment-methods-page .payment-method-card:hover {
+    border-color: #d0b2ed !important;
+}
