@@ -37,7 +37,7 @@ const CategoriesList=()=>{
  return <>
   <MetaData title="Manage Categories"/>
   <div className="row"><div className="col-12 col-md-2"><Sidebar/></div><div className="col-12 col-md-10">
-   <div style={{padding:24}}>
+   <div className="categories-admin-page" style={{padding:24}}>
     <h1 style={{color:'#f5f0ff',marginBottom:8}}>Categories</h1>
     <p style={{color:'#aaa',marginBottom:24}}>Create, edit, activate, and remove product categories.</p>
     <form onSubmit={submit} style={{background:'#160d22',border:'1px solid #45245e',borderRadius:12,padding:20,marginBottom:24}}>
