@@ -46,7 +46,7 @@ async function main() {
         const migrationPlan = allProducts.map(product => {
             const sellPrice = product.sellPrice ?? product.price;
 
-            if (!Number.isFinite(Number(sellPrice))) {
+            if (sellPrice === null || sellPrice === undefined || sellPrice === '' || !Number.isFinite(Number(sellPrice))) {
                 throw new Error(
                     `Cannot migrate "${product.name || product._id}": no valid sellPrice or legacy price exists.`
                 );
