@@ -19,10 +19,19 @@
 }
 
 .sales-chart-title {
-    color: #ffffff;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff;
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 15px;
+    opacity: 1;
+}
+
+.sales-chart-card h3.sales-chart-title,
+.sales-chart-card h3.sales-chart-title * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff;
+    opacity: 1;
 }
 
 /* Recharts text */
