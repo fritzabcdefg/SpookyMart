@@ -79,12 +79,23 @@ export const Header = () => {
                         </div>
                     </div>) : <Link to="/login" className="btn ml-4" id="login_btn">Login</Link>}
 
-                    <Link to="/cart" style={{ textDecoration: 'none' }} >
-                        <span id="cart" className="ml-3">Cart</span>
-                        <span className="ml-1" id="cart_count">{cartItems ? cartItems.length : null}</span>
-                        {/* <span className="ml-1" id="cart_count">2</span> */}
+                    <Link
+                        to="/cart"
+                        className="cart-nav-link"
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '6px',
+                            marginLeft: '12px',
+                            textDecoration: 'none',
+                            verticalAlign: 'middle'
+                        }}
+                        aria-label={`Cart, ${cartItems ? cartItems.length : 0} items`}
+                    >
+                        <span id="cart">Cart</span>
+                        <span id="cart_count">{cartItems ? cartItems.length : 0}</span>
                     </Link>
-                    {/* <span className="ml-1" id="cart_count">{cartItems ? cartItems.length : null}</span>  */}
                 </div>
 
             </nav>
