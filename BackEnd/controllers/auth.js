@@ -71,7 +71,7 @@ exports.registerUser = async (req, res, next) => {
             emailVerificationExpire: Date.now() + 24 * 60 * 60 * 1000,
             avatar: {
                 public_id: 'default-avatar',
-                url: `${(process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/+$/, '')}/images/default_avatar.jpg`
+                url: `${(process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\/+$/, '')}/images/default_avatar.jpg`
             }
         });
 
@@ -211,8 +211,15 @@ exports.forgotPassword = async (req, res, next) => {
     // Get reset token
     const resetToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false });
-    // Create reset password url
-    const resetUrl = `${req.protocol}://localhost:5173/password/reset/${resetToken}`;
+    // Use the deployed frontend URL in production; localhost is development-only.
+    const frontendUrl = (process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\/+$/, '');
+    if (!frontendUrl) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save({ validateBeforeSave: false });
+        return res.status(500).json({ error: 'FRONTEND_URL must be configured for production password reset emails.' });
+    }
+    const resetUrl = `${frontendUrl}/password/reset/${resetToken}`;
     const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
     try {
         await sendEmail({
