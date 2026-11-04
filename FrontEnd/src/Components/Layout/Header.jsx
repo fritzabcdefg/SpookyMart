@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import '../../App.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { getUser, logout } from '../Utils/helpers';
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../actions/userActions'
 
 import Search from './Search'
+
 export const Header = () => {
     const dispatch = useDispatch();
-    const { user, loading } = useSelector(state => state.auth)
+    const { user } = useSelector(state => state.auth)
     const { cartItems } = useSelector(state => state.cart)
-    // const [user, setUser] = useState({})
-    const navigate = useNavigate()
 
     const logoutHandler = () => {
         dispatch(logout());
@@ -24,22 +22,51 @@ export const Header = () => {
 
     return (
         <>
-            <nav className="navbar row">
-                <div className="col-12 col-md-3">
-                    <div className="navbar-brand">
+            <nav
+                className="navbar row"
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    rowGap: '12px'
+                }}
+            >
+                <div
+                    className="header-brand-search"
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flex: '1 1 560px',
+                        minWidth: 0,
+                        gap: 'clamp(14px, 2.5vw, 32px)'
+                    }}
+                >
+                    <div className="navbar-brand" style={{ flex: '0 0 auto', margin: 0 }}>
                         <Link to="/">
                             <img src="/images/spookymart-logo.svg" alt="SpookyMart" />
                         </Link>
                     </div>
+
+                    <div style={{ flex: '1 1 260px', minWidth: 0, maxWidth: '520px' }}>
+                        <Search />
+                    </div>
                 </div>
 
-                <Search />
-
-                <div className="products-nav">
+                <div
+                    className="products-nav"
+                    style={{ flex: '0 0 auto', margin: '0 18px' }}
+                >
                     <Link to="/products">Products</Link>
                 </div>
 
-                <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
+                <div
+                    className="header-actions"
+                    style={{
+                        flex: '0 1 auto',
+                        marginLeft: 'auto',
+                        textAlign: 'center'
+                    }}
+                >
                     <div
                         className="header-account-cart"
                         style={{
