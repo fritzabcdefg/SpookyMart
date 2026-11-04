@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
     },
     sellPrice: {
         type: Number,
+        required: [true, 'Please enter product selling price'],
         min: [0, 'Selling price cannot be negative']
     },
     costPrice: {
