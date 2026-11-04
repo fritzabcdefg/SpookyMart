@@ -1823,3 +1823,59 @@ ul.CTAs a {
     .confirm-item { gap: .7rem; flex-wrap: wrap; }
     .confirm-item-total { margin-left: 76px; }
 }
+
+
+/* Checkout progress: separate each step into its own spaced group */
+.checkout-progress {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: min(100% - 24px, 760px);
+    margin: 1.75rem auto 2rem;
+    overflow: visible;
+}
+
+.checkout-progress > a {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    float: none !important;
+    text-decoration: none;
+}
+
+.checkout-progress > a > div {
+    float: none !important;
+}
+
+.checkout-progress .step {
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .checkout-progress {
+        gap: 8px;
+        width: calc(100% - 20px);
+    }
+
+    .checkout-progress .step {
+        font-size: 0.78rem;
+        letter-spacing: 0;
+        padding: 5px 7px;
+    }
+
+    .checkout-progress .triangle-active,
+    .checkout-progress .triangle-incomplete {
+        border-top-width: 17px;
+        border-bottom-width: 17px;
+        border-left-width: 10px;
+    }
+
+    .checkout-progress .triangle2-active,
+    .checkout-progress .triangle2-incomplete {
+        border-top-width: 17px;
+        border-bottom-width: 17px;
+        border-left-width: 10px;
+    }
+}
