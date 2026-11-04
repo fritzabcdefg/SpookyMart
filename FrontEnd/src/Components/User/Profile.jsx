@@ -194,12 +194,12 @@ const Profile = () => {
 
                 <div className="row">
                     <div className="col-12">
-                        <div className="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                        <div className="d-flex justify-content-between align-items-center flex-wrap mb-3 profile-section-header">
                             <h3>My Payment Methods</h3>
 
                             <Link
                                 to="/me/payment-methods"
-                                className="btn btn-primary"
+                                className="btn btn-primary profile-action-btn"
                             >
                                 Manage Payment Methods
                             </Link>
