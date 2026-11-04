@@ -93,12 +93,19 @@ exports.firebaseLogin = async (req, res) => {
                 name,
                 email,
                 password: crypto.randomBytes(48).toString('hex'),
+                authProvider: providerId === 'google.com' ? 'google' : 'facebook',
+                emailVerified: true,
                 avatar: {
                     public_id: `firebase-${decoded.sub}`,
                     url: photoURL
                 }
             });
 
+        }
+
+        if (decoded.email_verified && !user.emailVerified) {
+            user.emailVerified = true;
+            await user.save();
         }
 
         await Customer.updateOne(
