@@ -34,7 +34,7 @@ const ConfirmOrder = () => {
 
     const itemsPrice = selectedItems.reduce(
         (total, item) =>
-            total + Number(item.price) * Number(item.quantity),
+            total + Number(item.sellPrice ?? item.price) * Number(item.quantity),
         0
     );
 
@@ -109,11 +109,11 @@ const ConfirmOrder = () => {
 
                                 <div className="col-12 col-lg-4">
                                     <p>
-                                        {item.quantity} × {formatPrice(item.price)}
+                                        {item.quantity} × {formatPrice(item.sellPrice ?? item.price)}
                                         {' = '}
                                         <b>
                                             {formatPrice(
-                                                item.quantity * item.price
+                                                item.quantity * (item.sellPrice ?? item.price)
                                             )}
                                         </b>
                                     </p>
