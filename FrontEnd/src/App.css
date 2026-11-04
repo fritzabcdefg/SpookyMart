@@ -3929,3 +3929,40 @@ main.confirm-order-page .confirm-summary-total {
  .order-details-page .order-details > button { width:100%; margin-right:0!important; }
  .order-details-page .order-detail-item-card { padding:.85rem!important; }
 }
+
+
+/* Latest Products: dark text on clean light product cards for readability */
+.home-page .product-card {
+    background: linear-gradient(150deg, #ffffff 0%, #fbf8ff 100%) !important;
+    border: 1px solid rgba(118, 82, 149, .22) !important;
+    color: #241332 !important;
+    box-shadow: 0 8px 22px rgba(36, 19, 50, .12);
+}
+.home-page .product-card .card-body,
+.home-page .product-card .card-title,
+.home-page .product-card .card-text,
+.home-page .product-card .ratings,
+.home-page .product-card #no_of_reviews {
+    color: #241332 !important;
+}
+.home-page .product-card .product-card-title a,
+.home-page .product-card .product-card-title a:visited {
+    color: #241332 !important;
+    font-weight: 750;
+}
+.home-page .product-card .product-card-title a:hover {
+    color: #765295 !important;
+}
+.home-page .product-card #no_of_reviews {
+    color: #241332 !important;
+    font-size: .82rem;
+    font-weight: 600;
+}
+.home-page .product-card .product-card-price {
+    color: #e87520 !important;
+    font-weight: 800;
+}
+.home-page .product-card:hover {
+    border-color: rgba(255, 133, 43, .65) !important;
+    box-shadow: 0 12px 26px rgba(36, 19, 50, .17);
+}
