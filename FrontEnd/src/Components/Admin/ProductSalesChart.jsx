@@ -75,15 +75,22 @@ export default function ProductSalesChart() {
 
     const RADIAN = Math.PI / 180;
 
+    const totalPieValue = sales.reduce(
+        (sum, item) => sum + Number(item.value || 0),
+        0
+    );
+
     const renderCustomizedLabel = ({
         cx,
         cy,
         midAngle,
-        innerRadius,
         outerRadius,
-        percent
+        value
     }) => {
         const radius = outerRadius + 25;
+        const slicePercent = totalPieValue > 0
+            ? (Number(value || 0) / totalPieValue) * 100
+            : 0;
 
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -98,7 +105,7 @@ export default function ProductSalesChart() {
                 fontSize={12}
                 fontWeight="bold"
             >
-                {`${(percent * 100).toFixed(1)}%`}
+                {`${slicePercent.toFixed(1)}%`}
             </text>
         );
     };
