@@ -960,24 +960,24 @@ exports.totalSales = async (req, res, next) => {
                             initialValue: 0,
                             in: {
                                 $add: [
-                                    '$value',
+                                    '$$value',
                                     {
                                         $cond: [
                                             {
                                                 $and: [
-                                                    { $ne: ['$this.costPrice', null] },
-                                                    { $ne: ['$this.costPrice', undefined] }
+                                                    { $ne: ['$$this.costPrice', null] },
+                                                    { $ne: ['$$this.costPrice', undefined] }
                                                 ]
                                             },
                                             {
                                                 $multiply: [
                                                     {
                                                         $subtract: [
-                                                            { $ifNull: ['$this.sellPrice', '$this.price'] },
-                                                            '$this.costPrice'
+                                                            { $ifNull: ['$$this.sellPrice', '$$this.price'] },
+                                                            '$$this.costPrice'
                                                         ]
                                                     },
-                                                    { $ifNull: ['$this.quantity', 0] }
+                                                    { $ifNull: ['$$this.quantity', 0] }
                                                 ]
                                             },
                                             0
@@ -1247,24 +1247,24 @@ exports.salesByDateRange = async (req, res) => {
                             initialValue: 0,
                             in: {
                                 $add: [
-                                    '$value',
+                                    '$$value',
                                     {
                                         $cond: [
                                             {
                                                 $and: [
-                                                    { $ne: ['$this.costPrice', null] },
-                                                    { $ne: ['$this.costPrice', undefined] }
+                                                    { $ne: ['$$this.costPrice', null] },
+                                                    { $ne: ['$$this.costPrice', undefined] }
                                                 ]
                                             },
                                             {
                                                 $multiply: [
                                                     {
                                                         $subtract: [
-                                                            { $ifNull: ['$this.sellPrice', '$this.price'] },
-                                                            '$this.costPrice'
+                                                            { $ifNull: ['$$this.sellPrice', '$$this.price'] },
+                                                            '$$this.costPrice'
                                                         ]
                                                     },
-                                                    { $ifNull: ['$this.quantity', 0] }
+                                                    { $ifNull: ['$$this.quantity', 0] }
                                                 ]
                                             },
                                             0
