@@ -24,10 +24,8 @@ const productSchema = Yup.object({
         .max(100, 'Product name cannot exceed 100 characters')
         .required('Product name is required'),
 
-    price: Yup.number()
-        .typeError('Price must be a number')
-        .positive('Price must be greater than 0')
-        .required('Price is required'),
+    sellPrice: Yup.number().typeError('Selling price must be a number').min(0, 'Selling price cannot be negative').required('Selling price is required'),
+    costPrice: Yup.number().typeError('Cost price must be a number').min(0, 'Cost price cannot be negative').required('Cost price is required'),
 
     description: Yup.string()
         .trim()
@@ -65,7 +63,8 @@ const NewProduct = () => {
     const formik = useFormik({
         initialValues: {
             name: '',
-            price: '',
+            sellPrice: '',
+            costPrice: '',
             description: '',
             category: '',
             stock: '',
@@ -79,7 +78,9 @@ const NewProduct = () => {
             const formData = new FormData();
 
             formData.set('name', values.name.trim());
-            formData.set('price', values.price);
+            formData.set('price', values.sellPrice);
+            formData.set('sellPrice', values.sellPrice);
+            formData.set('costPrice', values.costPrice);
             formData.set('description', values.description.trim());
             formData.set('category', values.category);
             formData.set('stock', values.stock);
@@ -234,27 +235,32 @@ const NewProduct = () => {
                                 )}
                             </div>
 
-                            {/* Price */}
+                            {/* Cost and selling prices */}
+                            <div className="form-group">
+                                <label htmlFor="cost_price_field">Cost Price (₱)</label>
+                                <input type="number" id="cost_price_field" name="costPrice" className="form-control" value={values.costPrice} onChange={handleChange} onBlur={handleBlur} min="0" step="0.01" />
+                                {showError('costPrice') && <small className="text-danger">{errors.costPrice}</small>}
+                            </div>
                             <div className="form-group">
                                 <label htmlFor="price_field">
-                                    Price
+                                    Selling Price (₱)
                                 </label>
 
                                 <input
                                     type="number"
                                     id="price_field"
-                                    name="price"
+                                    name="sellPrice"
                                     className="form-control"
-                                    value={values.price}
+                                    value={values.sellPrice}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    min="0.01"
+                                    min="0"
                                     step="0.01"
                                 />
 
-                                {showError('price') && (
+                                {showError('sellPrice') && (
                                     <small className="text-danger">
-                                        {errors.price}
+                                        {errors.sellPrice}
                                     </small>
                                 )}
                             </div>
