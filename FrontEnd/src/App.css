@@ -3102,3 +3102,66 @@ main.confirm-order-page .confirm-summary-total {
     border-color: #e0c8fa !important;
     color: #ffffff !important;
 }
+
+
+/* Compact My Profile overview cards */
+.profile-page .profile-overview {
+    max-width: 940px;
+    margin-right: auto;
+    margin-left: auto;
+    align-items: center;
+    column-gap: 0;
+    row-gap: 1rem;
+}
+.profile-page .profile-sidebar,
+.profile-page .profile-details {
+    padding: 1.1rem 1.25rem !important;
+}
+.profile-page .profile-sidebar {
+    min-height: 0;
+}
+.profile-page .avatar-profile {
+    width: min(10rem, 100%) !important;
+    margin-bottom: .65rem !important;
+}
+.profile-page .profile-sidebar .profile-action-btn {
+    width: auto !important;
+    min-width: 150px;
+    margin: .45rem 0 0 !important;
+    padding: .55rem .9rem !important;
+}
+.profile-page .profile-details h4 {
+    margin: .65rem 0 .25rem !important;
+    font-size: .82rem !important;
+}
+.profile-page .profile-details h4:first-child {
+    margin-top: 0 !important;
+}
+.profile-page .profile-details > p {
+    margin: 0 !important;
+    padding: .45rem .7rem !important;
+    font-size: .92rem !important;
+}
+.profile-page .profile-details > .profile-action-btn {
+    display: inline-flex !important;
+    width: auto !important;
+    min-width: 155px;
+    margin: .85rem .5rem 0 0 !important;
+    padding: .55rem .9rem !important;
+}
+@media (max-width: 767.98px) {
+    .profile-page .profile-overview {
+        max-width: 520px;
+    }
+    .profile-page .profile-sidebar,
+    .profile-page .profile-details {
+        padding: 1rem !important;
+    }
+    .profile-page .avatar-profile {
+        width: min(8.5rem, 65vw) !important;
+    }
+    .profile-page .profile-details > .profile-action-btn {
+        width: 100% !important;
+        margin-right: 0 !important;
+    }
+}
