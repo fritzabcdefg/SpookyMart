@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../App.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,14 +10,25 @@ import Search from './Search'
 
 export const Header = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [loggingOut, setLoggingOut] = useState(false);
     const { user } = useSelector(state => state.auth)
     const { cartItems } = useSelector(state => state.cart)
 
-    const logoutHandler = () => {
-        dispatch(logout());
-        toast.success('Logged out!', {
-            position: 'bottom-right'
-        });
+    const logoutHandler = async (event) => {
+        event.preventDefault();
+        if (loggingOut) return;
+
+        setLoggingOut(true);
+        const result = await dispatch(logout());
+        setLoggingOut(false);
+
+        if (result?.success) {
+            toast.success('Logged out!', { position: 'bottom-right' });
+            navigate('/', { replace: true });
+        } else {
+            toast.error('Logout could not be completed. Please try again.');
+        }
     }
 
     return (
@@ -114,8 +125,9 @@ export const Header = () => {
                                         className="dropdown-item text-danger"
                                         to="/"
                                         onClick={logoutHandler}
+                                        aria-disabled={loggingOut}
                                     >
-                                        Logout
+                                        {loggingOut ? 'Logging out...' : 'Logout'}
                                     </Link>
                                 </div>
                             </div>
