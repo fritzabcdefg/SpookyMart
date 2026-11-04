@@ -5,7 +5,7 @@ const Footer = () => {
         <>
             <footer className="py-1">
                 <p className="text-center mt-1">
-                    L&F Shop Inc. - 2025-2026, All Rights Reserved
+                    Spooky Mart L&F Shop Inc. - 2026-2027 - For Purposes Only
                 </p>
             </footer></>
 

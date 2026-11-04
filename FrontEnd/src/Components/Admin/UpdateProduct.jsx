@@ -32,7 +32,8 @@ const UpdateProduct = () => {
 
     const { categories = [] } = useSelector(state => state.categories || {});
     const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
+    const [sellPrice, setSellPrice] = useState('');
+    const [costPrice, setCostPrice] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('Decorations');
     const [stock, setStock] = useState('');
@@ -52,7 +53,8 @@ const UpdateProduct = () => {
     useEffect(() => {
         if (product && product._id === id) {
             setName(product.name || '');
-            setPrice(product.price ?? '');
+            setSellPrice(product.sellPrice ?? product.price ?? '');
+            setCostPrice(product.costPrice ?? '');
             setDescription(product.description || '');
             setCategory(product.category || 'Decorations');
             setStock(product.stock ?? '');
@@ -120,7 +122,9 @@ const UpdateProduct = () => {
         const formData = new FormData();
 
         formData.set('name', name);
-        formData.set('price', price);
+        formData.set('price', sellPrice);
+        formData.set('sellPrice', sellPrice);
+        formData.set('costPrice', costPrice);
         formData.set('description', description);
         formData.set('category', category);
         formData.set('stock', stock);
@@ -190,14 +194,19 @@ const UpdateProduct = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="price_field">Price</label>
+                                    <label htmlFor="cost_price_field">Cost Price (₱)</label>
+                                    <input type="number" id="cost_price_field" className="form-control" value={costPrice} onChange={e => setCostPrice(e.target.value)} min="0" step="0.01" required />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="price_field">Selling Price (₱)</label>
                                     <input
                                         type="number"
                                         id="price_field"
                                         className="form-control"
-                                        value={price}
-                                        onChange={e => setPrice(e.target.value)}
-                                        min="0.01"
+                                        value={sellPrice}
+                                        onChange={e => setSellPrice(e.target.value)}
+                                        min="0"
                                         step="0.01"
                                         required
                                     />

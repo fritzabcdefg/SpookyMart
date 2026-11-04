@@ -228,15 +228,13 @@ const generateReceiptPDF = order => {
             };
 
             const subtotal = Number(order.itemsPrice || 0);
-            const tax = Number(order.taxPrice || 0);
             const shipping = Number(order.shippingPrice || 0);
 
             const grandTotal = Number(order.totalPrice || 0) > 0
                 ? Number(order.totalPrice)
-                : subtotal + tax + shipping;
+                : subtotal + shipping;
 
             drawTotal('Subtotal', subtotal);
-            drawTotal('Tax', tax);
             drawTotal('Shipping', shipping);
 
             doc.moveTo(totalLabelX, y)

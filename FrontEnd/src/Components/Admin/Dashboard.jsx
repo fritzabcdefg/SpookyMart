@@ -20,7 +20,7 @@ const Dashboard = () => {
     const { products = [], loading: productsLoading } =
         useSelector(state => state.products || {});
 
-    const { orders = [], totalAmount, loading: ordersLoading } =
+    const { orders = [], totalAmount, totalProfit, profitUnavailableOrdersCount = 0, loading: ordersLoading } =
         useSelector(state => state.allOrders || {});
 
     const { users = [], loading: usersLoading } =
@@ -62,6 +62,14 @@ const Dashboard = () => {
             color: '#e04455',
             link: '/admin/orders',
             footer: 'View Orders'
+        },
+        {
+            title: 'Gross Profit',
+            count: ordersLoading ? '...' : formatCurrency(totalProfit),
+            icon: 'fa-chart-line',
+            color: '#16a34a',
+            link: '/admin/orders',
+            footer: `${profitUnavailableOrdersCount} legacy order(s) excluded`
         },
         {
             title: 'Users',
