@@ -99,7 +99,11 @@ exports.registerUser = async (req, res, next) => {
 
         const frontendUrl = (process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\/+$/, '');
         if (!frontendUrl) throw new Error('FRONTEND_URL must be configured for production email verification.');
-        const verifyUrl = `${(process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`).replace(/\/+$/, '')}/api/v1/email/verify/${verificationToken}`;
+        // Never generate localhost verification links from the deployed production API.
+        const backendUrl = process.env.NODE_ENV === 'production'
+            ? 'https://spookymart.onrender.com'
+            : (process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`);
+        const verifyUrl = `${backendUrl.replace(/\/+$/, '')}/api/v1/email/verify/${verificationToken}`;
         const safeName = String(name).replace(/[&<>"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[character]));
         await sendEmail({
             email: createdUser.email,
