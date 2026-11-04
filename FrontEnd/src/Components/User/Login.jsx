@@ -65,6 +65,9 @@ const Login = () => {
         if (new URLSearchParams(location.search).get('verified') === '1') {
             toast.success('Email verified! You can now log in.');
         }
+        if (new URLSearchParams(location.search).get('verification') === 'pending') {
+            toast.info('Registration successful! Check your email and verify your account before logging in.');
+        }
         if (isAuthenticated && redirect === 'shipping') {
             navigate(`/${redirect}`);
         } else if (isAuthenticated) {
