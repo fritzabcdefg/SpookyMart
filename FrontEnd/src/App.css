@@ -3398,3 +3398,31 @@ main.confirm-order-page .confirm-summary-total {
 .profile-page .row > .col-12 > p:not(.profile-data-card p) {
     color: #241332 !important;
 }
+
+
+/* My Profile shipping-address actions: keep both controls together */
+.profile-page .profile-section-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: .75rem !important;
+}
+.profile-page .profile-section-header h3 {
+    flex: 1 0 100%;
+    margin-bottom: .25rem !important;
+}
+.profile-page .profile-section-header .profile-action-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: auto !important;
+    min-width: 190px;
+    margin: 0 !important;
+}
+@media (max-width: 575.98px) {
+    .profile-page .profile-section-header .profile-action-btn {
+        flex: 1 1 100%;
+        width: 100% !important;
+    }
+}
