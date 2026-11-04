@@ -71,7 +71,7 @@ exports.registerUser = async (req, res, next) => {
             emailVerificationExpire: Date.now() + 24 * 60 * 60 * 1000,
             avatar: {
                 public_id: 'default-avatar',
-                url: `${(process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\\/$/, '')}/images/default_avatar.jpg`
+                url: `${(process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/+$/, '')}/images/default_avatar.jpg`
             }
         });
 
@@ -97,9 +97,9 @@ exports.registerUser = async (req, res, next) => {
             paymentMethods: safePaymentMethods
         });
 
-        const frontendUrl = (process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\\/$/, '');
+        const frontendUrl = (process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\/+$/, '');
         if (!frontendUrl) throw new Error('FRONTEND_URL must be configured for production email verification.');
-        const verifyUrl = `${(process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`).replace(/\\/$/, '')}/api/v1/email/verify/${verificationToken}`;
+        const verifyUrl = `${(process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`).replace(/\/+$/, '')}/api/v1/email/verify/${verificationToken}`;
         const safeName = String(name).replace(/[&<>"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[character]));
         await sendEmail({
             email: createdUser.email,
@@ -155,7 +155,7 @@ exports.verifyEmail = async (req, res) => {
         user.emailVerificationToken = undefined;
         user.emailVerificationExpire = undefined;
         await user.save();
-        const frontendUrl = (process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\\/$/, '');
+        const frontendUrl = (process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173')).replace(/\/+$/, '');
         if (!frontendUrl) return res.status(500).send('FRONTEND_URL is not configured. Please contact the store administrator.');
         return res.redirect(`${frontendUrl}/login?verified=1`);
     } catch (error) {
