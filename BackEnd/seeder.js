@@ -51,11 +51,11 @@ const seedDatabase = async () => {
     try {
         // Seeding must use its own Atlas URI and a separate database.
         // Never fall back to DB_URI: that variable belongs to the running application.
-        const mongoUri = process.env.DB_URI;
+        const mongoUri = process.env.DB_SEED_URI;
 
         if (!mongoUri) {
             throw new Error(
-                'DB_URI is missing from BackEnd/config/.env. ' +
+                'DB_SEED_URI is missing from BackEnd/config/.env. ' +
                 'Use a MongoDB Atlas connection string whose database path is exactly /SpookyMart_demo.'
             );
         }
