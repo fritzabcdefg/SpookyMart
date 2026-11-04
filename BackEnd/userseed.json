@@ -8,7 +8,8 @@
       "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
     },
     "role": "admin",
-    "emailVerified": true
+    "emailVerified": true,
+    "createdAt": "2026-01-05T09:00:00.000Z"
   },
   {
     "name": "SpookyMart User1",
@@ -19,6 +20,151 @@
       "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
     },
     "role": "user",
-    "emailVerified": true
+    "emailVerified": true,
+    "createdAt": "2026-01-12T09:00:00.000Z"
+  },
+  {
+    "name": "Mika Santos",
+    "email": "mika.santos.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-01-18T09:00:00.000Z"
+  },
+  {
+    "name": "Jared Reyes",
+    "email": "jared.reyes.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-02-06T09:00:00.000Z"
+  },
+  {
+    "name": "Alyssa Cruz",
+    "email": "alyssa.cruz.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-02-21T09:00:00.000Z"
+  },
+  {
+    "name": "Paolo Garcia",
+    "email": "paolo.garcia.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-03-12T09:00:00.000Z"
+  },
+  {
+    "name": "Bea Mendoza",
+    "email": "bea.mendoza.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-04-04T09:00:00.000Z"
+  },
+  {
+    "name": "Noah Villanueva",
+    "email": "noah.villanueva.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-05-17T09:00:00.000Z"
+  },
+  {
+    "name": "Chloe Ramirez",
+    "email": "chloe.ramirez.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-06-09T09:00:00.000Z"
+  },
+  {
+    "name": "Ethan Flores",
+    "email": "ethan.flores.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-07-22T09:00:00.000Z"
+  },
+  {
+    "name": "Sofia Castillo",
+    "email": "sofia.castillo.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-08-14T09:00:00.000Z"
+  },
+  {
+    "name": "Liam Torres",
+    "email": "liam.torres.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-09-03T09:00:00.000Z"
+  },
+  {
+    "name": "Isabelle Aquino",
+    "email": "isabelle.aquino.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-10-11T09:00:00.000Z"
+  },
+  {
+    "name": "Gabriel Lim",
+    "email": "gabriel.lim.demo@gmail.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "default_avatar_user",
+      "url": "https://res.cloudinary.com/pbs0k0ts/image/upload/v1791302094/20250228192535_1.jpg"
+    },
+    "role": "user",
+    "emailVerified": true,
+    "createdAt": "2026-10-26T09:00:00.000Z"
   }
 ]
