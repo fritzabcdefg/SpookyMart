@@ -2790,3 +2790,104 @@ main.confirm-order-page .confirm-summary-total {
         padding: 1rem;
     }
 }
+
+
+/* My Profile contrast pass — override inherited Bootstrap/theme text colors */
+.profile-page,
+.profile-page .row,
+.profile-page .col-12,
+.profile-page .profile-sidebar,
+.profile-page .profile-details,
+.profile-page .profile-data-card,
+.profile-page .profile-data-card .card-body {
+    color: #f7f1fc !important;
+}
+
+.profile-page h1,
+.profile-page h2,
+.profile-page h3,
+.profile-page h4,
+.profile-page h5,
+.profile-page h6,
+.profile-page label,
+.profile-page strong,
+.profile-page b,
+.profile-page .font-weight-bold {
+    color: #ffffff !important;
+}
+
+.profile-page p,
+.profile-page li,
+.profile-page small,
+.profile-page span:not(.badge),
+.profile-page .text-muted,
+.profile-page .text-secondary {
+    color: #eee5f7 !important;
+}
+
+.profile-page .profile-page-heading p,
+.profile-page .user-info h4,
+.profile-page .profile-data-card h5 {
+    color: #e7d2fb !important;
+}
+
+.profile-page .user-info p,
+.profile-page .profile-data-card p {
+    color: #ffffff !important;
+}
+
+.profile-page a:not(.profile-action-btn):not(.btn) {
+    color: #e0c8fa !important;
+}
+
+.profile-page a:not(.profile-action-btn):not(.btn):hover {
+    color: #ffffff !important;
+}
+
+.profile-page .profile-action-btn,
+.profile-page .profile-action-btn:hover,
+.profile-page .profile-action-btn:focus {
+    color: #241332 !important;
+}
+
+.profile-page .profile-orders-btn,
+.profile-page .profile-orders-btn:hover,
+.profile-page .profile-orders-btn:focus,
+.profile-page .profile-outline-btn,
+.profile-page .profile-outline-btn:hover,
+.profile-page .profile-outline-btn:focus {
+    color: #ffffff !important;
+}
+
+.profile-page .profile-data-card .badge,
+.profile-page .profile-data-card .badge-success {
+    color: #ffffff !important;
+}
+
+.profile-page .alert-warning {
+    border-color: #e7bd65;
+    background: #fff4d6;
+    color: #513b12 !important;
+}
+
+.profile-page .alert-warning * {
+    color: #513b12 !important;
+}
+
+.profile-page .alert-danger {
+    background: #4b2029;
+    color: #fff !important;
+}
+
+.profile-page .alert-danger * {
+    color: #fff !important;
+}
+
+.profile-page .alert-success {
+    background: #1e4934;
+    color: #fff !important;
+}
+
+.profile-page .alert-success * {
+    color: #fff !important;
+}
