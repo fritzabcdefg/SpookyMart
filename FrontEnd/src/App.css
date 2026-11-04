@@ -2891,3 +2891,174 @@ main.confirm-order-page .confirm-summary-total {
 .profile-page .alert-success * {
     color: #fff !important;
 }
+
+
+/* Storefront home product cards: dark surfaces require readable light text */
+.home-page .product-card {
+    background: linear-gradient(145deg, #241332 0%, #38204e 100%) !important;
+    border: 1px solid rgba(197, 166, 227, .42) !important;
+    color: #f7f1fc !important;
+    box-shadow: 0 7px 20px rgba(18, 8, 29, .2);
+}
+.home-page .product-card .card-body,
+.home-page .product-card .card-title,
+.home-page .product-card .card-text,
+.home-page .product-card .ratings,
+.home-page .product-card #no_of_reviews {
+    color: #f7f1fc !important;
+}
+.home-page .product-card .product-card-title a {
+    color: #ead8fb !important;
+}
+.home-page .product-card .product-card-title a:hover {
+    color: #ffffff !important;
+}
+.home-page .product-card .product-card-price {
+    color: #ffb16f !important;
+}
+.home-page #products_heading,
+.home-page #products h4,
+.home-page #products h3 {
+    color: #ffffff !important;
+}
+.home-page .pagination .page-link {
+    color: #38204e !important;
+    background: #ffffff !important;
+    border-color: #d0b2ed !important;
+}
+.home-page .pagination .page-item.active .page-link {
+    color: #ffffff !important;
+    background: #765295 !important;
+    border-color: #765295 !important;
+}
+
+/* Saved payment methods: force dark cards and explicit high-contrast text */
+.payment-methods-page .payment-method-card,
+.payment-methods-page .payment-method-card .card-body {
+    background: linear-gradient(145deg, #241332 0%, #38204e 100%) !important;
+    color: #ffffff !important;
+}
+.payment-methods-page .payment-method-card h5,
+.payment-methods-page .payment-method-card p,
+.payment-methods-page .payment-method-card span:not(.badge),
+.payment-methods-page .payment-method-card strong {
+    color: #f7f1fc !important;
+}
+.payment-methods-page .payment-method-card h5 {
+    color: #e0c8fa !important;
+}
+.payment-methods-page .payment-method-card .badge,
+.payment-methods-page .payment-method-card .badge-success {
+    background: #4d8b69 !important;
+    color: #ffffff !important;
+}
+
+/* Address book surfaces and controls: avoid white-on-white Bootstrap defaults */
+.address-book-page {
+    color: #f7f1fc;
+}
+.address-book-page > .d-flex h2,
+.address-book-page > h4,
+.address-book-page .card-header h5 {
+    color: #ffffff !important;
+}
+.address-book-page > .d-flex p,
+.address-book-page > p,
+.address-book-page .card-body p,
+.address-book-page .card-body label,
+.address-book-page .form-check-label {
+    color: #f0e8f8 !important;
+}
+.address-book-page > .d-flex .btn-outline-secondary {
+    border: 1px solid #d0b2ed !important;
+    background: #765295 !important;
+    color: #ffffff !important;
+    font-weight: 700;
+}
+.address-book-page > .d-flex .btn-outline-secondary:hover,
+.address-book-page > .d-flex .btn-outline-secondary:focus {
+    background: #8b68aa !important;
+    color: #ffffff !important;
+}
+.address-book-page > .card,
+.address-book-page .card.shadow-sm {
+    background: linear-gradient(145deg, #241332 0%, #38204e 100%) !important;
+    border: 1px solid rgba(197, 166, 227, .4) !important;
+    color: #ffffff !important;
+}
+.address-book-page .card-header,
+.address-book-page .card-body {
+    background: transparent !important;
+    color: #ffffff !important;
+}
+.address-book-page .card-header {
+    border-bottom: 1px solid rgba(208, 178, 237, .25) !important;
+}
+.address-book-page .card-body h5,
+.address-book-page .card-body p,
+.address-book-page .card-body strong {
+    color: #f7f1fc !important;
+}
+.address-book-page .form-control,
+.address-book-page select.form-control {
+    background: #ffffff !important;
+    color: #241332 !important;
+    border: 1px solid #c5a6e3 !important;
+}
+.address-book-page .form-control::placeholder {
+    color: #71617e !important;
+}
+.address-book-page .form-control option {
+    background: #ffffff;
+    color: #241332;
+}
+.address-book-page .btn-primary {
+    background: #ff852b !important;
+    border-color: #ff852b !important;
+    color: #241332 !important;
+    font-weight: 750;
+}
+.address-book-page .btn-primary:hover,
+.address-book-page .btn-primary:focus {
+    background: #ffad70 !important;
+    border-color: #ffad70 !important;
+    color: #241332 !important;
+}
+.address-book-page .btn-secondary {
+    background: #765295 !important;
+    border-color: #765295 !important;
+    color: #ffffff !important;
+}
+.address-book-page .btn-outline-primary {
+    border-color: #d0b2ed !important;
+    background: #765295 !important;
+    color: #ffffff !important;
+}
+.address-book-page .btn-outline-primary:hover,
+.address-book-page .btn-outline-primary:focus {
+    background: #8b68aa !important;
+    color: #ffffff !important;
+}
+.address-book-page .btn-outline-danger {
+    border-color: #ff8585 !important;
+    background: #6b2936 !important;
+    color: #ffffff !important;
+}
+.address-book-page .btn-outline-success {
+    border-color: #8dd5a7 !important;
+    background: #286344 !important;
+    color: #ffffff !important;
+}
+.address-book-page .badge-success {
+    background: #4d8b69 !important;
+    color: #ffffff !important;
+}
+
+/* Profile page Manage Addresses action must remain legible on all themes */
+.profile-page a[href="/me/addresses"].profile-action-btn,
+.profile-page a[href="/me/addresses"].profile-action-btn:hover,
+.profile-page a[href="/me/addresses"].profile-action-btn:focus {
+    background: #ff852b !important;
+    border-color: #ff852b !important;
+    color: #241332 !important;
+}

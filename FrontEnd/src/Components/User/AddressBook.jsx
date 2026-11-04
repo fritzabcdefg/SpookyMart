@@ -175,7 +175,7 @@ const AddressBook = () => {
         <>
             <MetaData title="Address Book - SpookyMart" />
 
-            <div className="container my-5">
+            <div className="container my-5 address-book-page">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h2>My Address Book</h2>
